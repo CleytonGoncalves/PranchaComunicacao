@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/template">
+
+<head>
+  <title>Cadastro de Palavra</title>
+  <link th:href="@{/css/pasta-palavra.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- Menu de Navegação -->
+<nav layout:include="menu-superior"></nav>
+
+<!-- Conteúdo -->
+<main layout:fragment="conteudo" class="container-fluid">
+  
+  <button type="button" id="botao-novo-cadastro" class="btn btn-info mb-3">NOVO</button>
+  
+  <!-- Modal de cadastro de palavra, populado por AJAX -->
+  <div id="modal-cadastro-container"></div>
+  
+  <!-- Tabela de palavras cadastradas -->
+  <!-- TODO: Implementar DataTable na tabela (precisa?) -->
+  <table th:replace="fragmentos/pastaSujeito :: tabela-sujeito"></table>
+
+</main>
+
+<footer>
+  <!-- Adiciona o JS no rodapé definido no Template -->
+  <script layout:fragment="rodape-scripts" th:src="@{/js/pasta-palavra.js}"></script>
+</footer>
+
+</body>
+</html>

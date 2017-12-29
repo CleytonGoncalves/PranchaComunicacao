@@ -1,0 +1,27 @@
+/* Centralizar o modal na tela */
+#modal-cadastro-container .modal-dialog {
+    -webkit-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    top: 50%;
+    margin: 0 auto;
+}
+
+/* Coloca o botão falso de seleção da imagem por cima (eixo Z) do botão real invisível  */
+/* Permitindo mostrar a validação (campo "required") que ocorre no botão invisível */
+#grupo-input-imagem {
+    position: relative;
+}
+
+#input-imagem-real {
+    position: relative;
+    opacity: 0;
+    min-width: 100%;
+    max-width: 100%;
+    z-index: -1;
+}
+
+#input-imagem-exibido {
+    top: 0;
+    position: absolute;
+}

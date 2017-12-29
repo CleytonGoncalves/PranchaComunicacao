@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Prancha de Comunicação</title>
+  
+  <!-- Meta tags p/ Bootstrap -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- Icone da página -->
+  <link rel="shortcut icon" type="image/png" th:href="@{/images/favicon_azul.png}">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{/css/fa-svg-with-js.css}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+<!-- Menu de Navegação -->
+<!-- TODO: Colocar em fragmento próprio -->
+<nav layout:fragment="menu-superior" id="menu-superior"
+     class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="#">INÍCIO <span class="sr-only">(current)</span></a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#">PRANCHA</a>
+      </li>
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01"
+           data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">CADASTRO</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="#">SUJEITO</a>
+          <a class="dropdown-item" href="#">VERBO</a>
+          <a class="dropdown-item" href="#">COMPLEMENTO</a>
+        </div>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#">PACIENTES</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#">CONTATO</a>
+      </li>
+    
+    </ul>
+  </div>
+</nav>
+
+<!-- Conteúdo -->
+<main layout:fragment="conteudo"></main>
+
+<!-- Rodapé para incluir as dependências de JS -->
+<!-- TODO: Colocar em fragmento próprio -->
+<footer id="rodape">
+  <!-- Bootstrap JS -->
+  <script th:src="@{/js/jquery-3.2.1.js}" src="../../static/js/jquery-3.2.1.js"></script>
+  <script th:src="@{/js/bootstrap.bundle.js}"
+          src="../../static/js/bootstrap.bundle.js"></script>
+  
+  <!-- Font-Awesome Sólido -->
+  <script th:src="@{/js/fontawesome.js}" src="../../static/js/fontawesome.js"></script>
+  <script defer th:src="@{/js/fa-solid.js}" src="../../static/js/fa-solid.js"></script>
+  
+  <!-- JS Próprio -->
+  <th:block layout:fragment="rodape-scripts"></th:block>
+</footer>
+
+</body>
+
+</html>

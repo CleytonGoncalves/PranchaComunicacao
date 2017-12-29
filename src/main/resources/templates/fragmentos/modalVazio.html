@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="modal(modalId, modalTitulo)">
+
+<section th:id="${modalId}" class="modal fade static" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    
+    <div th:id="${modalId} + '-conteudo'" class="modal-content">
+      
+      <!-- Cabeçalho -->
+      <header class="modal-header">
+        <h5 th:text="${modalTitulo}" class="modal-title">(Título)</h5>
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      
+      </header>
+      
+      <!-- Conteúdo -->
+      <div layout:fragment="modal-conteudo">(Conteúdo)</div>
+    
+    </div>
+  
+  </div>
+</section>
+
+</body>
