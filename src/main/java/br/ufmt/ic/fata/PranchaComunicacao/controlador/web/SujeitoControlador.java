@@ -28,9 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/pastaSujeito") // URL raiz para todos os Requests deste controller
 @SessionAttributes("palavra1") // Garante o mesmo Model até completar a sessão (setComplete())
+@RequestMapping("/pastaSujeito") // URL raiz para todos os Requests deste controller
 public final class SujeitoControlador {
+    
+    private static final String PALAVRA_MODEL_NAME = "palavra1";
     
     private final PalavraServico<Sujeito> palavraServico;
     private final ArmazenamentoServico armazenamentoServico;
@@ -46,7 +48,7 @@ public final class SujeitoControlador {
     }
     
     @GetMapping
-    public String raiz(Model model) {
+    public String pegarRaiz(Model model) {
         model.addAttribute("armazenamentoServico", armazenamentoServico); // Para acessar as imagens
         
         return "pastaPalavra"; //View da raiz
@@ -59,20 +61,20 @@ public final class SujeitoControlador {
     
     @GetMapping("/novo")
     public String novoSujeito(Model model, SessionStatus status) {
-        status.setComplete();
-        model.addAttribute("palavra1", new Sujeito());
-        log.debug("NOVA PALAVRA ADICIONADA");
+        if (model.containsAttribute(PALAVRA_MODEL_NAME)) {
+            status.setComplete();
+        }
+    
+        model.addAttribute(PALAVRA_MODEL_NAME, new Sujeito());
         
         return "fragmentos/pastaSujeito :: modal-cadastro";
     }
     
     @PostMapping(value = "/salvar")
     public String salvarSujeito(@RequestParam("imagem") MultipartFile imagem,
-                                @Valid @ModelAttribute("palavra1") Sujeito sujeito,
+                                @Valid @ModelAttribute(PALAVRA_MODEL_NAME) Sujeito sujeito,
                                 BindingResult bR, Model model, RedirectAttributes ra,
                                 SessionStatus status) {
-        
-        log.debug("NOVA PALAVRA SENDO SALVA");
         
         if (sujeito.isNew() || ! imagem.isEmpty()) { // Novo sujeito ou já existente sem nova imagem
             String novaImagemNome = armazenamentoServico.gerarNomeUnico(imagem.getOriginalFilename());
@@ -99,17 +101,14 @@ public final class SujeitoControlador {
     public String pegarSujeito(@PathVariable(name = "id") long id, Model model) {
         Optional<Sujeito> optSujeito = palavraServico.buscarPorId(id);
         
-        log.debug("PALAVRA EXISTENTE SENDO PEGA");
-        
         if (! optSujeito.isPresent()) {
             //TODO: Erro ID não existe
             return "";
         }
-        
-        model.addAttribute("palavra1", optSujeito.get());
+    
+        model.addAttribute(PALAVRA_MODEL_NAME, optSujeito.get());
         
         return "fragmentos/pastaSujeito :: modal-cadastro";
     }
-    
     
 }
