@@ -1,3 +1,7 @@
+body {
+    text-transform: uppercase;
+}
+
 .fa-fw.fa-border {
     width: 1.58571429em;
 }
