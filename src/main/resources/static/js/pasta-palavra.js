@@ -1,3 +1,4 @@
+
 /* Pede pro servidor criar uma nova palavra, recebendo o modal  */
 $("#botao-novo-cadastro").click(function (e) {
     e.preventDefault();
@@ -41,6 +42,11 @@ function adicionarModalListeners() {
     /* Listener para habilitar pré-visualização ao selecionar imagem */
     $("#input-imagem-real").change(function () {
         carregarImagemPreview(this);
+    });
+
+    /* Repassa o click no botão falso de seleção de imagem para o botão real */
+    $("#input-imagem-exibido").click(function (e) {
+        $('#input-imagem-real').click()
     });
 }
 
