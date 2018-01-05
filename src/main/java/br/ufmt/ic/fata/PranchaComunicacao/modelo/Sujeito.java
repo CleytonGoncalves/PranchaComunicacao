@@ -1,5 +1,7 @@
 package br.ufmt.ic.fata.PranchaComunicacao.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class Sujeito extends Palavra {
     @NotBlank
     private String pronome;
     
+    @JsonIgnore
     @ManyToMany(mappedBy = "sujeitos")
     private List<Paciente> pacientes;
     

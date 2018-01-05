@@ -17,12 +17,10 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Palavra extends EntidadeBase {
     
-    //TODO: Adicionar "outro tipo" de palavra com campos dinâmicos (para suportar alfabeto,
-    // teclado, etc);
     @NotBlank
     private String palavra;
     
-    @NotBlank
+    // Não deve conter anotação NotBlank devido a imagem ser validada separadamente
     private String url;
     
 }

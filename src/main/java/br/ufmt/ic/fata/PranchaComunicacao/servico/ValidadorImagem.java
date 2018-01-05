@@ -12,8 +12,7 @@ public class ValidadorImagem implements Validator {
     
     @Override
     public boolean supports(Class<?> clazz) {
-        //NOOP
-        return false;
+        return MultipartFile.class.isAssignableFrom(clazz);
     }
     
     @Override
@@ -37,4 +36,5 @@ public class ValidadorImagem implements Validator {
         
         return false;
     }
+    
 }
