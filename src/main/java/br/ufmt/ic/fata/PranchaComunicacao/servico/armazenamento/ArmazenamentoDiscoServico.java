@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 import javax.validation.constraints.NotNull;
 
+import br.ufmt.ic.fata.PranchaComunicacao.excecao.ArmazenamentoException;
 import br.ufmt.ic.fata.PranchaComunicacao.util.NomeArquivoUtil;
 
 @Service("ArmazenamentoServico")

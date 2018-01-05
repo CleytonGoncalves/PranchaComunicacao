@@ -1,5 +1,9 @@
-package br.ufmt.ic.fata.PranchaComunicacao.servico.armazenamento;
+package br.ufmt.ic.fata.PranchaComunicacao.excecao;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "Arquivo inválido")
 public class ArmazenamentoException extends RuntimeException {
     
     public ArmazenamentoException(String mensagem) {
