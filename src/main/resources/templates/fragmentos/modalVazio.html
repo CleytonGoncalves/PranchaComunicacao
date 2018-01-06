@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<body layout:fragment="modal(modalId, modalTitulo)">
+<body layout:fragment="modal-frag(modalId, modalTitulo)">
 
 <section th:id="${modalId}" class="modal fade static" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -18,9 +18,9 @@
         </button>
       
       </header>
-      
-      <!-- Conteúdo -->
-      <div layout:fragment="modal-conteudo">(Conteúdo)</div>
+  
+      <!-- Conteúdo - Deve ser substituido pelo conteúdo desejado -->
+      <div id="modal-conteudo" layout:fragment="modal-conteudo-frag"></div>
     
     </div>
   

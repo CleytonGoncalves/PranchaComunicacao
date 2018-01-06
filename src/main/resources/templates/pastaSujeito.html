@@ -1,19 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/pastaPalavra">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Sujeitos</title>
+</head>
 
 <body>
 
-<!-- Modal de cadastro -->
-<!-- Insere o Modal, substituindo o ID e Título; e o Conteúdo pelo Form -->
-<div th:assert="${palavra1}" th:fragment="modal-cadastro" th:remove="tag"
-     layout:include="fragmentos/modalVazio :: modal(modalId='modal-cadastro', modalTitulo='CADASTRO DE SUJEITO')"
->
+<main>
+  <!-- Modal de cadastro -->
+  <!-- Substitui o div pelo fragmento de modal, alterando o ID e Título -->
+  <div layout:fragment="modal-cadastro-frag"
+       layout:replace="fragmentos/modalVazio :: modal-frag(modalId='modal-cadastro', modalTitulo='CADASTRO DE SUJEITO')"></div>
   
-  <!-- Conteúdo do Modal -->
-  <form layout:fragment="modal-conteudo" id="form-cadastro" th:action="@{/pastaSujeito/salvar}"
-        th:object="${palavra1}"
-        method="post" enctype="multipart/form-data">
+  <!-- Conteúdo do Modal, para ser inserido DINAMICAMENTE (não aparece na página quando instanciado) -->
+  <form th:fragment="form-cadastro" id="form-cadastro" th:assert="${palavra1}"
+        th:action="@{/pastaSujeito/salvar}"
+        th:object="${palavra1}" method="post" enctype="multipart/form-data">
     
     <div class="modal-body">
       <div class="container">
@@ -23,7 +28,7 @@
           <fieldset class="col-md-3 form-group">
             <img class="img-thumbnail d-block mx-auto" id="imagem-palavra" height="150" width="150"
                  th:src="*{id != null} ? @{*{url}} : @{images/placeholder.jpg}"
-                 src="../../static/images/placeholder.jpg">
+                 src="../static/images/placeholder.jpg">
             
             <div id="grupo-input-imagem" class="mt-3">
               <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
@@ -109,46 +114,48 @@
     </div>
   
   </form>
-
-</div>
-
-<!-- Tabela de sujeito -->
-<table th:fragment="tabela-palavras" id="tabela-palavras"
-       class="table table-hover rtable table-sm table-bordered table-striped">
   
-  <thead>
-  <tr>
-    <th scope="col" class="text-center">Imagem</th>
-    <th scope="col">Sujeito</th>
-    <th scope="col">Pessoa</th>
-    <th scope="col">Sexo</th>
-    <th scope="col" class="text-center">Editar</th>
-  </tr>
-  </thead>
+  <!-- Tabela de sujeito -->
+  <!-- TODO: Implementar DataTable na tabela -->
+  <table layout:fragment="tabela-palavra-frag" id="tabela-palavras"
+         class="table table-hover rtable table-sm table-bordered table-striped">
+    
+    <thead>
+    <tr>
+      <th scope="col" class="text-center">Imagem</th>
+      <th scope="col">Sujeito</th>
+      <th scope="col">Pessoa</th>
+      <th scope="col">Sexo</th>
+      <th scope="col" class="text-center">Editar</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <tr th:each="sujeito : ${listaPalavra}">
+      
+      <td class="text-center">
+        <img class="img-thumbnail img-fluid d-block mx-auto"
+             th:src="@{${sujeito.url}}"
+             src="../static/images/placeholder.jpg" width="60">
+      </td>
+      
+      <td class="align-middle" th:text="${sujeito.palavra}">(Enfermeira)</td>
+      <td class="align-middle" th:text="${sujeito.pronome}">(Eu)</td>
+      <td class="align-middle" th:text="${sujeito.sexo}">(Feminino)</td>
+      
+      <td class="align-middle text-center">
+        <button th:id="${sujeito.id}" type="button" class="btn btn-link botao-editar-cadastro">
+          <i class="fas fa-edit fa-lg fa-fw"></i>
+        </button>
+      </td>
+    
+    </tr>
+    </tbody>
   
-  <tbody>
-  <tr th:each="sujeito : ${listaPalavra}">
-    
-    <td class="text-center">
-      <img class="img-thumbnail img-fluid d-block mx-auto"
-           th:src="@{${sujeito.url}}"
-           src="../../static/images/placeholder.jpg" width="60">
-    </td>
-    
-    <td class="align-middle" th:text="${sujeito.palavra}">(Enfermeira)</td>
-    <td class="align-middle" th:text="${sujeito.pronome}">(Eu)</td>
-    <td class="align-middle" th:text="${sujeito.sexo}">(Feminino)</td>
-    
-    <td class="align-middle text-center">
-      <button th:id="${sujeito.id}" type="button" class="btn btn-link botao-editar-cadastro">
-        <i class="fas fa-edit fa-lg fa-fw"></i>
-      </button>
-    </td>
-  
-  </tr>
-  </tbody>
+  </table>
 
-</table>
+</main>
+
 
 </body>
 </html>

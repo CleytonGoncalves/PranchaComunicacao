@@ -32,9 +32,11 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @SessionAttributes("palavra1") // Garante o mesmo Model até completar a sessão (setComplete())
 @RequestMapping("/pastaSujeito") // URL raiz para todos os Requests deste controller
-public final class SujeitoControlador {
+public class SujeitoControlador {
     
-    private static final String PALAVRA_MODEL_NAME = "palavra1";
+    private static final String PALAVRA_MODEL = "palavra1";
+    
+    private static final String PALAVRA_CADASTRO_VIEW = "pastaSujeito :: form-cadastro";
     
     private final PalavraServico<Sujeito> palavraServico;
     
@@ -45,7 +47,7 @@ public final class SujeitoControlador {
     
     @GetMapping
     public String pegarRaiz() {
-        return "pastaPalavra"; // View inicial
+        return "pastaSujeito"; // View inicial
     }
     
     @ModelAttribute("listaPalavra")
@@ -60,13 +62,13 @@ public final class SujeitoControlador {
      */
     @GetMapping("/novo")
     public String novoSujeito(Model model, SessionStatus status) {
-        if (model.containsAttribute(PALAVRA_MODEL_NAME)) {
+        if (model.containsAttribute(PALAVRA_MODEL)) {
             status.setComplete();
         }
-        
-        model.addAttribute(PALAVRA_MODEL_NAME, new Sujeito());
-        
-        return "fragmentos/pastaSujeito :: modal-cadastro";
+    
+        model.addAttribute(PALAVRA_MODEL, new Sujeito());
+    
+        return PALAVRA_CADASTRO_VIEW;
     }
     
     /**
@@ -83,9 +85,9 @@ public final class SujeitoControlador {
             throw new PalavraNaoEncontradaException("ID pedido: " + id);
         }
     
-        model.addAttribute(PALAVRA_MODEL_NAME, optSujeito.get());
+        model.addAttribute(PALAVRA_MODEL, optSujeito.get());
     
-        return "fragmentos/pastaSujeito :: modal-cadastro"; // Modal preenchido com o sujeito pedido
+        return PALAVRA_CADASTRO_VIEW; // Modal preenchido com o sujeito pedido
     }
     
     /**
@@ -96,7 +98,7 @@ public final class SujeitoControlador {
     @PostMapping(value = "/salvar")
     @ResponseStatus(HttpStatus.OK)
     public void salvarSujeito(@RequestParam("imagem") MultipartFile imagem,
-                              @Valid @ModelAttribute(PALAVRA_MODEL_NAME) Sujeito sujeito,
+                              @Valid @ModelAttribute(PALAVRA_MODEL) Sujeito sujeito,
                               BindingResult br, SessionStatus status) {
         
         if (sujeito.isNew() || ! imagem.isEmpty()) { // Novo sujeito, ou já existente com nova
@@ -109,7 +111,7 @@ public final class SujeitoControlador {
             // O Front-end é responsável por validar tudo antes de enviar. Só deve ocorrer caso
             // a validação front-end não seja realizada, ou erro grave inesperado
             FieldError erro = br.getFieldError();
-            throw new FormUploadException("Sujeito " + erro.getField() + ": " + erro.getDefaultMessage());
+            throw new FormUploadException("Palavra " + erro.getField() + ": " + erro.getDefaultMessage());
         }
         
         palavraServico.salvar(sujeito);

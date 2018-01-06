@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/template">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE"></title>
+  <link th:href="@{/css/pasta-palavra.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- Conteúdo -->
+<main layout:fragment="conteudo-frag" class="container-fluid">
+  
+  <button type="button" id="botao-novo-cadastro" class="btn btn-info mb-3">NOVO</button>
+  
+  <!-- Placeholder do Modal de cadastro de palavra -->
+  <div layout:fragment="modal-cadastro-frag"></div>
+  
+  <!-- Placeholder da Tabela de palavras cadastradas -->
+  <div layout:fragment="tabela-palavra-frag"></div>
+
+</main>
+
+<footer>
+  <!-- Adiciona o JS no rodapé definido no Template -->
+  <script layout:fragment="rodape-scripts-frag" th:src="@{/js/pasta-palavra.js}"></script>
+</footer>
+
+</body>
+</html>

@@ -15,7 +15,7 @@ function clickNovoCadastro(e) {
         url: window.location + "/novo",
         cache: false
     })
-        .done(adicionarModal)
+        .done(adicionarFormulario)
         .fail(function () {
             alert("Falha ao criar novo cadastro.");
         });
@@ -30,14 +30,16 @@ function clickEditarCadastro(e) {
         url: window.location + "/" + palavraId,
         cache: false
     })
-        .done(adicionarModal)
+        .done(adicionarFormulario)
         .fail(function () {
             alert("Falha ao editar o cadastro.");
         });
 }
 
-function adicionarModal(novoModalHtml) {
-    substituirFragmento($("#modal-cadastro-container"), $("#modal-cadastro"), novoModalHtml);
+function adicionarFormulario(novoFormHtml) {
+    var paiDoForm = $("#modal-conteudo");
+    var form = $("#form-cadastro");
+    substituirFragmento(paiDoForm, form, novoFormHtml);
 
     $('#modal-cadastro').modal('show'); // Exibe o modal
 
@@ -106,7 +108,6 @@ function onEnviarForm(e) {
         enctype: 'multipart/form-data',
         processData: false,
         contentType: false,
-        async: false,
         cache: false
     })
         .done(function () {
