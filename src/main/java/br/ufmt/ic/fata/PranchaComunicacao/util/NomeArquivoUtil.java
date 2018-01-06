@@ -22,7 +22,7 @@ public final class NomeArquivoUtil {
         // Para não sobrescrever arquivos de nome igual
         int sufixo = 1;
         while (Files.exists(local.resolve(novoNome), LinkOption.NOFOLLOW_LINKS)) {
-            novoNome = (nomeSimples + sufixo) + extensao;
+            novoNome = (nomeSimples + sufixo) + "." + extensao;
             sufixo++;
         }
         
