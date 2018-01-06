@@ -15,10 +15,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
-import javax.validation.constraints.NotNull;
-
-import br.ufmt.ic.fata.PranchaComunicacao.excecao.ArmazenamentoException;
 import br.ufmt.ic.fata.PranchaComunicacao.util.NomeArquivoUtil;
+import br.ufmt.ic.fata.PranchaComunicacao.util.excecao.ArmazenamentoException;
 
 @Service("ArmazenamentoServico")
 public class ArmazenamentoDiscoServico implements ArmazenamentoServico {
@@ -33,11 +31,12 @@ public class ArmazenamentoDiscoServico implements ArmazenamentoServico {
     
     @Override
     public void salvar(MultipartFile arquivo) {
-        this.salvar(arquivo, arquivo.getOriginalFilename());
+        this.salvar(arquivo, NomeArquivoUtil.transformarEmNomeValido(arquivo.getOriginalFilename
+                                                                                     ()));
     }
     
     @Override
-    public void salvar(MultipartFile arquivo, @NotNull String nomeArquivo) {
+    public void salvar(MultipartFile arquivo, String nomeArquivo) {
         try {
             if (nomeArquivo == null || nomeArquivo.isEmpty()) {
                 throw new ArmazenamentoException("Nome do arquivo inválido: " + nomeArquivo);
