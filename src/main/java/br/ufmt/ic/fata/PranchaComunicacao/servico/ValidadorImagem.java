@@ -8,7 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ValidadorImagem implements Validator {
     
-    private final String[] tiposValidos = {"image/jpg", "image/jpeg", "image/png", "image/gif"};
+    private static final String[] tiposValidos = {"image/jpg", "image/jpeg", "image/png",
+                                                  "image/gif"};
     
     @Override
     public boolean supports(Class<?> clazz) {

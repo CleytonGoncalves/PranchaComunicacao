@@ -26,7 +26,7 @@ public abstract class EntidadeBase implements Persistable<Long> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(AccessLevel.PROTECTED) // Mantém o setId() protected
+    @Setter(AccessLevel.PROTECTED) // Só subclasses podem mudar o ID
     protected Long id;
     
     /* Usado para comparação (equals/hashcode) */

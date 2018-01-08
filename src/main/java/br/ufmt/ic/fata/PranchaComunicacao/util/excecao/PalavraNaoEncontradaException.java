@@ -1,4 +1,4 @@
-package br.ufmt.ic.fata.PranchaComunicacao.excecao;
+package br.ufmt.ic.fata.PranchaComunicacao.util.excecao;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
