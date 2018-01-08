@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/pastaPalavra">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Verbos</title>
+</head>
+
+<body>
+
+<main>
+  <!-- Modal de cadastro -->
+  <!-- Substitui o div pelo fragmento de modal, alterando o ID e Título -->
+  <div layout:fragment="modal-cadastro-frag"
+       layout:replace="fragmentos/modalVazio :: modal-frag(modalId='modal-cadastro', modalTitulo='CADASTRO DE VERBO')"></div>
+  
+  <!-- Conteúdo do Modal, para ser inserido DINAMICAMENTE (não aparece na página quando instanciado) -->
+  <form th:fragment="form-cadastro" id="form-cadastro" th:assert="${palavra1}"
+        th:object="${palavra1}"
+        th:action="@{/pastaSujeito/salvar}" method="post" enctype="multipart/form-data">
+    
+    <div class="modal-body">
+      <div class="container">
+        <div class="row align-items-center">
+          
+          <!-- Lado esquerdo (Imagem) -->
+          <fieldset class="col-md-3 form-group">
+            <img class="img-thumbnail d-block mx-auto" id="imagem-palavra" height="150" width="150"
+                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.jpg}"
+                 src="../static/images/placeholder.jpg">
+            
+            <div id="grupo-input-imagem" class="mt-3">
+              <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
+              <input id="input-imagem-real" name="imagem" type="file" th:required="*{id == null}"
+                     accept="image/png, image/jpeg, image/jpg, image/gif"/>
+              
+              <!-- Botão falso que delega para outro botão invísivel (onclick) -->
+              <input id="input-imagem-exibido" class="btn btn-block btn-info" type="button"
+                     value="SELECIONAR"/>
+            </div>
+          
+          </fieldset>
+          
+          <!-- Lado direito (Campos) -->
+          <fieldset class="col-md-8 form-group">
+            
+            <!-- Entrada Palavra-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label font-weight-bold"
+                     for="input-palavra">PALAVRA</label>
+              <div class="col-md-6">
+                <input class="form-control input-md" id="input-palavra" name="input-palavra"
+                       required="" type="text" th:field="*{palavra}"/>
+              </div>
+            </div>
+            
+            <!-- Radio Sexo -->
+            <div class="form-group row">
+              <label class="col-md-2 control-label font-weight-bold">SEXO</label>
+              
+              <div class="col-md-8">
+                <input id="grupo-sexo-0" name="grupo-sexo" type="radio" value="M" th:field="*{sexo}"
+                       required=""/>
+                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-0">
+                  MASCULINO
+                </label>
+                
+                <input id="grupo-sexo-1" name="grupo-sexo" type="radio" value="F" th:field="*{sexo}"
+                       required=""/>
+                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-1">
+                  FEMININO
+                </label>
+              
+              </div>
+            </div>
+            
+            <!-- Radio Pronome -->
+            <div class="form-group row">
+              <label class="col-md-2 control-label font-weight-bold">PRONOME</label>
+              
+              <div class="col-md-6">
+                <label class="radio-inline form-check form-check-inline" for="grupo-pronome-0">
+                  <input checked="" id="grupo-pronome-0" name="grupo-pronome" type="radio"
+                         value="EU" th:field="*{pronome}" required=""/>
+                  EU
+                </label>
+                
+                <label class="radio-inline form-check form-check-inline" for="grupo-pronome-1">
+                  <input id="grupo-pronome-1" name="grupo-pronome" type="radio" value="VOCÊ"
+                         th:field="*{pronome}" required=""/>
+                  VOCÊ
+                </label>
+                
+                <label class="radio-inline form-check form-check-inline" for="grupo-pronome-2">
+                  <input id="grupo-pronome-2" name="grupo-pronome" type="radio" value="NÓS"
+                         th:field="*{pronome}" required=""/>
+                  NÓS
+                </label>
+              
+              </div>
+            </div>
+          
+          </fieldset>
+        
+        </div>
+      </div>
+    
+    </div>
+    
+    <div class="modal-footer">
+      <button type="reset" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+      <button id="botao-enviar-form" type="submit" class="btn btn-primary">SALVAR</button>
+    </div>
+  
+  </form>
+  
+  <!-- Tabela de sujeito -->
+  <!-- TODO: Implementar DataTable na tabela -->
+  <table layout:fragment="tabela-palavra-frag" id="tabela-palavras"
+         class="table table-hover rtable table-sm table-bordered table-striped">
+    
+    <thead>
+    <tr>
+      <th scope="col" class="text-center">Imagem</th>
+      <th scope="col">Verbo</th>
+      <th scope="col">Eu - Presente</th>
+      <th scope="col">Nós - Presente</th>
+      <th scope="col">Você - Presente</th>
+      <th scope="col" class="text-center">Editar</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <tr th:each="sujeito : ${listaPalavra}">
+      <!-- TODO: Editar linhas da tabela para Verbos -->
+      
+      <td class="text-center">
+        <img class="img-thumbnail img-fluid d-block mx-auto"
+             th:src="@{${sujeito.url}}" src="../static/images/placeholder.jpg" width="60">
+      </td>
+      
+      <td class="align-middle" th:text="${sujeito.palavra}">(Enfermeira)</td>
+      <td class="align-middle" th:text="${sujeito.pronome}">(Eu)</td>
+      <td class="align-middle" th:text="${sujeito.sexo}">(Feminino)</td>
+      
+      <td class="align-middle text-center">
+        <button th:id="${sujeito.id}" type="button" class="btn btn-link botao-editar-cadastro">
+          <i class="fas fa-edit fa-lg fa-fw"></i>
+        </button>
+      </td>
+    
+    </tr>
+    </tbody>
+  
+  </table>
+
+</main>
+
+
+</body>
+</html>
