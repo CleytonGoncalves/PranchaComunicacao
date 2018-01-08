@@ -15,33 +15,33 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Verbo extends Palavra {
     
-    //TODO: Refatorar esses campos da pessoa gramatical com tempo
+    //TODO: Criar ENUM com Eu/Você/Nós e associar o tempo ao enum em um mapa
     @NotBlank
-    private String presentePrimeiraPessoa;
+    private String presenteEu;
     
     @NotBlank
-    private String presenteSegundaPessoa;
+    private String presenteVoce;
     
     @NotBlank
-    private String presenteTerceiraPessoa;
+    private String presenteNos;
     
     @NotBlank
-    private String passadoPrimeiraPessoa;
+    private String passadoEu;
     
     @NotBlank
-    private String passadoSegundaPessoa;
+    private String passadoVoce;
     
     @NotBlank
-    private String passadoTerceiraPessoa;
+    private String passadoNos;
     
     @NotBlank
-    private String futuroPrimeiraPessoa;
+    private String futuroEu;
     
     @NotBlank
-    private String futuroSegundaPessoa;
+    private String futuroVoce;
     
     @NotBlank
-    private String futuroTerceiraPessoa;
+    private String futuroNos;
     
     @ManyToMany(mappedBy = "verbos")
     private List<Paciente> pacientes;
