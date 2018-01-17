@@ -1,4 +1,4 @@
-package br.ufmt.ic.fata.PranchaComunicacao.modelo;
+package br.ufmt.ic.fata.PranchaComunicacao.modelo.base;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

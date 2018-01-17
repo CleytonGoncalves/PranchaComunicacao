@@ -3,12 +3,11 @@ package br.ufmt.ic.fata.PranchaComunicacao.servico.palavra;
 import org.springframework.validation.Errors;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 import br.ufmt.ic.fata.PranchaComunicacao.modelo.Palavra;
 import br.ufmt.ic.fata.PranchaComunicacao.repositorio.PalavraRepositorio;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.ValidadorImagem;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.armazenamento.ArmazenamentoServico;
+import br.ufmt.ic.fata.PranchaComunicacao.servico.base.ServicoBase;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -18,23 +17,23 @@ import lombok.extern.slf4j.Slf4j;
  * @param <T> Subclasse de palavra
  */
 @Slf4j
-public abstract class PalavraServico<T extends Palavra> {
+public abstract class PalavraServico<T extends Palavra> extends ServicoBase<T> {
     
     private final ArmazenamentoServico armazenamentoServico;
     
     private final ValidadorImagem validadorImagem;
     
-    private final PalavraRepositorio<T> palavraRepositorio;
+    protected abstract PalavraRepositorio<T> getRepositorio();
     
-    PalavraServico(PalavraRepositorio<T> pr, ArmazenamentoServico as, ValidadorImagem vi) {
-        this.palavraRepositorio = pr;
+    PalavraServico(ArmazenamentoServico as, ValidadorImagem vi) {
         this.armazenamentoServico = as;
         this.validadorImagem = vi;
     }
     
+    @Override
     public void salvar(T palavra) {
         logPalavraSalva(palavra);
-        palavraRepositorio.save(palavra);
+        super.salvar(palavra);
     }
     
     public String salvarImagem(MultipartFile imagem, Errors erros) {
@@ -48,18 +47,6 @@ public abstract class PalavraServico<T extends Palavra> {
         
         armazenamentoServico.salvar(imagem, novaImagemNome);
         return novaImagemNome;
-    }
-    
-    public void remover(T palavra) {
-        palavraRepositorio.delete(palavra);
-    }
-    
-    public T buscarPorId(Long id) {
-        return palavraRepositorio.findOne(id);
-    }
-    
-    public List<T> buscarTodos() {
-        return palavraRepositorio.findAll();
     }
     
     /*  Métodos Auxiliares */

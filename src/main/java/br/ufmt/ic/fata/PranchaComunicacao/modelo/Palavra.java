@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import br.ufmt.ic.fata.PranchaComunicacao.modelo.base.EntidadeBase;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import br.ufmt.ic.fata.PranchaComunicacao.modelo.base.EntidadeBase;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +24,12 @@ public class Paciente extends EntidadeBase {
     
     @NotBlank
     private String nome;
-    private String dataNasc;
+    
+    private String dataNascimento;
+    
     private String sexo;
-    private String fotoUrl;
+    
+    private String imagemUrl;
     
     @Column(nullable = false)
     @ColumnDefault("50")
