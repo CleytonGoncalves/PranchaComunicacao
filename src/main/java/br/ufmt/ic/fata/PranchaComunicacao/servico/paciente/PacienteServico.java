@@ -1,14 +1,14 @@
-package br.ufmt.ic.fata.PranchaComunicacao.servico;
+package br.ufmt.ic.fata.PranchaComunicacao.servico.paciente;
 
 import org.springframework.stereotype.Service;
 
 import br.ufmt.ic.fata.PranchaComunicacao.modelo.Paciente;
 import br.ufmt.ic.fata.PranchaComunicacao.repositorio.PacienteRepositorio;
 import br.ufmt.ic.fata.PranchaComunicacao.repositorio.base.RepositorioBase;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.base.ServicoBase;
+import br.ufmt.ic.fata.PranchaComunicacao.servico.base.ServicoCrudBase;
 
 @Service
-public class PacienteServico extends ServicoBase<Paciente> {
+public class PacienteServico extends ServicoCrudBase<Paciente> {
     
     private final PacienteRepositorio repositorio;
     

@@ -5,7 +5,7 @@ import java.util.List;
 import br.ufmt.ic.fata.PranchaComunicacao.modelo.base.EntidadeBase;
 import br.ufmt.ic.fata.PranchaComunicacao.repositorio.base.RepositorioBase;
 
-public abstract class ServicoBase<T extends EntidadeBase> {
+public abstract class ServicoCrudBase<T extends EntidadeBase> {
     
     protected abstract RepositorioBase<T> getRepositorio();
     

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 import br.ufmt.ic.fata.PranchaComunicacao.modelo.Paciente;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.PacienteServico;
+import br.ufmt.ic.fata.PranchaComunicacao.servico.paciente.PacienteServico;
 
 @Controller
 @RequestMapping("/pastaPaciente")

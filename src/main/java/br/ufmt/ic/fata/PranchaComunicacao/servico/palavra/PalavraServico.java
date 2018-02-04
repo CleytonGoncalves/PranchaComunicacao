@@ -7,7 +7,7 @@ import br.ufmt.ic.fata.PranchaComunicacao.modelo.Palavra;
 import br.ufmt.ic.fata.PranchaComunicacao.repositorio.PalavraRepositorio;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.ValidadorImagem;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.armazenamento.ArmazenamentoServico;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.base.ServicoBase;
+import br.ufmt.ic.fata.PranchaComunicacao.servico.base.ServicoCrudBase;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * @param <T> Subclasse de palavra
  */
 @Slf4j
-public abstract class PalavraServico<T extends Palavra> extends ServicoBase<T> {
+public abstract class PalavraServico<T extends Palavra> extends ServicoCrudBase<T> {
     
     private final ArmazenamentoServico armazenamentoServico;
     
