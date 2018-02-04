@@ -1,13 +1,11 @@
 package br.ufmt.ic.fata.PranchaComunicacao.modelo;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -25,39 +23,39 @@ public class Paciente extends EntidadeBase {
     @NotBlank
     private String nome;
     
-    private String dataNascimento;
+    private LocalDate dataNascimento;
     
     private String sexo;
     
     private String imagemUrl;
     
-    @Column(nullable = false)
-    @ColumnDefault("50")
-    private int velocidadeVoz;
+    /* Inicializados com valor padrão */
     
-    @Column(nullable = false)
-    @ColumnDefault("50")
-    private int velocidadeSelecao;
+    private int velocidadeVoz = 50;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private int velocidadeSelecao = 50;
+    
+    /* Por que Set? https://thoughts-on-java.org/association-mappings-bag-list-set */
+    
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "paciente_pasta_sujeito",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "sujeito_id"))
     private Set<Sujeito> sujeitos;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "paciente_pasta_verbo",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "verbo_id"))
     private Set<Verbo> verbos;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "paciente_pasta_complemento",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "complemento_id"))
     private Set<Complemento> complementos;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "paciente_pasta_diverso",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "diverso_id"))
