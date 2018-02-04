@@ -1,24 +1,24 @@
-package br.ufmt.ic.fata.PranchaComunicacao.controlador.web;
+package br.ufmt.ic.fata.PranchaComunicacao.controlador.web.palavra;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import br.ufmt.ic.fata.PranchaComunicacao.modelo.Diverso;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.DiversoServico;
+import br.ufmt.ic.fata.PranchaComunicacao.modelo.Sujeito;
+import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.SujeitoServico;
 
 @Controller
 @SessionAttributes("palavra1") // Garante o mesmo Model até completar a sessão (setComplete())
-@RequestMapping("/pastaDiverso") // URL raiz para todos os Requests deste controller
-public class DiversoControlador extends PalavraControladorAbstrato<Diverso> {
+@RequestMapping("/pastaSujeito") // URL raiz para todos os Requests deste controller
+public class SujeitoControlador extends PalavraControladorAbstrato<Sujeito> {
     
     /* Nome das páginas HTML (Views) */
-    private static final String PAGINA_INICIAL = "pastaDiverso";
-    private static final String FRAGMENTO_CADASTRO = "pastaDiverso :: form-cadastro";
+    private static final String PAGINA_INICIAL = "pastaSujeito";
+    private static final String FRAGMENTO_CADASTRO = "pastaSujeito :: form-cadastro";
     
     @Autowired
-    public DiversoControlador(DiversoServico servico) {
+    public SujeitoControlador(SujeitoServico servico) {
         super(servico);
     }
     
@@ -33,8 +33,8 @@ public class DiversoControlador extends PalavraControladorAbstrato<Diverso> {
     }
     
     @Override
-    Diverso novaInstanciaPalavra() {
-        return new Diverso();
+    Sujeito novaInstanciaPalavra() {
+        return new Sujeito();
     }
     
 }

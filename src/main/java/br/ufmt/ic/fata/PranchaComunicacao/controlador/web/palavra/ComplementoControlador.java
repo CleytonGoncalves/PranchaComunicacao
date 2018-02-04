@@ -1,4 +1,4 @@
-package br.ufmt.ic.fata.PranchaComunicacao.controlador.web;
+package br.ufmt.ic.fata.PranchaComunicacao.controlador.web.palavra;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

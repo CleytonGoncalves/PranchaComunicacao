@@ -1,4 +1,4 @@
-package br.ufmt.ic.fata.PranchaComunicacao.controlador.web;
+package br.ufmt.ic.fata.PranchaComunicacao.controlador.web.palavra;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
