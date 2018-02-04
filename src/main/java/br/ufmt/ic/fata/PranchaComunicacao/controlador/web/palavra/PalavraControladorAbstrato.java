@@ -24,10 +24,10 @@ import br.ufmt.ic.fata.PranchaComunicacao.util.excecao.FormUploadException;
 public abstract class PalavraControladorAbstrato<T extends Palavra> {
     
     /* Identificador da palavra no template HTML */
-    private static final String PALAVRA_MODEL = "palavra1";
+    static final String PALAVRA_MODEL = "palavra1";
     
     /* Serviço da Palavra */
-    final PalavraServico<T> palavraServico;
+    private final PalavraServico<T> palavraServico;
     
     PalavraControladorAbstrato(PalavraServico<T> ps) {
         this.palavraServico = ps;

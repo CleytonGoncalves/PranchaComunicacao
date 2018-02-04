@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import br.ufmt.ic.fata.PranchaComunicacao.modelo.Diverso;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.DiversoServico;
 
+import static br.ufmt.ic.fata.PranchaComunicacao.controlador.web.palavra
+                      .PalavraControladorAbstrato.PALAVRA_MODEL;
+
 @Controller
-@SessionAttributes("palavra1") // Garante o mesmo Model até completar a sessão (setComplete())
+@SessionAttributes(PALAVRA_MODEL) // Garante o mesmo Model até completar a sessão (setComplete())
 @RequestMapping("/pastaDiverso") // URL raiz para todos os Requests deste controller
 public class DiversoControlador extends PalavraControladorAbstrato<Diverso> {
     
