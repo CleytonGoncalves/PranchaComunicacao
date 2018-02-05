@@ -13,7 +13,8 @@ import br.ufmt.ic.fata.PranchaComunicacao.modelo.Paciente;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.prancha.PranchaServico;
 
 @Controller
-@SessionAttributes("paciente1") // Garante o mesmo Model até completar a sessão (setComplete())
+@SessionAttributes({"pacienteId", "sujeitos", "verbos", "complementos", "diversos"})
+// Garante o mesmo Model até completar a sessão (setComplete())
 @RequestMapping("pranchaComunicacao")
 public class PranchaControlador {
     
@@ -22,7 +23,11 @@ public class PranchaControlador {
     private static final String PAGINA_INICIAL_COM_PACIENTE = "pranchaComunicacao";
     
     /* Identificador do Paciente no template HTML */
-    private static final String PACIENTE_MODEL = "paciente1";
+    private static final String PACIENTE_ID_MODEL = "pacienteId";
+    private static final String SUJEITOS_MODEL = "listaSujeito";
+    private static final String VERBOS_MODEL = "listaVerbo";
+    private static final String COMPLEMENTOS_MODEL = "listaComplemento";
+    private static final String DIVERSOS_MODEL = "listaDiverso";
     
     private final PranchaServico servico;
     
@@ -45,12 +50,16 @@ public class PranchaControlador {
         
         Paciente paciente = servico.getPacientePorId(id);
         if (paciente == null) { return getPaginaInicialSemPaciente(); }
-        
-        if (model.containsAttribute(PACIENTE_MODEL)) {
+    
+        if (model.containsAttribute(PACIENTE_ID_MODEL)) {
             status.setComplete();
         }
-        
-        model.addAttribute(PACIENTE_MODEL, paciente);
+    
+        model.addAttribute(PACIENTE_ID_MODEL, id);
+        model.addAttribute(SUJEITOS_MODEL, paciente.getSujeitos());
+        model.addAttribute(VERBOS_MODEL, paciente.getVerbos());
+        model.addAttribute(COMPLEMENTOS_MODEL, paciente.getComplementos());
+        model.addAttribute(DIVERSOS_MODEL, paciente.getDiversos());
         
         return PAGINA_INICIAL_COM_PACIENTE;
     }

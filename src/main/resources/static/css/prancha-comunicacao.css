@@ -1,0 +1,62 @@
+.container-prancha {
+    flex-direction: column;
+    display: flex;
+}
+
+.container-grupo {
+    display: flex;
+    background: #DDD;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.container-grupo .btn {
+    margin: 3px;
+    padding: 0.1rem;
+}
+
+.item-nao-selecionado {
+    background-color: #fff;
+    border-color: #ddd;
+}
+
+.container-prancha h5 {
+    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
+}
+
+.painel-acao .btn {
+    width: 150px;
+    height: 110px;
+    white-space: initial;
+}
+
+.painel-exibicao-frase {
+    display: none;
+!important;
+}
+
+.painel-sujeito {
+}
+
+.painel-verbo {
+    display: none;
+!important;
+}
+
+.painel-complemento {
+    display: none;
+!important;
+}
+
+.painel-diverso {
+}
+
+.painel-acao {
+    display: none;
+!important;
+}

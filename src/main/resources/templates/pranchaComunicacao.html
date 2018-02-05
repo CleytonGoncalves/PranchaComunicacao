@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/template">
+
+<head>
+  <title>Prancha de Comunicação</title>
+  
+  <link th:href="@{/css/prancha-comunicacao.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<main layout:fragment="conteudo-frag" class="container-fluid">
+  
+  <div class="container-prancha" th:assert="${pacienteId}">
+    
+    <!-- TODO: Corrigir exibição da imagem, e criar script de seleção de palavras e montagem de frases -->
+    
+    <!-- Painel de Exibição de Frase -->
+    <section class="container-grupo painel-exibicao-frase">
+      
+      <div class="btn item-nao-selecionado">
+        <img src="/images/placeholder.png" height="170" width="170">
+        <h5>Eu</h5>
+      </div>
+    
+    </section>
+    
+    <!-- Painéis Inferiores -->
+    <section id="painel-inferior">
+      
+      <!-- Painel de Seleção de Palavra -->
+      <h5 class="painel-sujeito">SUJEITOS</h5>
+      <section class="container-grupo painel-sujeito">
+        
+        <div th:each="sujeito : ${listaSujeito}" class="btn item-nao-selecionado">
+          <img height="150" width="150" src="/images/placeholder.png">
+          <h5 th:text="${sujeito.palavra}">(Palavra)</h5>
+        </div>
+        
+        <br>
+        <div id="botao-anterior-sujeito" class="btn item-nao-selecionado botao-voltar-anterior">
+          <i class="fas fa-arrow-up fa-2x"></i>
+          <h5>VOLTAR AO ANTERIOR</h5>
+        </div>
+      
+      </section>
+      
+      <h5 class="painel-verbo">VERBOS</h5>
+      <section class="container-grupo painel-verbo">
+        
+        <div class="btn item-nao-selecionado">
+          <img src="/images/placeholder.png" height="150" width="150">
+          <h5>Eu</h5>
+        </div>
+        
+        <br>
+        <div id="botao-anterior-verbo" class="btn item-nao-selecionado botao-voltar-anterior">
+          <i class="fas fa-arrow-up fa-2x"></i>
+          <h5>VOLTAR AO ANTERIOR</h5>
+        </div>
+      
+      </section>
+      
+      <h5 class="painel-complemento">COMPLEMENTOS</h5>
+      <section class="container-grupo painel-complemento">
+        
+        <div class="btn item-nao-selecionado">
+          <img src="/images/placeholder.png" height="150" width="150">
+          <h5>Eu</h5>
+        </div>
+        
+        <br>
+        <div id="botao-anterior-complemento" class="btn item-nao-selecionado botao-voltar-anterior">
+          <i class="fas fa-arrow-up fa-2x"></i>
+          <h5>VOLTAR AO ANTERIOR</h5>
+        </div>
+      
+      </section>
+      
+      <h5 class="painel-diverso">DIVERSOS</h5>
+      <section class="container-grupo painel-diverso">
+        
+        <div class="btn item-nao-selecionado">
+          <img src="/images/placeholder.png" height="150" width="150">
+          <h5>Eu</h5>
+        </div>
+        
+        <br>
+        <div id="botao-anterior-diverso" class="btn item-nao-selecionado botao-voltar-anterior">
+          <i class="fas fa-arrow-up fa-2x"></i>
+          <h5>VOLTAR AO ANTERIOR</h5>
+        </div>
+      
+      </section>
+      
+      <!-- Painel de Ações -->
+      <section class="container-grupo painel-acao">
+        
+        <div id="botao-falar" class="btn item-nao-selecionado">
+          <i class="fas fa-volume-up fa-3x"></i>
+          <h5>FALAR</h5>
+        </div>
+        
+        <div id="botao-apagar-ultimo" class="btn item-nao-selecionado">
+          <i class="fas fa-times-circle fa-3x"></i>
+          <h5>APAGAR ÚLTIMO</h5>
+        </div>
+        
+        <div id="botao-voltar-anterior2" class="btn item-nao-selecionado botao-voltar-anterior">
+          <i class="fas fa-arrow-up fa-3x"></i>
+          <h5>VOLTAR AO ANTERIOR</h5>
+        </div>
+        
+        <div id="botao-recomecar" class="btn item-nao-selecionado">
+          <i class="fas fa-undo fa-3x"></i>
+          <h5>RECOMEÇAR</h5>
+        </div>
+      
+      </section>
+    
+    </section>
+  
+  </div>
+
+</main>
+
+</body>
+
+</html>
