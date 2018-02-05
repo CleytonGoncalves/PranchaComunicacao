@@ -29,8 +29,8 @@
           
           <fieldset class="col-md-3">
             <img class="img-thumbnail d-block mx-auto" id="imagem-palavra" height="150" width="150"
-                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.jpg}"
-                 src="../static/images/placeholder.jpg">
+                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.png}"
+                 src="../static/images/placeholder.png">
             
             <div id="grupo-input-imagem" class="mt-3">
               <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
@@ -179,7 +179,7 @@
       
       <td class="text-center">
         <img class="img-thumbnail img-fluid d-block mx-auto"
-             th:src="@{${paciente.imagemUrl}}" src="../static/images/placeholder.jpg" width="60">
+             th:src="@{${paciente.imagemUrl}}" src="../static/images/placeholder.png" width="60">
       </td>
       
       <td class="align-middle" th:text="${paciente.nome}"></td>
