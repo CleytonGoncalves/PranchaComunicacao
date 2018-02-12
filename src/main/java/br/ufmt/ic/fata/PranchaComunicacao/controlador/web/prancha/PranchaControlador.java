@@ -13,8 +13,8 @@ import br.ufmt.ic.fata.PranchaComunicacao.modelo.Paciente;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.prancha.PranchaServico;
 
 @Controller
-@SessionAttributes({"pacienteId", "sujeitos", "verbos", "complementos", "diversos"})
 // Garante o mesmo Model até completar a sessão (setComplete())
+@SessionAttributes({"pacienteId", "sujeitos", "verbos", "complementos", "diversos"})
 @RequestMapping("pranchaComunicacao")
 public class PranchaControlador {
     
@@ -41,7 +41,7 @@ public class PranchaControlador {
      */
     @GetMapping
     public String getPaginaInicialSemPaciente() {
-        return PAGINA_INICIAL_SEM_PACIENTE;
+        return "redirect:/" + PAGINA_INICIAL_SEM_PACIENTE;
     }
     
     @GetMapping("/{pacienteId}")
@@ -55,13 +55,19 @@ public class PranchaControlador {
             status.setComplete();
         }
     
-        model.addAttribute(PACIENTE_ID_MODEL, id);
+        addPacienteNoModel(model, paciente);
+    
+        return PAGINA_INICIAL_COM_PACIENTE;
+    }
+    
+    /* Métodos ajudantes */
+    
+    private void addPacienteNoModel(Model model, Paciente paciente) {
+        model.addAttribute(PACIENTE_ID_MODEL, paciente.getId());
         model.addAttribute(SUJEITOS_MODEL, paciente.getSujeitos());
         model.addAttribute(VERBOS_MODEL, paciente.getVerbos());
         model.addAttribute(COMPLEMENTOS_MODEL, paciente.getComplementos());
         model.addAttribute(DIVERSOS_MODEL, paciente.getDiversos());
-        
-        return PAGINA_INICIAL_COM_PACIENTE;
     }
     
 }
