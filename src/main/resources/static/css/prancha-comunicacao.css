@@ -24,14 +24,14 @@
     border-color: #ddd;
 }
 
-.container-prancha h5 {
+.container-prancha h5, h6 {
     margin-bottom: 0.25rem;
     margin-top: 0.25rem;
 }
 
 .painel-acao .btn {
-    width: 150px;
-    height: 110px;
+    /*width: 150px;*/
+    /*height: 110px;*/
     white-space: initial;
 }
 
