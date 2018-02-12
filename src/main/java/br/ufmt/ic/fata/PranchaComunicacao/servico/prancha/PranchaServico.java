@@ -1,6 +1,5 @@
 package br.ufmt.ic.fata.PranchaComunicacao.servico.prancha;
 
-import com.sun.istack.internal.Nullable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ public class PranchaServico {
         this.pacienteServico = ps;
     }
     
-    @Nullable
     public Paciente getPacientePorId(Long id) {
         return pacienteServico.buscarPorId(id);
     }
