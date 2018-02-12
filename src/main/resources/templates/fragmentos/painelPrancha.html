@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="painel-frag(listaPalavra, tipoPalavra, titulo)">
+
+<h5 th:class="'painel-' + ${tipoPalavra}" th:text="${titulo}">(TIPOPALAVRA)</h5>
+<section th:class="'container-grupo painel-' + ${tipoPalavra}">
+  
+  <div th:each="palavra : ${listaPalavra}" class="btn item-nao-selecionado">
+    <img height="110" width="110" th:src="@{'/' + ${palavra.url}}">
+    <h6 th:text="${palavra.palavra}">(Palavra)</h6>
+  </div>
+  
+  <br>
+  <div th:id="'botao-anterior-' + ${tipoPalavra}"
+       class="btn item-nao-selecionado botao-voltar-anterior">
+    <i class="fas fa-arrow-up fa-2x"></i>
+    <h6>VOLTAR AO ANTERIOR</h6>
+  </div>
+
+</section>
+
+</body>
+</html>
