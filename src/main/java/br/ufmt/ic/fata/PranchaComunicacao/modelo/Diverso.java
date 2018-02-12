@@ -15,6 +15,8 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Diverso extends Palavra {
     
+    //TODO: Permitir colocar uma ou mais imagens
+    
     @NotBlank
     private String tipo;
     
