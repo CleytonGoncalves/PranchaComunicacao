@@ -13,8 +13,8 @@
       <div layout:replace="fragmentos/prancha/itemPalavra :: item-frag(id=${tipoPalavra} + '-' + ${palavra.id},
         texto=${palavra.palavra}, imagem='/' + ${palavra.url})"></div>
     </th:block>
-    
-    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-voltar-' + ${tipoPalavra},
+  
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-' + ${tipoPalavra} + '-voltar',
         texto='VOLTAR A SELEÇÃO', icone='fa-arrow-up')"></div>
   
   </div>

@@ -41,11 +41,23 @@
     margin: 3px;
     padding: 0;
     border-radius: 0;
-}
-
-.item-nao-selecionado {
     background-color: #fff;
     border-color: #ddd;
+    color: #000000;
+}
+
+.container-prancha .header-selecionado {
+    background: #fff885;
+}
+
+.container-prancha .painel-selecionado {
+    background: #dfe61f;
+}
+
+.item-selecionado {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
 }
 
 .container-prancha h6 {
