@@ -18,14 +18,14 @@
   
   <div class="container-prancha" th:assert="${pacienteId}">
   
-    <!-- TODO: Criar script de seleção de palavras e montagem de frases -->
-    <!-- TODO: Voltar ao anterior com mesmo tamanho que as palavras -->
+    <!-- TODO: Criar script de seleção de palavras e montagem de frase -->
+    <!-- TODO: Fazer o item de ação "Voltar" ter o mesmo tamanho que os itens de Palavras -->
   
     <!-- Painel de Formação de Frase -->
     <div layout:replace="fragmentos/prancha/painelFormacao :: painel-frag"></div>
   
     <!-- Painéis de Seleção de Palavras -->
-    <div id="painel-palavra">
+    <div id="container-painel-palavra">
       
       <!-- Painel de Seleção de Palavra -->
       <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
