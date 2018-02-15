@@ -24,6 +24,7 @@ public class PranchaControlador {
     
     /* Identificador do Paciente no template HTML */
     private static final String PACIENTE_ID_MODEL = "pacienteId";
+    private static final String PACIENTE_IMAGEM_MODEL = "pacienteImagem";
     private static final String SUJEITOS_MODEL = "listaSujeito";
     private static final String VERBOS_MODEL = "listaVerbo";
     private static final String COMPLEMENTOS_MODEL = "listaComplemento";
@@ -64,6 +65,7 @@ public class PranchaControlador {
     
     private void addPacienteNoModel(Model model, Paciente paciente) {
         model.addAttribute(PACIENTE_ID_MODEL, paciente.getId());
+        model.addAttribute(PACIENTE_IMAGEM_MODEL, paciente.getImagemUrl());
         model.addAttribute(SUJEITOS_MODEL, paciente.getSujeitos());
         model.addAttribute(VERBOS_MODEL, paciente.getVerbos());
         model.addAttribute(COMPLEMENTOS_MODEL, paciente.getComplementos());
