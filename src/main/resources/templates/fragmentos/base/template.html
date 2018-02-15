@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  
+  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Prancha de Comunicação</title>
+  
+  <!-- Meta tags p/ Bootstrap -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- Icone da página -->
+  <link rel="shortcut icon" type="image/png" th:href="@{/images/favicon_azul.png}">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{/css/fa-svg-with-js.css}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+<!-- Menu de Navegação (se não for determinado um outro topo, usa o topo do replace) -->
+<div layout:fragment="topo-frag" layout:replace="fragmentos/base/topo :: topo-frag"></div>
+
+<!-- Conteúdo -->
+<main layout:fragment="conteudo-frag"></main>
+
+<!-- Rodapé para incluir as dependências de JS -->
+<div layout:replace="fragmentos/base/rodape :: rodape-frag"></div>
+
+</body>
+
+</html>

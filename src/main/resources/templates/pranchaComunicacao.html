@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="fragmentos/template">
+      layout:decorator="fragmentos/base/template">
 
 <head>
   <title>Prancha de Comunicação</title>
@@ -11,69 +11,39 @@
 
 <body>
 
+<div layout:fragment="topo-frag"
+     layout:replace="fragmentos/prancha/topoReduzido :: topo-frag(imagem=${pacienteImagem})"></div>
+
 <main layout:fragment="conteudo-frag" class="container-fluid">
   
   <div class="container-prancha" th:assert="${pacienteId}">
   
     <!-- TODO: Criar script de seleção de palavras e montagem de frases -->
     <!-- TODO: Voltar ao anterior com mesmo tamanho que as palavras -->
-    
-    <!-- Painel de Exibição de Frase -->
-    <section class="container-grupo painel-exibicao-frase">
-      
-      <div class="btn item-nao-selecionado">
-        <img src="/images/placeholder.png" height="130" width="130">
-        <h6>Eu</h6>
-      </div>
-    
-    </section>
-    
-    <!-- Painéis Inferiores -->
-    <section id="painel-inferior">
+  
+    <!-- Painel de Formação de Frase -->
+    <div layout:replace="fragmentos/prancha/painelFormacao :: painel-frag"></div>
+  
+    <!-- Painéis de Seleção de Palavras -->
+    <div id="painel-palavra">
       
       <!-- Painel de Seleção de Palavra -->
-      <div
-          layout:replace="fragmentos/painelPrancha :: painel-frag(listaPalavra=${listaSujeito}, tipoPalavra='sujeito', titulo='SUJEITOS')">
-      </div>
-  
-      <div
-          layout:replace="fragmentos/painelPrancha :: painel-frag(listaPalavra=${listaVerbo}, tipoPalavra='verbo', titulo='VERBOS')">
-      </div>
-  
-      <div
-          layout:replace="fragmentos/painelPrancha :: painel-frag(listaPalavra=${listaComplemento}, tipoPalavra='complemento', titulo='COMPLEMENTOS')">
-      </div>
-  
-      <div
-          layout:replace="fragmentos/painelPrancha :: painel-frag(listaPalavra=${listaDiverso}, tipoPalavra='diverso', titulo='DIVERSOS')">
-      </div>
-      
-      <!-- Painel de Ações -->
-      <section class="container-grupo painel-acao">
-        
-        <div id="botao-falar" class="btn item-nao-selecionado">
-          <i class="fas fa-volume-up fa-2x"></i>
-          <h6>FALAR</h6>
-        </div>
-        
-        <div id="botao-apagar-ultimo" class="btn item-nao-selecionado">
-          <i class="fas fa-times-circle fa-2x"></i>
-          <h6>APAGAR ÚLTIMO</h6>
-        </div>
-        
-        <div id="botao-voltar-anterior2" class="btn item-nao-selecionado botao-voltar-anterior">
-          <i class="fas fa-arrow-up fa-2x"></i>
-          <h6>VOLTAR AO ANTERIOR</h6>
-        </div>
-        
-        <div id="botao-recomecar" class="btn item-nao-selecionado">
-          <i class="fas fa-undo fa-2x"></i>
-          <h6>RECOMEÇAR</h6>
-        </div>
-      
-      </section>
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
+        tipoPalavra='sujeito', titulo='SUJEITOS')"></div>
     
-    </section>
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
+        tipoPalavra='verbo', titulo='VERBOS')"></div>
+    
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
+        tipoPalavra='complemento', titulo='COMPLEMENTOS')"></div>
+    
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
+        tipoPalavra='diverso', titulo='DIVERSOS')"></div>
+  
+    </div>
+  
+    <!-- Painel de Ações -->
+    <div layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></div>
   
   </div>
 

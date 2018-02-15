@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="item-frag(id, texto, imagem)">
+
+<div th:id="${id}" class="btn item-nao-selecionado">
+  <img height="110" width="110" th:src="@{${imagem}}">
+  <h6 th:text="${texto}"></h6>
+</div>
+
+</body>
+
+</html>

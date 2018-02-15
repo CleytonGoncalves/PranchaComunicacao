@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="painel-frag">
+
+<section class="container-acao card">
+  <h5 class="card-header">AÇÕES</h5>
+  <div class="painel-prancha">
+    
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-falar-acao',
+        texto='FALAR', icone='fa-volume-up')"></div>
+    
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-apagar-ultimo-acao',
+        texto='APAGAR ÚLTIMO', icone='fa-times-circle')"></div>
+    
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-voltar-acao',
+        texto='VOLTAR A SELEÇÃO', icone='fa-arrow-up')"></div>
+    
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-recomecar-acao',
+        texto='RECOMEÇAR', icone='fa-undo')"></div>
+  
+  </div>
+</section>
+
+</body>
+
+</html>

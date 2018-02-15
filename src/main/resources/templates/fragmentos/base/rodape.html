@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="rodape-frag">
+
+<footer id="rodape" class="rodape">
+  <span>© 2018 FATA - Instituto de Computação - Universidade Federal de Mato Grosso</span>
+  
+  <!-- Bootstrap JS -->
+  <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  
+  <!-- Font-Awesome Sólido -->
+  <script th:src="@{/js/fontawesome.min.js}"></script>
+  <script defer th:src="@{/js/fa-solid.min.js}"></script>
+  
+  <!-- Placeholder JS Próprio -->
+  <div layout:fragment="rodape-scripts-frag"></div>
+
+</footer>
+
+</body>
+</html>

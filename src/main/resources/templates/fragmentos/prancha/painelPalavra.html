@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="painel-frag(listaPalavra, tipoPalavra, titulo)">
+
+<section th:class="'card container-' + ${tipoPalavra}">
+  <h5 class="card-header" th:text="${titulo}">(TIPOPALAVRA)</h5>
+  
+  <div th:class="painel-prancha">
+    
+    <th:block th:each="palavra : ${listaPalavra}">
+      <div layout:replace="fragmentos/prancha/itemPalavra :: item-frag(id=${tipoPalavra} + '-' + ${palavra.id},
+        texto=${palavra.palavra}, imagem='/' + ${palavra.url})"></div>
+    </th:block>
+    
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-voltar-' + ${tipoPalavra},
+        texto='VOLTAR A SELEÇÃO', icone='fa-arrow-up')"></div>
+  
+  </div>
+</section>
+
+</body>
+</html>

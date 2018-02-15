@@ -1,29 +1,9 @@
-<!DOCTYPE HTML>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!DOCTYPE html>
+<html
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head>
-  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Prancha de Comunicação</title>
-  
-  <!-- Meta tags p/ Bootstrap -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
-  <!-- Icone da página -->
-  <link rel="shortcut icon" type="image/png" th:href="@{/images/favicon_azul.png}">
-  
-  <!-- CSS -->
-  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
-  <link rel="stylesheet" th:href="@{/css/fa-svg-with-js.css}">
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
+<body layout:fragment="topo-frag">
 
-</head>
-
-<body>
-
-<!-- Menu de Navegação -->
-<!-- TODO: Colocar em fragmento próprio -->
 <header id="topo">
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
     
@@ -70,25 +50,5 @@
   </nav>
 </header>
 
-<!-- Conteúdo -->
-<main layout:fragment="conteudo-frag"></main>
-
-<!-- Rodapé para incluir as dependências de JS -->
-<!-- TODO: Colocar em fragmento próprio -->
-<footer id="rodape">
-  <!-- Bootstrap JS -->
-  <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
-  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-  
-  <!-- Font-Awesome Sólido -->
-  <script th:src="@{/js/fontawesome.min.js}"></script>
-  <script defer th:src="@{/js/fa-solid.min.js}"></script>
-  
-  <!-- Placeholder JS Próprio -->
-  <div layout:fragment="rodape-scripts-frag"></div>
-
-</footer>
-
 </body>
-
 </html>
