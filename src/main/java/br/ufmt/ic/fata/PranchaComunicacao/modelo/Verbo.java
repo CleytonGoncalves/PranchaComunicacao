@@ -1,5 +1,7 @@
 package br.ufmt.ic.fata.PranchaComunicacao.modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
@@ -44,6 +46,7 @@ public class Verbo extends Palavra {
     private String futuroNos;
     
     @ManyToMany(mappedBy = "verbos")
+    @JsonBackReference
     private List<Paciente> pacientes;
     
 }

@@ -1,5 +1,7 @@
 package br.ufmt.ic.fata.PranchaComunicacao.modelo;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.time.LocalDate;
@@ -41,24 +43,28 @@ public class Paciente extends EntidadeBase {
     @JoinTable(name = "paciente_pasta_sujeito",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "sujeito_id"))
+    @JsonManagedReference
     private Set<Sujeito> sujeitos;
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "paciente_pasta_verbo",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "verbo_id"))
+    @JsonManagedReference
     private Set<Verbo> verbos;
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "paciente_pasta_complemento",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "complemento_id"))
+    @JsonManagedReference
     private Set<Complemento> complementos;
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "paciente_pasta_diverso",
                joinColumns = @JoinColumn(name = "paciente_id"),
                inverseJoinColumns = @JoinColumn(name = "diverso_id"))
+    @JsonManagedReference
     private Set<Diverso> diversos;
     
     

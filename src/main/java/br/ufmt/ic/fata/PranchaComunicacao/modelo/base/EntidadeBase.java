@@ -1,6 +1,8 @@
 package br.ufmt.ic.fata.PranchaComunicacao.modelo.base;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Type;
 import org.springframework.data.domain.Persistable;
 
@@ -39,9 +41,20 @@ public abstract class EntidadeBase implements Persistable<Long> {
     @Version
     private Long version;
     
+    @JsonIgnore
     @Override
     public boolean isNew() {
         return id == null;
+    }
+    
+    @JsonIgnore
+    public UUID getUuid() {
+        return uuid;
+    }
+    
+    @JsonIgnore
+    public Long getVersion() {
+        return version;
     }
     
     @Override

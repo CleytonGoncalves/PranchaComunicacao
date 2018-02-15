@@ -1,6 +1,6 @@
 package br.ufmt.ic.fata.PranchaComunicacao.modelo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -23,8 +23,8 @@ public class Sujeito extends Palavra {
     @NotBlank
     private String pronome;
     
-    @JsonIgnore
     @ManyToMany(mappedBy = "sujeitos")
+    @JsonBackReference
     private List<Paciente> pacientes;
     
 }
