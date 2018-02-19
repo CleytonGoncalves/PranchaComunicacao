@@ -4,7 +4,7 @@
 
 <body layout:fragment="item-frag(id, texto, imagem)">
 
-<div th:id="${id}" class="btn">
+<div th:id="${id}" class="btn item-selecionavel">
   <img height="110" width="110" th:src="@{${imagem}}">
   <h6 th:text="${texto}"></h6>
 </div>

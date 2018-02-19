@@ -4,10 +4,10 @@
 
 <body layout:fragment="painel-frag(listaPalavra, tipoPalavra, titulo)">
 
-<section th:class="'card container-' + ${tipoPalavra}">
+<section th:id="'secao-' + ${tipoPalavra}" class="card secao-selecionavel">
   <h5 class="card-header" th:text="${titulo}">(TÍTULO)</h5>
   
-  <div th:class="painel-prancha">
+  <div th:class="painel-secao">
     
     <th:block th:each="palavra : ${listaPalavra}">
       <div layout:replace="fragmentos/prancha/itemPalavra :: item-frag(id=${tipoPalavra} + '-' + ${palavra.id},

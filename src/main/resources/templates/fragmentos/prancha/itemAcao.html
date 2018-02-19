@@ -4,7 +4,7 @@
 
 <body layout:fragment="item-frag(id, texto, icone)">
 
-<div th:id="${id}" class="btn">
+<div th:id="${id}" class="btn item-selecionavel">
   <i th:class="'fas fa-2x ' + ${icone}"></i>
   <h6 th:text="${texto}"></h6>
 </div>

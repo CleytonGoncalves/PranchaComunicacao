@@ -22,28 +22,30 @@
     <!-- TODO: Fazer o item de ação "Voltar" ter o mesmo tamanho que os itens de Palavras -->
   
     <!-- Painel de Formação de Frase -->
-    <div layout:replace="fragmentos/prancha/painelFormacao :: painel-frag"></div>
+    <section layout:replace="fragmentos/prancha/painelFormacao :: painel-frag"></section>
   
-    <!-- Painéis de Seleção de Palavras -->
-    <div id="container-painel-palavra">
-      
-      <!-- Painel de Seleção de Palavra -->
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
+    <!-- Painéis Selecionáveis -->
+    <section>
+      <!-- Painéis de Palavras -->
+      <div>
+        <!-- Painel de Seleção de Palavra -->
+        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
         tipoPalavra='sujeito', titulo='SUJEITOS')"></div>
-    
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
+      
+        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
         tipoPalavra='verbo', titulo='VERBOS')"></div>
-    
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
+      
+        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
         tipoPalavra='complemento', titulo='COMPLEMENTOS')"></div>
-    
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
+      
+        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
         tipoPalavra='diverso', titulo='DIVERSOS')"></div>
-  
-    </div>
-  
-    <!-- Painel de Ações -->
-    <div layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></div>
+    
+      </div>
+    
+      <!-- Painel de Ações -->
+      <div layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></div>
+    </section>
   
   </div>
 

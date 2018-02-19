@@ -4,9 +4,9 @@
 
 <body layout:fragment="painel-frag">
 
-<section class="container-acao card">
+<section id="secao-acao" class="card secao-selecionavel">
   <h5 class="card-header">AÇÕES</h5>
-  <div class="painel-prancha">
+  <div class="painel-secao">
   
     <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='botao-acao-falar',
         texto='FALAR', icone='fa-volume-up')"></div>

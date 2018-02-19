@@ -21,7 +21,7 @@
     display: flex;
 }
 
-.painel-prancha {
+.painel-secao {
     display: flex;
     background: #eeeeee;
     flex-direction: row;
@@ -37,6 +37,7 @@
     padding: 0.5rem 1.0rem;
 }
 
+/* Item da Prancha */
 .container-prancha .btn {
     margin: 3px;
     padding: 0;
@@ -46,31 +47,29 @@
     color: #000000;
 }
 
-.container-prancha .header-selecionado {
+/* Título da seção atual sendo percorrido pelo Seletor (JS) */
+.secao-selecionavel.secao-realce .card-header {
     background: #fff885;
 }
 
-.container-prancha .painel-selecionado {
+/* Corpo da seção atual sendo percorrido pelo Seletor (JS) */
+.secao-selecionavel.secao-realce .painel-secao {
     background: #dfe61f;
 }
 
-.item-selecionado {
+/* Item atual da seção sendo percorrido pelo Seletor (JS) */
+.secao-selecionavel .painel-secao .item-realce {
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
 }
 
+/* Legenda do Item */
 .container-prancha h6 {
     margin: 0.25rem;
 }
 
-.painel-acao .btn {
-    /*width: 150px;*/
-    /*height: 110px;*/
-    white-space: initial;
-}
-
-.container-formacao {
+#secao-formacao {
     margin-bottom: 2rem;
     background-color: #dae0e5;
     flex-direction: row;
@@ -81,28 +80,28 @@
     border-bottom: 2px solid #868e969e;
 }
 
-.container-formacao .card-header {
+#secao-formacao .card-header {
     background-color: transparent;
     border-top: 2px solid #007bff;
     border-bottom: 2px solid #007bff;
 }
 
-.container-sujeito {
+#secao-sujeito {
     margin-bottom: 1rem;
 }
 
-.container-verbo {
+#secao-verbo {
     margin-bottom: 1rem;
 }
 
-.container-complemento {
+#secao-complemento {
     margin-bottom: 1rem;
 }
 
-.container-diverso {
+#secao-diverso {
     margin-bottom: 1rem;
 }
 
-.container-acao {
+#secao-acao {
     margin-bottom: 2rem;
 }
