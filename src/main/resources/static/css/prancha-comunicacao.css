@@ -49,19 +49,29 @@
 
 /* Título da seção atual sendo percorrido pelo Seletor (JS) */
 .secao-selecionavel.secao-realce .card-header {
-    background: #fff885;
+    background: #fff885 !important;
 }
 
 /* Corpo da seção atual sendo percorrido pelo Seletor (JS) */
 .secao-selecionavel.secao-realce .painel-secao {
-    background: #dfe61f;
+    background: #dfe61f !important;
 }
 
 /* Item atual da seção sendo percorrido pelo Seletor (JS) */
-.secao-selecionavel .painel-secao .item-realce {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+.item-realce {
+    color: #fff !important;
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+}
+
+.item-realce img {
+    width: 130px !important;
+    height: 130px !important;
+}
+
+.item-realce svg {
+    width: 130px !important;
+    height: 130px !important;
 }
 
 /* Legenda do Item */
@@ -77,13 +87,12 @@
     align-items: center;
     flex-wrap: wrap;
     text-align: center;
-    border-bottom: 2px solid #868e969e;
-}
-
-#secao-formacao .card-header {
-    background-color: transparent;
-    border-top: 2px solid #007bff;
-    border-bottom: 2px solid #007bff;
+    padding: 0.5rem 1.0rem;
+    width: fit-content;
+    min-width: 700px;
+    min-height: 185px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #secao-sujeito {
