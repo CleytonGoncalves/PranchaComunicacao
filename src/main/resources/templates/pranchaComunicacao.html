@@ -26,22 +26,19 @@
   
     <!-- Painéis Selecionáveis -->
     <section>
-      <!-- Painéis de Palavras -->
-      <div>
-        <!-- Painel de Seleção de Palavra -->
-        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
-        tipoPalavra='sujeito', titulo='SUJEITOS')"></div>
-      
-        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
-        tipoPalavra='verbo', titulo='VERBOS')"></div>
-      
-        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
-        tipoPalavra='complemento', titulo='COMPLEMENTOS')"></div>
-      
-        <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
-        tipoPalavra='diverso', titulo='DIVERSOS')"></div>
+      <!-- Painel de Seleção de Palavra -->
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
+      tipoPalavra='sujeito', titulo='SUJEITOS')"></div>
+  
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
+      tipoPalavra='verbo', titulo='VERBOS')"></div>
+  
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
+      tipoPalavra='complemento', titulo='COMPLEMENTOS')"></div>
+  
+      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
+      tipoPalavra='diverso', titulo='DIVERSOS')"></div>
     
-      </div>
     
       <!-- Painel de Ações -->
       <div layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></div>
