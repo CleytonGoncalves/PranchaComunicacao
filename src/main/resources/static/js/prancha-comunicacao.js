@@ -1,42 +1,51 @@
-/* Constante de Configuração */
+/* ########## CONFIGURAÇÃO ########## */
 
-var TEMPO_SELETOR = 1000;
+var TEMPO_SELETOR = 1000; // Tempo em ms para o movimento do seletor
 
-/* jQuery Selectors */
+/* ########## FIM DA CONFIGURAÇÃO ########## */
 
-// Encontra todos pelo qual o seletor deve passar
-var JQ_SECAO_SELECIONAVEL = ".secao-selecionavel:visible";
-var JQ_ITEM_SELECIONAVEL = ".item-selecionavel:visible";
 
-// Encontra aquele que foi escolhido pelo usuário
-var JQ_SECAO_ESCOLHIDA = ".secao-realce";
-var JQ_ITEM_ESCOLHIDO = ".item-realce";
+/* ### CONSTANTES DO SCRIPT ### */
 
-/* Status do Seletor */
+/* Classes CSS */
 
-var SELETOR_PARADO = "SELETOR_PARADO";
-var SELETOR_SECAO = "SELETOR_SECAO";
-var SELETOR_ITEM = "SELETOR_ITEM";
+var CLASSE_SECAO_SELECIONAVEL = "secao-selecionavel";
+var CLASSE_ITEM_SELECIONAVEL = "item-selecionavel";
 
-/* Script */
+var CLASSE_SECAO_SELECIONADA = "secao-realce";
+var CLASSE_ITEM_SELECIONADO = "item-realce";
 
-var statusSeletor = SELETOR_PARADO;
+
+/* Enum de estados do seletor */
+
+var EstadoSeletorEnum = {
+    SELETOR_PARADO: "SELETOR_PARADO",
+    SELETOR_SECAO: "SELETOR_SECAO",
+    SELETOR_ITEM: "SELETOR_ITEM"
+};
+
+if (Object.freeze) {
+    Object.freeze(EstadoSeletorEnum);
+} // Torna imutável se suportar ES5
+
+
+/* ### SCRIPT DO SELETOR ### */
+
+var estadoSeletor = EstadoSeletorEnum.SELETOR_PARADO;
 var seletorIntervalId = undefined;
 
 $(window).ready(function () {
     rodarSeletorSecao();
 });
 
-$("body").not("#topo").click(clickFeito);
+$("body").not("#topo").click(clickFeito); // Qualquer parte da página, exceto pelo navbar
 
 /* Clique */
 
 function clickFeito() {
-    console.log("Clicado");
-    if (statusSeletor === SELETOR_SECAO) {
-        console.log("rodar Item");
+    if (estadoSeletor === EstadoSeletorEnum.SELETOR_SECAO) {
         rodarSeletorItem();
-    } else if (statusSeletor === SELETOR_ITEM) {
+    } else if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM) {
         //    TODO: MOVER O ITEM SELECIONADO PARA A SECAO DE EXIBIÇÃO, RETIRAR DA SECAO ANTERIOR, DESATIVAR REALCE
         pararSeletor();
     }
@@ -45,16 +54,16 @@ function clickFeito() {
 function rodarSeletorSecao() {
     pararSeletor();
 
-    var secoes = $(JQ_SECAO_SELECIONAVEL);
-    statusSeletor = SELETOR_SECAO;
+    var secoes = getSecoesSelecionaveis();
+    estadoSeletor = EstadoSeletorEnum.SELETOR_SECAO;
     iniciarSeletor(secoes, ativarRealceSecao, desativarRealceSecao);
 }
 
 function rodarSeletorItem() {
     pararSeletor();
 
-    var itensSecaoEscolhida = $(JQ_SECAO_ESCOLHIDA + " " + JQ_ITEM_SELECIONAVEL);
-    statusSeletor = SELETOR_ITEM;
+    var itensSecaoEscolhida = getItensSelecionaveis();
+    estadoSeletor = EstadoSeletorEnum.SELETOR_ITEM;
     iniciarSeletor(itensSecaoEscolhida, ativarRealceItem, desativarRealceItem);
 }
 
@@ -75,7 +84,7 @@ function iniciarSeletor(lista, funcaoAtivarRealce, funcaoDesativarRealce) {
 }
 
 function pararSeletor() {
-    statusSeletor = SELETOR_PARADO;
+    estadoSeletor = EstadoSeletorEnum.SELETOR_PARADO;
 
     if (seletorIntervalId) {
         clearInterval(seletorIntervalId);
@@ -91,17 +100,28 @@ function calcPosCircular(pos, qntdSecao) {
 /* Realce */
 
 function ativarRealceSecao(secao) {
-    secao.classList.add("secao-realce");
+    secao.classList.add(CLASSE_SECAO_SELECIONADA);
 }
 
 function desativarRealceSecao(secao) {
-    secao.classList.remove("secao-realce");
+    secao.classList.remove(CLASSE_SECAO_SELECIONADA);
 }
 
 function ativarRealceItem(item) {
-    item.classList.add("item-realce");
+    item.classList.add(CLASSE_ITEM_SELECIONADO);
 }
 
 function desativarRealceItem(item) {
-    item.classList.remove("item-realce");
+    item.classList.remove(CLASSE_ITEM_SELECIONADO);
+}
+
+/* Funções Ajudantes */
+
+function getSecoesSelecionaveis() {
+    return $("." + CLASSE_SECAO_SELECIONAVEL + ":visible");
+}
+
+function getItensSelecionaveis() {
+    var selector = "." + CLASSE_SECAO_SELECIONADA + " ." + CLASSE_ITEM_SELECIONAVEL + ":visible";
+    return $(selector);
 }
