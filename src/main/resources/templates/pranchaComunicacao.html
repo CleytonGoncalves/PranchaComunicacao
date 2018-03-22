@@ -17,32 +17,29 @@
 <main layout:fragment="conteudo-frag" class="container-fluid">
   
   <div class="container-prancha" th:assert="${pacienteId}">
-  
-    <!-- TODO: Criar script de seleção de palavras e montagem de frase -->
+    
     <!-- TODO: Fazer o item de ação "Voltar" ter o mesmo tamanho que os itens de Palavras -->
-  
+    
     <!-- Painel de Formação de Frase -->
     <section layout:replace="fragmentos/prancha/painelFormacao :: painel-frag"></section>
-  
-    <!-- Painéis Selecionáveis -->
-    <section>
-      <!-- Painel de Seleção de Palavra -->
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
-      tipoPalavra='sujeito', titulo='SUJEITOS')"></div>
-  
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
-      tipoPalavra='verbo', titulo='VERBOS')"></div>
-  
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
-      tipoPalavra='complemento', titulo='COMPLEMENTOS')"></div>
-  
-      <div layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
-      tipoPalavra='diverso', titulo='DIVERSOS')"></div>
+    
+    <!-- Paineis de Seleção de Palavras -->
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
+    tipoPalavra='sujeito', titulo='SUJEITOS')"></section>
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
+    tipoPalavra='verbo', titulo='VERBOS')"></section>
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
+    tipoPalavra='complemento', titulo='COMPLEMENTOS')"></section>
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
+    tipoPalavra='diverso', titulo='DIVERSOS')"></section>
     
     
-      <!-- Painel de Ações -->
-      <div layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></div>
-    </section>
+    <!-- Painel de Ações -->
+    <section layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></section>
   
   </div>
 
