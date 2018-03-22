@@ -57,7 +57,6 @@ function setFluxoSVC() {
 
 function proximaEtapaFluxo() {
     desativarTodosRealces();
-    debugger;
     
     if (etapaFluxoAtual === null || etapaFluxoAtual < 0) {
         etapaFluxoAtual = 0;
