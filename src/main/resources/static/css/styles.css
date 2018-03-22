@@ -1,6 +1,5 @@
-body {
-    text-transform: uppercase;
-!important;
+* {
+    text-transform: uppercase !important; /* Site todo maiúsculo */
 }
 
 .fa-fw.fa-border {
