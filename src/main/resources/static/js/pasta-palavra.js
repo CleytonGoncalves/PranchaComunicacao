@@ -1,3 +1,5 @@
+"use strict";
+
 var TAMANHO_MAX_IMAGEM = 2000; // Comprimento/Largura em px
 var TAMANHO_MIN_IMAGEM = 100; // Comprimento/Largura em px
 var PESO_MAX_IMAGEM = 2000; // Peso em KB
