@@ -1,5 +1,7 @@
 package br.ufmt.ic.fata.PranchaComunicacao.servico.armazenamento;
 
+import br.ufmt.ic.fata.PranchaComunicacao.util.NomeArquivoUtil;
+import br.ufmt.ic.fata.PranchaComunicacao.util.excecao.ArmazenamentoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -14,9 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
-
-import br.ufmt.ic.fata.PranchaComunicacao.util.NomeArquivoUtil;
-import br.ufmt.ic.fata.PranchaComunicacao.util.excecao.ArmazenamentoException;
 
 @Service("ArmazenamentoServico")
 public class ArmazenamentoDiscoServico implements ArmazenamentoServico {
@@ -51,9 +50,8 @@ public class ArmazenamentoDiscoServico implements ArmazenamentoServico {
                         "Não é possível armazenar arquivo com caminho fora da pasta atual: "
                                 + nomeArquivo);
             }
-            
-            Files.copy(arquivo.getInputStream(), this.local.resolve(nomeArquivo),
-                    StandardCopyOption.REPLACE_EXISTING);
+    
+            Files.copy(arquivo.getInputStream(), this.local.resolve(nomeArquivo), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new ArmazenamentoException("Falha ao armazenar o arquivo: " + nomeArquivo, e);
         }
@@ -102,16 +100,4 @@ public class ArmazenamentoDiscoServico implements ArmazenamentoServico {
         return NomeArquivoUtil.gerarNomeUnico(nomeOriginal, local);
     }
     
-    /**
-     * Cria o diretório de armazenamento de arquivos.
-     * Deve ser chamado apenas durante a inicialização do Spring.
-     */
-    public void init() {
-        try {
-            Files.createDirectories(local);
-        } catch (IOException e) {
-            throw new IllegalStateException("Não foi possível inicializar o local de " +
-                                                    "armazenamento", e);
-        }
-    }
 }
