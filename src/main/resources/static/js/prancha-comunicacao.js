@@ -11,15 +11,21 @@ var TEMPO_SELETOR = 1000; // Tempo em ms para o movimento do seletor
 
 /* CSS */
 
+/* Classes que definem quais são selecionáveis pelo seletor */
 var CLASSE_SECAO_SELECIONAVEL = "secao-selecionavel";
 var CLASSE_ITEM_SELECIONAVEL = "item-selecionavel";
 
+/* Classes que aplicam o realce (seleção) */
 var CLASSE_SECAO_REALCE = "secao-realce";
 var CLASSE_ITEM_REALCE = "item-realce";
 
+/* Classe que definem quais itens realizam alguma ação */
 var CLASSE_ITEM_ACAO = "item-acao";
+
+/* Classe que define os itens que foram selecionados*/
 var CLASSE_ITEM_SELECIONADO = "item-selecionado";
 
+/* IDs das seções, para usar na montagem do fluxo */
 var ID_SECAO_FORMACAO = "secao-formacao";
 var ID_SECAO_SUJEITO = "secao-sujeito";
 var ID_SECAO_VERBO = "secao-verbo";
@@ -27,6 +33,17 @@ var ID_SECAO_COMPLEMENTO = "secao-complemento";
 var ID_SECAO_DIVERSO = "secao-diverso";
 var ID_SECAO_ACAO = "secao-acao";
 
+/* IDs dos itens de ação do painel de ação */
+var ID_ITEM_FALAR = "acao-falar";
+var ID_ITEM_APAGAR_ULTIMO = "acao-apagar-ultimo";
+var ID_ITEM_VOLTAR = "acao-voltar";
+var ID_ITEM_RECOMECAR = "acao-recomecar";
+
+/* IDs dos itens de voltar de cada painel */
+var ID_ITEM_VOLTAR_SUJEITO = "acao-voltar-sujeito";
+var ID_ITEM_VOLTAR_VERBO = "acao-voltar-verbo";
+var ID_ITEM_VOLTAR_COMPLEMENTO = "acao-voltar-complemento";
+var ID_ITEM_VOLTAR_DIVERSO = "acao-voltar-diverso";
 
 /* Enum de estados do seletor */
 
@@ -108,12 +125,16 @@ function selecionarAtual() {
 
         var itemRealcado = getItemRealcado();
         if (itemRealcado.hasClass(CLASSE_ITEM_ACAO)) {
-            //fazerAcao(itemRealcado);
+            fazerAcao(itemRealcado);
         } else {
             selecionarItem(itemRealcado);
             proximaEtapaFluxo();
         }
     }
+}
+
+function fazerAcao(item) {
+    console.log(item);
 }
 
 /* Seletor */
