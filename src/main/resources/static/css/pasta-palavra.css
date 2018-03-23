@@ -1,19 +1,11 @@
-#modal-cadastro .modal-dialog {
-    /* Centralizar o modal na tela */
-    -webkit-transform: translate(0, -50%);
-    -o-transform: translate(0, -50%);
-    transform: translate(0, -50%);
-    top: 50%;
-    margin: 0 auto;
-
-    /* Tamanho dinâmico */
-    position: relative;
+.modal-dialog{
     display: table;
     overflow-y: auto;
-    overflow-x: auto;
-    width: auto;
-    min-width: 300px;
     max-width: 100%;
+}
+
+.modal-content {
+    padding: 0 1rem 0 1rem;
 }
 
 /* Coloca o botão falso de seleção da imagem por cima (eixo Z) do botão real invisível  */

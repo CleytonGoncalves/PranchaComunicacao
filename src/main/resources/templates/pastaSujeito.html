@@ -43,60 +43,64 @@
           </fieldset>
           
           <!-- Lado direito (Campos) -->
-          <fieldset class="col-md-8 form-group">
+          <fieldset class="col-md-9 form-group">
             
             <!-- Entrada Palavra-->
             <div class="form-group row">
-              <label class="col-md-2 control-label font-weight-bold"
+              <label class="col-md-3 col-form-label font-weight-bold"
                      for="input-palavra">PALAVRA</label>
-              <div class="col-md-6">
-                <input class="form-control input-md" id="input-palavra" name="input-palavra"
+              
+              <div class="col-md-9">
+                <input class="form-control " id="input-palavra" name="input-palavra"
                        required="" type="text" th:field="*{palavra}"/>
               </div>
+            
             </div>
             
             <!-- Radio Sexo -->
             <div class="form-group row">
-              <label class="col-md-2 control-label font-weight-bold">SEXO</label>
+              <label class="col-md-3 font-weight-bold">SEXO</label>
               
-              <div class="col-md-8">
-                <input id="grupo-sexo-0" name="grupo-sexo" type="radio" value="M" th:field="*{sexo}"
-                       required=""/>
-                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-0">
-                  MASCULINO
-                </label>
+              <div class="col-md-9">
                 
-                <input id="grupo-sexo-1" name="grupo-sexo" type="radio" value="F" th:field="*{sexo}"
-                       required=""/>
-                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-1">
-                  FEMININO
-                </label>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="sexo-0" name="grupo-sexo" type="radio" value="M"
+                         th:field="*{sexo}" required=""/>
+                  <label class="custom-control-label" for="sexo-0">MASCULINO</label>
+                </div>
+                
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="sexo-1" name="grupo-sexo" type="radio" value="F"
+                         th:field="*{sexo}" required=""/>
+                  <label class="custom-control-label" for="sexo-1">FEMININO</label>
+                </div>
               
               </div>
             </div>
             
             <!-- Radio Pronome -->
             <div class="form-group row">
-              <label class="col-md-2 control-label font-weight-bold">PRONOME</label>
+              <label class="col-md-3 font-weight-bold">PRONOME</label>
               
-              <div class="col-md-6">
-                <label class="radio-inline form-check form-check-inline" for="grupo-pronome-0">
-                  <input checked="" id="grupo-pronome-0" name="grupo-pronome" type="radio"
-                         value="EU" th:field="*{pronome}" required=""/>
-                  EU
-                </label>
+              <div class="col-md-9">
                 
-                <label class="radio-inline form-check form-check-inline" for="grupo-pronome-1">
-                  <input id="grupo-pronome-1" name="grupo-pronome" type="radio" value="VOCÊ"
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" checked="" id="pronome-0" name="grupo-pronome" type="radio" value="EU"
                          th:field="*{pronome}" required=""/>
-                  VOCÊ
-                </label>
+                  <label class="custom-control-label" for="pronome-0">EU</label>
+                </div>
                 
-                <label class="radio-inline form-check form-check-inline" for="grupo-pronome-2">
-                  <input id="grupo-pronome-2" name="grupo-pronome" type="radio" value="NÓS"
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="pronome-1" name="grupo-pronome" type="radio" value="VOCÊ"
                          th:field="*{pronome}" required=""/>
-                  NÓS
-                </label>
+                  <label class="custom-control-label" for="pronome-1">VOCÊ</label>
+                </div>
+                
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="pronome-2" name="grupo-pronome" type="radio" value="NÓS"
+                         th:field="*{pronome}" required=""/>
+                  <label class="custom-control-label" for="pronome-2">NÓS</label>
+                </div>
               
               </div>
             </div>

@@ -39,10 +39,10 @@ function clickEditarCadastro(e) {
 }
 
 function adicionarFormulario(novoFormHtml) {
-    var paiDoForm = $("#modal-conteudo");
+    var paiDoForm = $(".modal-content");
     var form = $("#form-cadastro");
     substituirFragmento(paiDoForm, form, novoFormHtml);
-
+    
     $('#modal-cadastro').modal('show'); // Exibe o modal
 
     aplicarModalListeners();

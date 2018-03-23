@@ -27,8 +27,7 @@
           <!-- Lado esquerdo (Imagem) -->
           <fieldset class="col-md-3 form-group">
             <img class="img-thumbnail d-block mx-auto" id="imagem-palavra" height="150" width="150"
-                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.png}"
-                 src="../static/images/placeholder.png">
+                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.png}">
             
             <div id="grupo-input-imagem" class="mt-3">
               <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
@@ -43,34 +42,39 @@
           </fieldset>
           
           <!-- Lado direito (Campos) -->
-          <fieldset class="col-md-8 form-group">
+          <fieldset class="col-md-9 form-group">
             
             <!-- Entrada Palavra-->
             <div class="form-group row">
-              <label class="col-md-2 control-label font-weight-bold"
+              <label class="col-md-3 col-form-label font-weight-bold"
                      for="input-palavra">PALAVRA</label>
-              <div class="col-md-6">
-                <input class="form-control input-md" id="input-palavra" name="input-palavra"
+              <div class="col-md-9">
+                <input class="form-control " id="input-palavra" name="input-palavra"
                        required="" type="text" th:field="*{palavra}"/>
               </div>
             </div>
             
             <!-- Radio Sexo -->
             <div class="form-group row">
-              <label class="col-md-2 control-label font-weight-bold">SEXO</label>
+              <label class="col-md-3 font-weight-bold">SEXO</label>
               
-              <div class="col-md-8">
-                <input id="grupo-sexo-0" name="grupo-sexo" type="radio" value="M" th:field="*{sexo}"
-                       required=""/>
-                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-0">
-                  MASCULINO
-                </label>
+              <div class="col-md-9">
                 
-                <input id="grupo-sexo-1" name="grupo-sexo" type="radio" value="F" th:field="*{sexo}"
-                       required=""/>
-                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-1">
-                  FEMININO
-                </label>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="sexo-0" name="grupo-sexo" type="radio" value="M" th:field="*{sexo}"
+                         required=""/>
+                  <label class="custom-control-label" for="sexo-0">
+                    MASCULINO
+                  </label>
+                </div>
+                
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="sexo-1" name="grupo-sexo" type="radio" value="F" th:field="*{sexo}"
+                         required=""/>
+                  <label class="custom-control-label" for="sexo-1">
+                    FEMININO
+                  </label>
+                </div>
               
               </div>
             </div>
