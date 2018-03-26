@@ -23,10 +23,9 @@
 
 </main>
 
-<footer>
-  <!-- Adiciona o JS no rodapé definido no Template -->
-  <script layout:fragment="rodape-scripts-frag" th:src="@{/js/pasta-palavra.js}"></script>
-</footer>
+<th:block layout:fragment="rodape-scripts-frag">
+  <script th:src="@{/js/pasta-palavra.js}"></script>
+</th:block>
 
 </body>
 </html>
