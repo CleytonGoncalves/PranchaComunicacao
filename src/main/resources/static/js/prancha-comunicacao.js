@@ -1,5 +1,8 @@
 "use strict";
 
+//TODO: https://www.w3.org/wiki/JavaScript_best_practices#Avoid_globals
+//TODO: INCLUIR ETAPA DE SELEÇÃO DE TEMPO VERBAL!
+
 /* ########## CONFIGURAÇÃO ########## */
 
 var TEMPO_SELETOR = 1000; // Tempo em ms para o movimento do seletor
@@ -8,6 +11,9 @@ var TEMPO_SELETOR = 1000; // Tempo em ms para o movimento do seletor
 
 
 /* ### CONSTANTES DO SCRIPT ### */
+
+/* Sintetizador de Voz */
+var sintetizador = new Sintetizador();
 
 /* CSS */
 
@@ -24,6 +30,9 @@ var CLASSE_ITEM_ACAO = "item-acao";
 
 /* Classe que define os itens que foram selecionados*/
 var CLASSE_ITEM_SELECIONADO = "item-selecionado";
+
+/* Classe que define o texto dos itens */
+var CLASSE_ITEM_TEXTO = "texto-item";
 
 /* IDs das seções, para usar na montagem do fluxo */
 var ID_SECAO_FORMACAO = "secao-formacao";
@@ -134,7 +143,9 @@ function selecionarAtual() {
 }
 
 function fazerAcao(item) {
-    console.log(item);
+    if (item.prop("id") === ID_ITEM_FALAR) {
+        sintetizador.falar(getTextoFormado());
+    }
 }
 
 /* Seletor */
@@ -261,6 +272,20 @@ function selecionarItem(item) {
 
 function moverParaSecaoFormacao(item) {
     item.appendTo("#" + ID_SECAO_FORMACAO).scrollView();
+}
+
+/* Texto */
+
+function getTextoFormado() {
+    var texto = "";
+    
+    $(".{0} .{1}".f(CLASSE_ITEM_SELECIONADO, CLASSE_ITEM_TEXTO)).each(function (idx) {
+        if (idx > 0) { texto += " "; }
+        
+        texto += $(this).text();
+    });
+    
+    return texto;
 }
 
 /* Geral */

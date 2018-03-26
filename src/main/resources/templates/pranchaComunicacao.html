@@ -14,6 +14,8 @@
 <div layout:fragment="topo-frag"
      layout:replace="fragmentos/prancha/topoReduzido :: topo-frag(imagem=${pacienteImagem})"></div>
 
+<!-- Conteúdo -->
+
 <main layout:fragment="conteudo-frag" class="container-fluid">
   
   <div class="container-prancha" th:assert="${pacienteId}">
@@ -45,10 +47,15 @@
 
 </main>
 
-<footer>
-  <!-- Adiciona o JS no rodapé -->
-  <script layout:fragment="rodape-scripts-frag" th:src="@{/js/prancha-comunicacao.js}"></script>
-</footer>
+<!-- Rodapé -->
+
+<th:block layout:fragment="rodape-scripts-frag">
+  <!-- Sintetizador de Voz (TTS) -->
+  <script th:src="@{/js/sintetizador.js}"></script>
+  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+  
+  <script th:src="@{/js/prancha-comunicacao.js}"></script>
+</th:block>
 
 </body>
 
