@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="painel-frag">
+
+<section th:id="secao-tempo" class="card secao-selecionavel">
+  <h5 class="card-header">TEMPO VERBAL</h5>
+  
+  <div th:class="painel-secao">
+  
+    <div layout:replace="fragmentos/prancha/itemTempo :: item-frag(id='tempo-passado',
+        texto='PASSADO', icone='fa-arrow-alt-circle-left')"></div>
+  
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='tempo-presente',
+        texto='PRESENTE', icone='fa-arrow-alt-circle-down')"></div>
+  
+    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='tempo-futuro',
+        texto='FUTURO', icone='fa-arrow-alt-circle-right')"></div>
+  
+  </div>
+</section>
+
+</body>
+</html>
