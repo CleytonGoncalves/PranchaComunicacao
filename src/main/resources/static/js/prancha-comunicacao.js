@@ -5,7 +5,8 @@
 
 /* ########## CONFIGURAÇÃO ########## */
 
-var TEMPO_SELETOR = 1000; // Tempo em ms para o movimento do seletor
+var CONFIG_TEMPO_SELETOR = 1000; // Tempo em ms para o movimento do seletor
+var CONFIG_FALAR_CADA_PALAVRA = false; // Se todo item pelo qual o seletor passar deve ser falado
 
 /* ########## FIM DA CONFIGURAÇÃO ########## */
 
@@ -41,6 +42,12 @@ var ID_SECAO_VERBO = "secao-verbo";
 var ID_SECAO_COMPLEMENTO = "secao-complemento";
 var ID_SECAO_DIVERSO = "secao-diverso";
 var ID_SECAO_ACAO = "secao-acao";
+var ID_SECAO_TEMPO = "secao-tempo";
+
+/* IDS dos itens de tempo */
+var ID_TEMPO_PASSADO = "tempo-passado";
+var ID_TEMPO_PRESENTE = "tempo-presente";
+var ID_TEMPO_FUTURO = "tempo-futuro";
 
 /* IDs dos itens de ação do painel de ação */
 var ID_ITEM_FALAR = "acao-falar";
@@ -54,6 +61,7 @@ var ID_ITEM_VOLTAR_VERBO = "acao-voltar-verbo";
 var ID_ITEM_VOLTAR_COMPLEMENTO = "acao-voltar-complemento";
 var ID_ITEM_VOLTAR_DIVERSO = "acao-voltar-diverso";
 
+
 /* Enum de estados do seletor */
 
 var EstadoSeletorEnum = {
@@ -66,20 +74,25 @@ if (Object.freeze) {
     Object.freeze(EstadoSeletorEnum); // Torna imutável se suportar ES5
 }
 
-/* ##### FLUXO DA PRANCHA ##### */
+/* ##### DEFINICAO FLUXO DA PRANCHA ##### */
 
 $(window).ready(function () {
     setFluxoSVC();
     proximaEtapaFluxo();
 });
 
+/* ##### SCRIPT DO SELETOR ##### */
+
+var listaSujeito = [];
+var listaVerbo = [];
+var listaComplemento = [];
+var listaDiverso = [];
+
+var estadoSeletor = EstadoSeletorEnum.SELETOR_PARADO;
+var seletorIntervalId = undefined;
+
 var fluxoFuncoes = null;
 var etapaFluxoAtual = null;
-
-/* Fluxo Sujeito -> Verbo -> Complemento (SVC) */
-function setFluxoSVC() {
-    fluxoFuncoes = [setApenasSujeitoVisivel, setApenasVerboEAcaoVisivel, setApenasComplementoEAcaoVisivel];
-}
 
 function proximaEtapaFluxo() {
     desativarTodosRealces();
@@ -117,11 +130,6 @@ function voltarEtapaFluxo() {
     rodarSeletorSecao();
 }
 
-/* ### SCRIPT DO SELETOR ### */
-
-var estadoSeletor = EstadoSeletorEnum.SELETOR_PARADO;
-var seletorIntervalId = undefined;
-
 /* Clique */
 
 $("body").not("#topo").click(selecionarAtual); // Qualquer parte da página, exceto pelo navbar
@@ -143,8 +151,16 @@ function selecionarAtual() {
 }
 
 function fazerAcao(item) {
-    if (item.prop("id") === ID_ITEM_FALAR) {
+    var itemId = item.prop("id");
+    
+    if (itemId === ID_ITEM_FALAR) {
         sintetizador.falar(getTextoFormado());
+        //TODO: ENVIAR FRASE FORMADA PARA O SERVIDOR
+    } else if (itemId === ID_ITEM_VOLTAR) {
+        desativarTodosRealces();
+        rodarSeletorSecao();
+    } else if (itemId === ID_ITEM_RECOMECAR) {
+        window.location.reload(true);
     }
 }
 
@@ -153,7 +169,7 @@ function fazerAcao(item) {
 function rodarSeletorSecao() {
     pararSeletor();
 
-    var secoes = getSecoesSelecionaveis();
+    var secoes = getSecoesVisiveisSelecionaveis();
     estadoSeletor = EstadoSeletorEnum.SELETOR_SECAO;
     iniciarSeletor(secoes, ativarRealceSecao, desativarRealceSecao);
 }
@@ -170,14 +186,22 @@ function iniciarSeletor(lista, funcaoAtivarRealce, funcaoDesativarRealce) {
     var posAtual = 0;
     var qntd = lista.length;
 
-    seletorIntervalId = setInterval(function () {
+    // Executa a função e retorna a si própria, a fim de que
+    // a primeira execução seja feita antes do intervalo
+    seletorIntervalId = setInterval(function loop() {
         var posAnterior = calcPosCircular(posAtual - 1, qntd);
-
+        
+        if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM && CONFIG_FALAR_CADA_PALAVRA) {
+            sintetizador.falar($(lista[posAtual]).find("." + CLASSE_ITEM_TEXTO).text());
+        }
+        
         funcaoDesativarRealce(lista[posAnterior]);
         funcaoAtivarRealce(lista[posAtual]);
 
         posAtual = calcPosCircular(posAtual + 1, qntd);
-    }, TEMPO_SELETOR);
+        
+        return loop;
+    }(), CONFIG_TEMPO_SELETOR);
 }
 
 function pararSeletor() {
@@ -217,37 +241,44 @@ function desativarTodosRealces() {
     $("." + CLASSE_ITEM_REALCE).removeClass(CLASSE_ITEM_REALCE);
 }
 
+
 /* ##### Funções Ajudantes ##### */
 
-/* Fluxo */
+/* ### Fluxo ### */
 
-function setApenasSujeitoVisivel() {
-    var seletorGeral = $(".{0}".f(CLASSE_SECAO_SELECIONAVEL));
-    var seletorMostrar = seletorGeral.not("#{0}, #{1}".f(ID_SECAO_SUJEITO, ID_SECAO_ACAO));
+/* Fluxo Sujeito -> Verbo -> Complemento (SVC) */
+function setFluxoSVC() {
     
-    seletorGeral.show(); // Exibe todos
-    seletorMostrar.hide(); // Esconde os não desejados
+    function setApenasSujeitoVisivel() {
+        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_SUJEITO, ID_SECAO_ACAO));
+    }
+    
+    function setApenasVerboEAcaoVisivel() {
+        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_VERBO, ID_SECAO_ACAO));
+    }
+    
+    function setApenasTempoVerbalVisivel() {
+        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_TEMPO, ID_SECAO_ACAO));
+    }
+    
+    function setApenasComplementoEAcaoVisivel() {
+        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_COMPLEMENTO, ID_SECAO_ACAO))
+    }
+    
+    fluxoFuncoes = [setApenasSujeitoVisivel, setApenasVerboEAcaoVisivel, setApenasTempoVerbalVisivel, setApenasComplementoEAcaoVisivel];
 }
 
-function setApenasVerboEAcaoVisivel() {
-    var seletorGeral = $(".{0}".f(CLASSE_SECAO_SELECIONAVEL));
-    var seletorMostrar = seletorGeral.not("#{0}, #{1}".f(ID_SECAO_VERBO, ID_SECAO_ACAO));
+function esconderTodasSecoesExceto(excecaoSeletor) {
+    var seletorGeral = $("." + CLASSE_SECAO_SELECIONAVEL);
+    var seletorEsconder = seletorGeral.not(excecaoSeletor);
     
     seletorGeral.show(); // Exibe todos
-    seletorMostrar.hide(); // Esconde os não desejados
+    seletorEsconder.hide(); // Esconde os não desejados
 }
 
-function setApenasComplementoEAcaoVisivel() {
-    var seletorGeral = $(".{0}".f(CLASSE_SECAO_SELECIONAVEL));
-    var seletorMostrar = seletorGeral.not("#{0}, #{1}".f(ID_SECAO_COMPLEMENTO, ID_SECAO_ACAO));
-    
-    seletorGeral.show(); // Exibe todos
-    seletorMostrar.hide(); // Esconde os não desejados
-}
+/* ### Seletor ### */
 
-/* Seletor */
-
-function getSecoesSelecionaveis() {
+function getSecoesVisiveisSelecionaveis() {
     return $("." + CLASSE_SECAO_SELECIONAVEL).filter(":visible");
 }
 
@@ -263,9 +294,26 @@ function getItemRealcado() {
 function selecionarItem(item) {
     item.detach();
 
-    // Deixa de ser selecionavel
-    item.removeClass(CLASSE_ITEM_SELECIONAVEL);
+    item.removeClass(CLASSE_ITEM_SELECIONAVEL); // Deixa de ser selecionavel
     item.addClass(CLASSE_ITEM_SELECIONADO);
+    
+    var itemId = item.prop("id").split("-");
+    var tipo = itemId[0], numeroId = itemId[1];
+    
+    switch (tipo) {
+        case "sujeito":
+            listaSujeito.push(numeroId);
+            break;
+        case "verbo":
+            listaVerbo.push(numeroId);
+            break;
+        case "complemento":
+            listaComplemento.push(numeroId);
+            break;
+        case "diverso":
+            listaDiverso.push(numeroId);
+            break;
+    }
 
     moverParaSecaoFormacao(item);
 }
@@ -274,7 +322,7 @@ function moverParaSecaoFormacao(item) {
     item.appendTo("#" + ID_SECAO_FORMACAO).scrollView();
 }
 
-/* Texto */
+/* ### Texto ### */
 
 function getTextoFormado() {
     var texto = "";
@@ -288,7 +336,7 @@ function getTextoFormado() {
     return texto;
 }
 
-/* Geral */
+/* ### Geral ### */
 
 $.fn.scrollView = function () {
     return this.each(function () {
