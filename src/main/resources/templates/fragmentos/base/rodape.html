@@ -8,12 +8,15 @@
   <span>© 2018 FATA - Instituto de Computação - Universidade Federal de Mato Grosso</span>
   
   <!-- Bootstrap JS -->
-  <script th:src="@{/js/jquery-3.3.1.js}"></script>
-  <script th:src="@{/js/bootstrap.bundle.js}"></script>
+  <script th:src="@{/js/geral/jquery-3.3.1.js}"></script>
+  <script th:src="@{/js/geral/bootstrap.bundle.js}"></script>
   
   <!-- Font-Awesome Sólido -->
-  <script th:src="@{/js/fontawesome.js}"></script>
-  <script defer th:src="@{/js/fa-solid.js}"></script>
+  <script th:src="@{/js/geral/fontawesome.js}"></script>
+  <script defer th:src="@{/js/geral/fa-solid.js}"></script>
+  
+  <!-- JS Comum a todas as páginas -->
+  <script defer th:src="@{/js/geral/scripts.js}"></script>
   
   <!-- JS de cada página (se existir) -->
   <div layout:fragment="rodape-scripts-frag"></div>

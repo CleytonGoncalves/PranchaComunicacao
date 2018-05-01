@@ -3,18 +3,13 @@
 //TODO: https://www.w3.org/wiki/JavaScript_best_practices#Avoid_globals
 //TODO: INCLUIR ETAPA DE SELEÇÃO DE TEMPO VERBAL!
 
-/* ########## CONFIGURAÇÃO ########## */
-
-var CONFIG_TEMPO_SELETOR = 1000; // Tempo em ms para o movimento do seletor
-var CONFIG_FALAR_CADA_PALAVRA = false; // Se todo item pelo qual o seletor passar deve ser falado
-
-/* ########## FIM DA CONFIGURAÇÃO ########## */
-
-
 /* ### CONSTANTES DO SCRIPT ### */
 
 /* Sintetizador de Voz */
 var sintetizador = new Sintetizador();
+
+/* Fluxo da Prancha */
+var fluxo = new Fluxo();
 
 /* CSS */
 
@@ -70,14 +65,10 @@ var EstadoSeletorEnum = {
     SELETOR_ITEM: "SELETOR_ITEM"
 };
 
-if (Object.freeze) {
-    Object.freeze(EstadoSeletorEnum); // Torna imutável se suportar ES5
-}
-
-/* ##### DEFINICAO FLUXO DA PRANCHA ##### */
+/* ##### INICIALIZAÇÃO DA PRANCHA ##### */
 
 $(window).ready(function () {
-    setFluxoSVC();
+    fluxoFuncoes = fluxo.getFluxoPaciente();
     proximaEtapaFluxo();
 });
 
@@ -244,38 +235,6 @@ function desativarTodosRealces() {
 
 /* ##### Funções Ajudantes ##### */
 
-/* ### Fluxo ### */
-
-/* Fluxo Sujeito -> Verbo -> Complemento (SVC) */
-function setFluxoSVC() {
-    
-    function setApenasSujeitoVisivel() {
-        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_SUJEITO, ID_SECAO_ACAO));
-    }
-    
-    function setApenasVerboEAcaoVisivel() {
-        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_VERBO, ID_SECAO_ACAO));
-    }
-    
-    function setApenasTempoVerbalVisivel() {
-        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_TEMPO, ID_SECAO_ACAO));
-    }
-    
-    function setApenasComplementoEAcaoVisivel() {
-        esconderTodasSecoesExceto("#{0}, #{1}".f(ID_SECAO_COMPLEMENTO, ID_SECAO_ACAO))
-    }
-    
-    fluxoFuncoes = [setApenasSujeitoVisivel, setApenasVerboEAcaoVisivel, setApenasTempoVerbalVisivel, setApenasComplementoEAcaoVisivel];
-}
-
-function esconderTodasSecoesExceto(excecaoSeletor) {
-    var seletorGeral = $("." + CLASSE_SECAO_SELECIONAVEL);
-    var seletorEsconder = seletorGeral.not(excecaoSeletor);
-    
-    seletorGeral.show(); // Exibe todos
-    seletorEsconder.hide(); // Esconde os não desejados
-}
-
 /* ### Seletor ### */
 
 function getSecoesVisiveisSelecionaveis() {
@@ -335,23 +294,3 @@ function getTextoFormado() {
     
     return texto;
 }
-
-/* ### Geral ### */
-
-$.fn.scrollView = function () {
-    return this.each(function () {
-        $('html, body').animate({
-            scrollTop: $(this).offset().top - 20
-        }, 500);
-    });
-};
-
-String.prototype.format = String.prototype.f = function() {
-    var s = this,
-        i = arguments.length;
-    
-    while (i--) {
-        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
-    }
-    return s;
-};

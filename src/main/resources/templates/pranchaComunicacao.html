@@ -53,10 +53,12 @@
 
 <th:block layout:fragment="rodape-scripts-frag">
   <!-- Sintetizador de Voz (TTS) -->
-  <script th:src="@{/js/sintetizador.js}"></script>
   <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
   
-  <script th:src="@{/js/prancha-comunicacao.js}"></script>
+  <script th:src="@{/js/prancha/configuracao.js}"></script>
+  <script th:src="@{/js/prancha/sintetizador.js}"></script>
+  <script th:src="@{/js/prancha/fluxo.js}"></script>
+  <script th:src="@{/js/prancha/prancha-comunicacao.js}"></script>
 </th:block>
 
 </body>
