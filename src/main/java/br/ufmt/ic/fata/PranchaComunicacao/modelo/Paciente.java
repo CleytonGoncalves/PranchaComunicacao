@@ -1,22 +1,19 @@
 package br.ufmt.ic.fata.PranchaComunicacao.modelo;
 
+import br.ufmt.ic.fata.PranchaComunicacao.modelo.base.EntidadeBase;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.NotBlank;
-
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
-import br.ufmt.ic.fata.PranchaComunicacao.modelo.base.EntidadeBase;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -35,7 +32,7 @@ public class Paciente extends EntidadeBase {
     
     private int velocidadeVoz = 50;
     
-    private int velocidadeSelecao = 50;
+    private int velocidadeSelecao = 1000;
     
     /* Por que Set? https://thoughts-on-java.org/association-mappings-bag-list-set */
     
