@@ -1,13 +1,5 @@
 package br.ufmt.ic.fata.PranchaComunicacao;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
-
-import java.util.HashSet;
-
 import br.ufmt.ic.fata.PranchaComunicacao.modelo.Paciente;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.armazenamento.ArmazenamentoDiscoServico;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.paciente.PacienteServico;
@@ -15,6 +7,13 @@ import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.ComplementoServico;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.DiversoServico;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.SujeitoServico;
 import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.VerboServico;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+
+import java.util.HashSet;
 
 @SpringBootApplication
 @PropertySource(value = {"application.properties", "segredos.application.properties"})
@@ -43,7 +42,6 @@ public class PranchaComunicacaoApplication {
             }
             //TODO: Remover entradas de teste acima
             
-            armazenamento.init();
         };
     }
     
