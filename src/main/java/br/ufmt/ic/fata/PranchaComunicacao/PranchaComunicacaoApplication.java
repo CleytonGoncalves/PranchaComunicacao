@@ -1,12 +1,12 @@
 package br.ufmt.ic.fata.PranchaComunicacao;
 
-import br.ufmt.ic.fata.PranchaComunicacao.modelo.Paciente;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.armazenamento.ArmazenamentoDiscoServico;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.paciente.PacienteServico;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.ComplementoServico;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.DiversoServico;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.SujeitoServico;
-import br.ufmt.ic.fata.PranchaComunicacao.servico.palavra.VerboServico;
+import br.ufmt.ic.fata.PranchaComunicacao.model.Paciente;
+import br.ufmt.ic.fata.PranchaComunicacao.service.armazenamento.ArmazenamentoDiscoService;
+import br.ufmt.ic.fata.PranchaComunicacao.service.paciente.PacienteService;
+import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.ComplementoService;
+import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.DiversoService;
+import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.SujeitoService;
+import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.VerboService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,9 +27,9 @@ public class PranchaComunicacaoApplication {
      * Inicializa o diretório de armazenamento de arquivos - Roda automático
      */
     @Bean
-    CommandLineRunner init(ArmazenamentoDiscoServico armazenamento, SujeitoServico ss,
-                           VerboServico vs, PacienteServico ps, ComplementoServico cs,
-                           DiversoServico ds) {
+    CommandLineRunner init(ArmazenamentoDiscoService armazenamento, SujeitoService ss,
+                           VerboService vs, PacienteService ps, ComplementoService cs,
+                           DiversoService ds) {
         return (args) -> {
     
             for (Paciente p : ps.buscarTodos()) {

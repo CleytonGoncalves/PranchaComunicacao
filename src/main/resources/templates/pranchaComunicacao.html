@@ -12,13 +12,13 @@
 <body>
 
 <div layout:fragment="topo-frag"
-     layout:replace="fragmentos/prancha/topoReduzido :: topo-frag(imagem=${pacienteImagem})"></div>
+     layout:replace="fragmentos/prancha/topoReduzido :: topo-frag(imagem=${paciente.getImagemUrl()})"></div>
 
 <!-- Conteúdo -->
 
 <main layout:fragment="conteudo-frag" class="container-fluid">
   
-  <div class="container-prancha" th:assert="${pacienteId}">
+  <div class="container-prancha" th:assert="${paciente}">
     
     <!-- TODO: Fazer o item de ação "Voltar" ter o mesmo tamanho que os itens de Palavras -->
     
@@ -27,16 +27,16 @@
     
     <!-- Paineis de Seleção de Palavras -->
     
-    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaSujeito},
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getSujeitos()},
     tipoPalavra='sujeito', titulo='SUJEITOS')"></section>
     
-    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaVerbo},
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getVerbos()},
     tipoPalavra='verbo', titulo='VERBOS')"></section>
     
-    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaComplemento},
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getComplementos()},
     tipoPalavra='complemento', titulo='COMPLEMENTOS')"></section>
     
-    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${listaDiverso},
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getDiversos()},
     tipoPalavra='diverso', titulo='DIVERSOS')"></section>
     
     <!-- Painel de Tempo -->
@@ -52,13 +52,13 @@
 <!-- Rodapé -->
 
 <th:block layout:fragment="rodape-scripts-frag">
-  <!-- Sintetizador de Voz (TTS) -->
-  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
-  
   <script th:src="@{/js/prancha/configuracao.js}"></script>
   <script th:src="@{/js/prancha/sintetizador.js}"></script>
   <script th:src="@{/js/prancha/fluxo.js}"></script>
   <script th:src="@{/js/prancha/prancha-comunicacao.js}"></script>
+  
+  <!-- Sintetizador de Voz (TTS) -->
+  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 </th:block>
 
 </body>
