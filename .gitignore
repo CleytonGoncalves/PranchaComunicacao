@@ -1,5 +1,5 @@
 ### Segredos ###
-/src/main/resources/segredos.application.properties
+/secrets.properties
 
 ### Gradle ###
 .gradle

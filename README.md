@@ -14,7 +14,7 @@ spring.datasource.username = <UsuárioDoBD>
 spring.datasource.password = <SenhaDoBD>
 
 # Caminho para gravar/ler arquivos submetidos pelos usuários (uploads)
-armazenamento.caminho=./<Caminho>/
+armazenamento.caminho=<Caminho>
 
 # Adiciona a pasta de uploads aos recursos estáticos (sobrescrita da configuração padrão)
 # https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-spring-mvc-static-content
