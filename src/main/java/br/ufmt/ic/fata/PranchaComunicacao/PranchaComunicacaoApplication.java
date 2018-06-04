@@ -16,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import java.util.HashSet;
 
 @SpringBootApplication
-@PropertySource(value = {"application.properties", "segredos.application.properties"})
+@PropertySource(value = {"application.properties", "file:./secrets.properties"})
 public class PranchaComunicacaoApplication {
     
     public static void main(String[] args) {
