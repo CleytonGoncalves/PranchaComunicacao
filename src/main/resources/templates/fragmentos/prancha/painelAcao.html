@@ -6,21 +6,22 @@
 
 <section id="secao-acao" class="card secao-selecionavel">
   <h5 class="card-header">AÇÕES</h5>
-  <div class="painel-secao">
   
-    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-falar',
-        texto='FALAR', icone='fa-volume-up')"></div>
+  <ul class="painel-secao">
   
-    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-apagar-ultimo',
-        texto='APAGAR ÚLTIMO', icone='fa-times-circle')"></div>
+    <li layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-falar',
+        texto='FALAR', acaoId='falar', secao='secao-acao', icone='fa-volume-up')"></li>
   
-    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-voltar',
-        texto='VOLTAR A SELEÇÃO', icone='fa-arrow-up')"></div>
+    <li layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-apagar-ultimo',
+        texto='APAGAR ÚLTIMO', acaoId='apagar-ultimo', secao='secao-acao', icone='fa-times-circle')"></li>
   
-    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-recomecar',
-        texto='RECOMEÇAR', icone='fa-undo')"></div>
+    <li layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-recomecar',
+        texto='RECOMEÇAR', acaoId='recomecar', secao='secao-acao', icone='fa-undo')"></li>
   
-  </div>
+    <li layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-voltar',
+        texto='VOLTAR A SELEÇÃO', acaoId='voltar-selecao', secao='secao-acao', icone='fa-arrow-up')"></li>
+  
+  </ul>
 </section>
 
 </body>

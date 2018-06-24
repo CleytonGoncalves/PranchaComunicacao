@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<body layout:fragment="item-frag(id, texto, imagem)">
+<body layout:fragment="item-frag(id, texto, categoria, palavraId, secao, imagem)">
 
-<div th:id="${id}" class="btn item-selecionavel">
+<li th:id="${id}" class="btn item-selecionavel"  data-item-tipo="palavra"
+     th:attr="data-palavra-categoria=${categoria}, data-palavra-id=${palavraId}, data-item-secao=${secao}">
   <img height="110" width="110" th:src="@{${imagem}}">
   <h6 class="texto-item" th:text="${texto}"></h6>
-</div>
+</li>
 
 </body>
 

@@ -1,6 +1,6 @@
 /* ##### Define os diferentes fluxos que a Prancha pode ter ##### */
 
-var Fluxo = function () {
+var FluxoPrancha = function () {
     
     /* Retorna o fluxo que a Prancha irá usar */
     this.getFluxoPaciente = function () {

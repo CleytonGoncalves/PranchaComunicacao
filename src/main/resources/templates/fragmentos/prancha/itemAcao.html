@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<body layout:fragment="item-frag(id, texto, icone)">
+<body layout:fragment="item-frag(id, texto, acaoId, secao, icone)">
 
-<div th:id="${id}" class="btn item-selecionavel item-acao">
+<li th:id="${id}" class="btn item-selecionavel item-acao"
+     data-item-tipo="acao" th:attr="data-item-secao=${secao}, data-acao-id=${acaoId}">
   <i th:class="'fas fa-2x ' + ${icone}"></i>
   <h6 th:text="${texto}"></h6>
-</div>
+</li>
 
 </body>
 

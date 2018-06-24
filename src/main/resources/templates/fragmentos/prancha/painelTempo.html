@@ -4,21 +4,21 @@
 
 <body layout:fragment="painel-frag">
 
-<section th:id="secao-tempo" class="card secao-selecionavel">
+<section id="secao-tempo" class="card secao-selecionavel">
   <h5 class="card-header">TEMPO VERBAL</h5>
   
-  <div th:class="painel-secao">
+  <ul th:class="painel-secao">
   
-    <div layout:replace="fragmentos/prancha/itemTempo :: item-frag(id='tempo-passado',
-        texto='PASSADO', icone='fa-arrow-alt-circle-left')"></div>
+    <li layout:replace="fragmentos/prancha/itemTempo :: item-frag(id='tempo-passado',
+        texto='PASSADO', secao='secao-tempo', tempo='Passado', icone='fa-arrow-alt-circle-left')"></li>
   
-    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='tempo-presente',
-        texto='PRESENTE', icone='fa-arrow-alt-circle-down')"></div>
+    <li layout:replace="fragmentos/prancha/itemTempo :: item-frag(id='tempo-presente',
+        texto='PRESENTE', secao='secao-tempo', tempo='Presente', icone='fa-arrow-alt-circle-down')"></li>
   
-    <div layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='tempo-futuro',
-        texto='FUTURO', icone='fa-arrow-alt-circle-right')"></div>
+    <li layout:replace="fragmentos/prancha/itemTempo :: item-frag(id='tempo-futuro',
+        texto='FUTURO', secao='secao-tempo', tempo='Futuro', icone='fa-arrow-alt-circle-right')"></li>
   
-  </div>
+  </ul>
 </section>
 
 </body>

@@ -28,16 +28,16 @@
     <!-- Paineis de Seleção de Palavras -->
     
     <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getSujeitos()},
-    tipoPalavra='sujeito', titulo='SUJEITOS')"></section>
+    categoria='sujeito', titulo='SUJEITOS')"></section>
     
     <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getVerbos()},
-    tipoPalavra='verbo', titulo='VERBOS')"></section>
+    categoria='verbo', titulo='VERBOS')"></section>
     
     <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getComplementos()},
-    tipoPalavra='complemento', titulo='COMPLEMENTOS')"></section>
+    categoria='complemento', titulo='COMPLEMENTOS')"></section>
     
     <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getDiversos()},
-    tipoPalavra='diverso', titulo='DIVERSOS')"></section>
+    categoria='diverso', titulo='DIVERSOS')"></section>
     
     <!-- Painel de Tempo -->
     <section layout:replace="fragmentos/prancha/painelTempo :: painel-frag"></section>
@@ -46,7 +46,7 @@
     <section layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></section>
   
   </div>
-
+  
 </main>
 
 <!-- Rodapé -->
@@ -54,7 +54,7 @@
 <th:block layout:fragment="rodape-scripts-frag">
   <script th:src="@{/js/prancha/configuracao.js}"></script>
   <script th:src="@{/js/prancha/sintetizador.js}"></script>
-  <script th:src="@{/js/prancha/fluxo.js}"></script>
+  <script th:src="@{/js/prancha/fluxo-prancha.js}"></script>
   <script th:src="@{/js/prancha/prancha-comunicacao.js}"></script>
   
   <!-- Sintetizador de Voz (TTS) -->

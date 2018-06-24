@@ -30,6 +30,7 @@
     flex-wrap: wrap;
     text-align: center;
     padding: 0.375rem 0.75rem;
+    margin: 0;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -39,7 +40,7 @@
 
 /* Item da Prancha */
 .container-prancha .btn {
-    margin: 3px;
+    margin: 12px 3px;
     padding: 0;
     border-radius: 0;
     background-color: #fff;
@@ -62,6 +63,8 @@
     color: #fff !important;
     background-color: #007bff !important;
     border-color: #007bff !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
 }
 
 .item-realce img {

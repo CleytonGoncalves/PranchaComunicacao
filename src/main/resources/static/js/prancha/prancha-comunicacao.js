@@ -1,15 +1,8 @@
 "use strict";
 
 //TODO: https://www.w3.org/wiki/JavaScript_best_practices#Avoid_globals
-//TODO: INCLUIR ETAPA DE SELEÇÃO DE TEMPO VERBAL!
 
-/* ### CONSTANTES DO SCRIPT ### */
-
-/* Sintetizador de Voz */
-var sintetizador = new Sintetizador();
-
-/* Fluxo da Prancha */
-var fluxo = new Fluxo();
+/* ##### CONSTANTES DO SCRIPT ##### */
 
 /* CSS */
 
@@ -50,14 +43,30 @@ var ID_ITEM_APAGAR_ULTIMO = "acao-apagar-ultimo";
 var ID_ITEM_VOLTAR = "acao-voltar";
 var ID_ITEM_RECOMECAR = "acao-recomecar";
 
-/* IDs dos itens de voltar de cada painel */
-var ID_ITEM_VOLTAR_SUJEITO = "acao-voltar-sujeito";
-var ID_ITEM_VOLTAR_VERBO = "acao-voltar-verbo";
-var ID_ITEM_VOLTAR_COMPLEMENTO = "acao-voltar-complemento";
-var ID_ITEM_VOLTAR_DIVERSO = "acao-voltar-diverso";
+/* ### Atributos Data-* personalizados ### */
 
+/* Chaves */
+var ATR_ITEM_TIPO = "itemTipo";
+var ATR_ITEM_SECAO = "itemSecao";
 
-/* Enum de estados do seletor */
+var ATR_PALAVRA_CATEGORIA = "palavraCategoria";
+var ATR_PALAVRA_ID = "palavraId";
+
+var ATR_ACAO_ID = "acaoId";
+
+var ATR_TEMPO_ID = "tempoId";
+
+/* Valores */
+var VAL_TIPO_PALAVRA = "palavra";
+var VAL_TIPO_ACAO = "acao";
+var VAL_TIPO_TEMPO = "tempo";
+
+var VAL_ACAO_FALAR = "falar";
+var VAL_ACAO_APAGAR_ULTIMO = "apagar-ultimo";
+var VAL_ACAO_VOLTAR_SELECAO = "voltar-selecao";
+var VAL_ACAO_RECOMECAR = "recomecar";
+
+/* ### Enum de estados do seletor ### */
 
 var EstadoSeletorEnum = {
     SELETOR_PARADO: "SELETOR_PARADO",
@@ -65,25 +74,195 @@ var EstadoSeletorEnum = {
     SELETOR_ITEM: "SELETOR_ITEM"
 };
 
+
 /* ##### INICIALIZAÇÃO DA PRANCHA ##### */
 
-$(window).ready(function () {
-    fluxoFuncoes = fluxo.getFluxoPaciente();
-    proximaEtapaFluxo();
-});
+var sintetizador = new Sintetizador();
+var fluxo = new FluxoPrancha();
 
-/* ##### SCRIPT DO SELETOR ##### */
-
-var listaSujeito = [];
-var listaVerbo = [];
-var listaComplemento = [];
-var listaDiverso = [];
+var listaPalavrasSelecionadas = [];
+var tempoVerbalSelecionado = CONFIG_TEMPO_VERBAL_PADRAO;
 
 var estadoSeletor = EstadoSeletorEnum.SELETOR_PARADO;
 var seletorIntervalId = undefined;
 
 var fluxoFuncoes = null;
 var etapaFluxoAtual = null;
+
+
+/* ##### SCRIPT DO SELETOR ##### */
+
+$(window).ready(function () {
+    fluxoFuncoes = fluxo.getFluxoPaciente();
+    proximaEtapaFluxo();
+});
+
+/* ### Seletor ### */
+
+function rodarSeletorSecao() {
+    pararSeletor();
+    
+    var secoes = getSecoesVisiveisSelecionaveis();
+    estadoSeletor = EstadoSeletorEnum.SELETOR_SECAO;
+    iniciarSeletor(secoes, ativarRealceSecao, desativarRealceSecao);
+}
+
+function rodarSeletorItem() {
+    pararSeletor();
+    
+    var itensSecaoEscolhida = getItensSelecionaveis();
+    estadoSeletor = EstadoSeletorEnum.SELETOR_ITEM;
+    iniciarSeletor(itensSecaoEscolhida, ativarRealceItem, desativarRealceItem);
+}
+
+function iniciarSeletor(lista, funcaoAtivarRealce, funcaoDesativarRealce) {
+    var posAtual = 0;
+    var qntd = lista.length;
+    
+    // Executa a função e retorna a si própria, a fim de que
+    // a primeira execução seja feita antes do intervalo
+    seletorIntervalId = setInterval(function loop() {
+        var posAnterior = calcPosCircular(posAtual - 1, qntd);
+        
+        if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM && CONFIG_FALAR_CADA_PALAVRA) {
+            sintetizador.falar($(lista[posAtual]).find("." + CLASSE_ITEM_TEXTO).text());
+        }
+        
+        funcaoDesativarRealce(lista[posAnterior]);
+        funcaoAtivarRealce(lista[posAtual]);
+        
+        posAtual = calcPosCircular(posAtual + 1, qntd);
+        
+        return loop;
+    }(), CONFIG_TEMPO_SELETOR);
+}
+
+function pararSeletor() {
+    estadoSeletor = EstadoSeletorEnum.SELETOR_PARADO;
+    
+    if (seletorIntervalId) {
+        clearInterval(seletorIntervalId);
+        seletorIntervalId = null;
+    }
+}
+
+function calcPosCircular(pos, qntdSecao) {
+    // Posicao circular: pos -1 -> qntdSecao-1; pos 0 -> 0; ...; pos qntdSecao -> 0; pos qntdSecao + 1 -> 1;
+    return (pos + qntdSecao) % qntdSecao; //
+}
+
+/* ### Ao Clicar ### */
+
+$("body").not("#topo").click(selecionarAtual); // Qualquer parte da página, exceto pelo navbar
+
+function selecionarAtual() {
+    if (estadoSeletor === EstadoSeletorEnum.SELETOR_SECAO) {
+        rodarSeletorItem();
+    } else if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM) {
+        pararSeletor();
+        
+        var itemRealcado = getItemRealcado();
+        if (itemRealcado.data(ATR_ITEM_TIPO) === VAL_TIPO_ACAO) {
+            fazerAcao(itemRealcado);
+        } else {
+            selecionarItem(itemRealcado);
+            proximaEtapaFluxo();
+        }
+    }
+}
+
+function selecionarItem(item) {
+    item.detach();
+    
+    // Deixa de ser selecionável, e se torna selecionado
+    item.removeClass(CLASSE_ITEM_SELECIONAVEL);
+    item.addClass(CLASSE_ITEM_SELECIONADO);
+    
+    var tipoItem = item.data(ATR_ITEM_TIPO);
+    
+    switch (tipoItem) {
+        case VAL_TIPO_TEMPO:
+            tempoVerbalSelecionado = item.data(ATR_TEMPO_ID);
+            break;
+        case VAL_TIPO_PALAVRA:
+            listaPalavrasSelecionadas.push(item.data(ATR_PALAVRA_ID));
+            break;
+        default:
+            console.error("Seleção de item inválido: {0}".f(item));
+    }
+    
+    moverParaSecaoFormacao(item);
+}
+
+function deselecionarItem(item) {
+    item.detach();
+    
+    // Deixa de ser selecionado, e se torna selecionável
+    item.removeClass(CLASSE_ITEM_SELECIONADO);
+    item.addClass(CLASSE_ITEM_SELECIONAVEL);
+    
+    var tipoItem = item.data(ATR_ITEM_TIPO);
+    
+    switch (tipoItem) {
+        case VAL_TIPO_TEMPO:
+            tempoVerbalSelecionado = CONFIG_TEMPO_VERBAL_PADRAO;
+            break;
+        case VAL_TIPO_PALAVRA:
+            var index = listaPalavrasSelecionadas.indexOf(item.data(ATR_PALAVRA_ID));
+            if (index > -1)
+                listaPalavrasSelecionadas = listaPalavrasSelecionadas.splice(index, 1); // Remove o ID da palavra atual da lista
+            break;
+        default:
+            console.error("Deseleção de item inválido: {0}".f(item));
+    }
+    
+    moverParaSecaoOriginal(item);
+}
+
+function fazerAcao(item) {
+    var tipoAcao = item.data(ATR_ACAO_ID);
+    
+    switch (tipoAcao) {
+        case VAL_ACAO_FALAR:
+            fazerAcaoFalar();
+            break;
+        case VAL_ACAO_VOLTAR_SELECAO:
+            desativarTodosRealces();
+            rodarSeletorSecao();
+            break;
+        case VAL_ACAO_RECOMECAR:
+            window.location.reload(true);
+            break;
+        case VAL_ACAO_APAGAR_ULTIMO:
+            deselecionarItem($("#{0}".f(ID_SECAO_FORMACAO)).children().last());
+            voltarEtapaFluxo();
+            break;
+        default:
+            console.error("Ação da prancha inválida: {0}".f(tipoAcao));
+    }
+}
+
+function fazerAcaoFalar() {
+    sintetizador.falar(getTextoFormado());
+    
+    //TODO: ENVIAR FRASE FORMADA PARA O SERVIDOR
+    $.post({
+        url:  location.origin + "/api/sintetizador",
+        data: JSON.stringify({palavrasIds: listaPalavrasSelecionadas, tempoVerbal: tempoVerbalSelecionado}),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        processData: false,
+        cache: false
+    })
+    .done(function () {
+        console.log("Sucesso ao enviar frase para o servidor");
+    })
+    .fail(function () {
+        alert("Falha ao sintetizar o texto.");
+    });
+}
+
+/* ### Fluxo ### */
 
 function proximaEtapaFluxo() {
     desativarTodosRealces();
@@ -121,95 +300,32 @@ function voltarEtapaFluxo() {
     rodarSeletorSecao();
 }
 
-/* Clique */
 
-$("body").not("#topo").click(selecionarAtual); // Qualquer parte da página, exceto pelo navbar
+/* ##### Funções Ajudantes ##### */
 
-function selecionarAtual() {
-    if (estadoSeletor === EstadoSeletorEnum.SELETOR_SECAO) {
-        rodarSeletorItem();
-    } else if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM) {
-        pararSeletor();
+/* ### Seletor ### */
 
-        var itemRealcado = getItemRealcado();
-        if (itemRealcado.hasClass(CLASSE_ITEM_ACAO)) {
-            fazerAcao(itemRealcado);
-        } else {
-            selecionarItem(itemRealcado);
-            proximaEtapaFluxo();
-        }
-    }
+function getSecoesVisiveisSelecionaveis() {
+    return $("." + CLASSE_SECAO_SELECIONAVEL).filter(":visible");
 }
 
-function fazerAcao(item) {
-    var itemId = item.prop("id");
-    
-    if (itemId === ID_ITEM_FALAR) {
-        sintetizador.falar(getTextoFormado());
-        //TODO: ENVIAR FRASE FORMADA PARA O SERVIDOR
-    } else if (itemId === ID_ITEM_VOLTAR) {
-        desativarTodosRealces();
-        rodarSeletorSecao();
-    } else if (itemId === ID_ITEM_RECOMECAR) {
-        window.location.reload(true);
-    }
+function getItensSelecionaveis() {
+    return $(".{0} ul li".f(CLASSE_SECAO_REALCE)).filter(":visible");
 }
 
-/* Seletor */
-
-function rodarSeletorSecao() {
-    pararSeletor();
-
-    var secoes = getSecoesVisiveisSelecionaveis();
-    estadoSeletor = EstadoSeletorEnum.SELETOR_SECAO;
-    iniciarSeletor(secoes, ativarRealceSecao, desativarRealceSecao);
+function getItemRealcado() {
+    return $(".{0} .{1}".f(CLASSE_SECAO_REALCE, CLASSE_ITEM_REALCE)).filter(":visible");
 }
 
-function rodarSeletorItem() {
-    pararSeletor();
-
-    var itensSecaoEscolhida = getItensSelecionaveis();
-    estadoSeletor = EstadoSeletorEnum.SELETOR_ITEM;
-    iniciarSeletor(itensSecaoEscolhida, ativarRealceItem, desativarRealceItem);
+function moverParaSecaoFormacao(item) {
+    item.appendTo("#{0}".f(ID_SECAO_FORMACAO)).scrollView();
 }
 
-function iniciarSeletor(lista, funcaoAtivarRealce, funcaoDesativarRealce) {
-    var posAtual = 0;
-    var qntd = lista.length;
-
-    // Executa a função e retorna a si própria, a fim de que
-    // a primeira execução seja feita antes do intervalo
-    seletorIntervalId = setInterval(function loop() {
-        var posAnterior = calcPosCircular(posAtual - 1, qntd);
-        
-        if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM && CONFIG_FALAR_CADA_PALAVRA) {
-            sintetizador.falar($(lista[posAtual]).find("." + CLASSE_ITEM_TEXTO).text());
-        }
-        
-        funcaoDesativarRealce(lista[posAnterior]);
-        funcaoAtivarRealce(lista[posAtual]);
-
-        posAtual = calcPosCircular(posAtual + 1, qntd);
-        
-        return loop;
-    }(), CONFIG_TEMPO_SELETOR);
+function moverParaSecaoOriginal(item) {
+    item.appendTo("#{0} ul".f(item.data(ATR_ITEM_SECAO)));
 }
 
-function pararSeletor() {
-    estadoSeletor = EstadoSeletorEnum.SELETOR_PARADO;
-
-    if (seletorIntervalId) {
-        clearInterval(seletorIntervalId);
-        seletorIntervalId = null;
-    }
-}
-
-function calcPosCircular(pos, qntdSecao) {
-    // Posicao circular: pos -1 -> qntdSecao-1; pos 0 -> 0; ...; pos qntdSecao -> 0; pos qntdSecao + 1 -> 1;
-    return (pos + qntdSecao) % qntdSecao; //
-}
-
-/* Realce */
+/* ### Realce ### */
 
 function ativarRealceSecao(secao) {
     secao.classList.add(CLASSE_SECAO_REALCE);
@@ -230,55 +346,6 @@ function desativarRealceItem(item) {
 function desativarTodosRealces() {
     $("." + CLASSE_SECAO_REALCE).removeClass(CLASSE_SECAO_REALCE);
     $("." + CLASSE_ITEM_REALCE).removeClass(CLASSE_ITEM_REALCE);
-}
-
-
-/* ##### Funções Ajudantes ##### */
-
-/* ### Seletor ### */
-
-function getSecoesVisiveisSelecionaveis() {
-    return $("." + CLASSE_SECAO_SELECIONAVEL).filter(":visible");
-}
-
-function getItensSelecionaveis() {
-    var selector = "." + CLASSE_SECAO_REALCE + " ." + CLASSE_ITEM_SELECIONAVEL;
-    return $(selector).filter(":visible");
-}
-
-function getItemRealcado() {
-    return $("." + CLASSE_SECAO_REALCE + " ." + CLASSE_ITEM_REALCE).filter(":visible");
-}
-
-function selecionarItem(item) {
-    item.detach();
-
-    item.removeClass(CLASSE_ITEM_SELECIONAVEL); // Deixa de ser selecionavel
-    item.addClass(CLASSE_ITEM_SELECIONADO);
-    
-    var itemId = item.prop("id").split("-");
-    var tipo = itemId[0], numeroId = itemId[1];
-    
-    switch (tipo) {
-        case "sujeito":
-            listaSujeito.push(numeroId);
-            break;
-        case "verbo":
-            listaVerbo.push(numeroId);
-            break;
-        case "complemento":
-            listaComplemento.push(numeroId);
-            break;
-        case "diverso":
-            listaDiverso.push(numeroId);
-            break;
-    }
-
-    moverParaSecaoFormacao(item);
-}
-
-function moverParaSecaoFormacao(item) {
-    item.appendTo("#" + ID_SECAO_FORMACAO).scrollView();
 }
 
 /* ### Texto ### */
