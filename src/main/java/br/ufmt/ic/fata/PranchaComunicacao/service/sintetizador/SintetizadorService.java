@@ -10,13 +10,18 @@ import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.ComplementoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.DiversoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.SujeitoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.VerboService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 import static br.ufmt.ic.fata.PranchaComunicacao.model.Pronome.EU;
 
+@Slf4j
 @Service
 public class SintetizadorService {
     
@@ -25,15 +30,28 @@ public class SintetizadorService {
     private final ComplementoService complementoService;
     private final DiversoService diversoService;
     
+    // Sintetizador de Voz
+    private Synthesiser sintetizador;
+    
     @Autowired
-    private SintetizadorService(SujeitoService ss, VerboService vs, ComplementoService cs, DiversoService ds) {
+    private SintetizadorService(@Value("${sintetizador.chave}") String chave, SujeitoService ss, VerboService vs, ComplementoService cs, DiversoService ds) {
         this.sujeitoService = ss;
         this.verboService = vs;
         this.complementoService = cs;
         this.diversoService = ds;
+    
+        sintetizador = new Synthesiser(chave);
+        sintetizador.setLanguage("pt-br");
+    }
+    
+    public InputStreamResource sintetizarTexto(List<String> listaPalavra, TempoVerbal tempoVerbal) throws IOException {
+        String texto = getTextoFromListaPalavrasIds(listaPalavra, tempoVerbal);
+        
+        return new InputStreamResource(sintetizador.getMP3Data(texto));
     }
     
     public String getTextoFromListaPalavrasIds(List<String> listaPalavra, TempoVerbal tempoVerbal) {
+        log.debug(listaPalavra + " - " + tempoVerbal);
         StringBuilder texto = new StringBuilder();
         
         Pronome pronome = EU; // Padrão
@@ -56,12 +74,18 @@ public class SintetizadorService {
                 case "complemento":
                     Complemento complemento = complementoService.buscarPorId(id);
                     texto.append(" ").append(complemento.getPalavra());
+                    break;
                 case "diverso":
                     Diverso diverso = diversoService.buscarPorId(id);
                     texto.append(" ").append(diverso.getPalavra());
+                    break;
+                default:
+                    throw new IllegalArgumentException("Tipo de palavra desconhecido");
             }
         }
-        
+    
+    
+        log.debug(texto.toString());
         return texto.toString();
     }
     

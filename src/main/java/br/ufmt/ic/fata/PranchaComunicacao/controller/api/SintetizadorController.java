@@ -1,19 +1,22 @@
 package br.ufmt.ic.fata.PranchaComunicacao.controller.api;
 
 import br.ufmt.ic.fata.PranchaComunicacao.model.TempoVerbal;
+import br.ufmt.ic.fata.PranchaComunicacao.service.sintetizador.SintetizadorRequest;
 import br.ufmt.ic.fata.PranchaComunicacao.service.sintetizador.SintetizadorService;
 import br.ufmt.ic.fata.PranchaComunicacao.util.converter.TempoVerbalConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.io.IOException;
 
 @Slf4j
 @RestController
@@ -27,12 +30,11 @@ public class SintetizadorController {
         this.service = service;
     }
     
-    @PostMapping
-    public ResponseEntity sintetizarTexto(@RequestParam(value = "palavrasIds") List<String> palavrasIds,
-                                          @RequestParam(value = "tempoVerbal") TempoVerbal tempoVerbal) {
-        log.debug(service.getTextoFromListaPalavrasIds(palavrasIds, tempoVerbal));
-        
-        return null;
+    @PostMapping(produces = "audio/mpeg")
+    public ResponseEntity<InputStreamResource> sintetizarTexto(@RequestBody SintetizadorRequest request) throws IOException {
+        InputStreamResource audio = service.sintetizarTexto(request.getPalavrasIds(), request.getTempoVerbal());
+    
+        return new ResponseEntity<>(audio, HttpStatus.OK);
     }
     
     @InitBinder
