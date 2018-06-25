@@ -19,6 +19,11 @@
 .container-prancha {
     flex-direction: column;
     display: flex;
+    margin-bottom: 2rem;
+}
+
+.container-prancha .card-header {
+    padding: 0.5rem 1.0rem;
 }
 
 .painel-secao {
@@ -34,18 +39,8 @@
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.container-prancha .card-header {
-    padding: 0.5rem 1.0rem;
-}
-
-/* Item da Prancha */
-.container-prancha .btn {
-    margin: 12px 3px;
-    padding: 0;
-    border-radius: 0;
-    background-color: #fff;
-    border-color: #ddd;
-    color: #000000;
+.secao-selecionavel {
+    margin-bottom: 1rem;
 }
 
 /* Título da seção atual sendo percorrido pelo Seletor (JS) */
@@ -56,6 +51,33 @@
 /* Corpo da seção atual sendo percorrido pelo Seletor (JS) */
 .secao-selecionavel.secao-realce .painel-secao {
     background: #dfe61f !important;
+}
+
+/* Item da Prancha */
+.container-prancha .btn {
+    margin: 12px 3px;
+    padding: 0;
+    border-radius: 0;
+    background-color: #fff;
+    border-color: #ddd;
+    color: #000000;
+    min-width: 110px;
+    max-width: 150px;
+}
+
+/* Legenda do Item */
+.container-prancha h6 {
+    margin: 0.25rem;
+}
+
+.item-icone {
+    height: 139px !important;
+    min-width: 150px !important;
+}
+
+.item-icone svg {
+    height: 110px !important;
+    width: 50px !important;
 }
 
 /* Item atual da seção sendo percorrido pelo Seletor (JS) */
@@ -72,9 +94,13 @@
     height: 130px !important;
 }
 
-.item-realce svg {
-    width: 130px !important;
+.item-realce.item-icone {
+    height: 160px !important;
+}
+
+.item-realce.item-icone svg {
     height: 130px !important;
+    width: 60px !important;
 }
 
 .item-selecionado {
@@ -88,9 +114,8 @@
     height: 130px !important;
 }
 
-/* Legenda do Item */
-.container-prancha h6 {
-    margin: 0.25rem;
+.item-selecionado.item-icone {
+    height: 160px !important;
 }
 
 #secao-formacao {
@@ -107,24 +132,4 @@
     min-height: 185px;
     margin-left: auto;
     margin-right: auto;
-}
-
-#secao-sujeito {
-    margin-bottom: 1rem;
-}
-
-#secao-verbo {
-    margin-bottom: 1rem;
-}
-
-#secao-complemento {
-    margin-bottom: 1rem;
-}
-
-#secao-diverso {
-    margin-bottom: 1rem;
-}
-
-#secao-acao {
-    margin-bottom: 2rem;
 }

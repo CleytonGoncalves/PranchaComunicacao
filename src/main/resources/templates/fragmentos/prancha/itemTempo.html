@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+<!--/* <!--suppress ThymeleafVariablesResolveInspection, HtmlUnknownTag */-->
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<body layout:fragment="item-frag(id, texto, tempo, icone)">
+<body layout:fragment="item-frag(texto, tempo, icone)">
 
-<li th:id="${id}" class="btn item-selecionavel item-tempo"
+<li class="btn  item-icone"
      data-item-tipo="tempo" th:attr="data-item-secao=${secao}, data-tempo-id=${tempo}">
   <i th:class="'fas fa-2x ' + ${icone}"></i>
   <h6 th:text="${texto}"></h6>

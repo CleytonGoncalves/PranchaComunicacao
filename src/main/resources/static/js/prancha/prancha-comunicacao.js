@@ -1,6 +1,9 @@
 "use strict";
 
+//TODO: Relacionar Tempo com o Verbo, e ao remover o Tempo, voltar p/ tela de seleção do Tempo
+//TODO: Remover uso de IDs/Classes em favor do uso de Data-Attributes no JS e CSS
 //TODO: https://www.w3.org/wiki/JavaScript_best_practices#Avoid_globals
+//TODO: Criar objeto global que guarda o estado do app
 
 /* ##### CONSTANTES DO SCRIPT ##### */
 
@@ -8,14 +11,10 @@
 
 /* Classes que definem quais são selecionáveis pelo seletor */
 var CLASSE_SECAO_SELECIONAVEL = "secao-selecionavel";
-var CLASSE_ITEM_SELECIONAVEL = "item-selecionavel";
 
 /* Classes que aplicam o realce (seleção) */
 var CLASSE_SECAO_REALCE = "secao-realce";
 var CLASSE_ITEM_REALCE = "item-realce";
-
-/* Classe que definem quais itens realizam alguma ação */
-var CLASSE_ITEM_ACAO = "item-acao";
 
 /* Classe que define os itens que foram selecionados*/
 var CLASSE_ITEM_SELECIONADO = "item-selecionado";
@@ -31,17 +30,6 @@ var ID_SECAO_COMPLEMENTO = "secao-complemento";
 var ID_SECAO_DIVERSO = "secao-diverso";
 var ID_SECAO_ACAO = "secao-acao";
 var ID_SECAO_TEMPO = "secao-tempo";
-
-/* IDS dos itens de tempo */
-var ID_TEMPO_PASSADO = "tempo-passado";
-var ID_TEMPO_PRESENTE = "tempo-presente";
-var ID_TEMPO_FUTURO = "tempo-futuro";
-
-/* IDs dos itens de ação do painel de ação */
-var ID_ITEM_FALAR = "acao-falar";
-var ID_ITEM_APAGAR_ULTIMO = "acao-apagar-ultimo";
-var ID_ITEM_VOLTAR = "acao-voltar";
-var ID_ITEM_RECOMECAR = "acao-recomecar";
 
 /* ### Atributos Data-* personalizados ### */
 
@@ -60,6 +48,8 @@ var ATR_TEMPO_ID = "tempoId";
 var VAL_TIPO_PALAVRA = "palavra";
 var VAL_TIPO_ACAO = "acao";
 var VAL_TIPO_TEMPO = "tempo";
+
+var VAL_PALAVRA_CATEGORIA_VERBO = "verbo";
 
 var VAL_ACAO_FALAR = "falar";
 var VAL_ACAO_APAGAR_ULTIMO = "apagar-ultimo";
@@ -94,7 +84,7 @@ var etapaFluxoAtual = null;
 
 $(window).ready(function () {
     fluxoFuncoes = fluxo.getFluxoPaciente();
-    proximaEtapaFluxo();
+    proximaEtapaFluxo(null);
 });
 
 /* ### Seletor ### */
@@ -166,7 +156,7 @@ function selecionarAtual() {
             fazerAcao(itemRealcado);
         } else {
             selecionarItem(itemRealcado);
-            proximaEtapaFluxo();
+            proximaEtapaFluxo(itemRealcado);
         }
     }
 }
@@ -175,7 +165,6 @@ function selecionarItem(item) {
     item.detach();
     
     // Deixa de ser selecionável, e se torna selecionado
-    item.removeClass(CLASSE_ITEM_SELECIONAVEL);
     item.addClass(CLASSE_ITEM_SELECIONADO);
     
     var tipoItem = item.data(ATR_ITEM_TIPO);
@@ -183,6 +172,8 @@ function selecionarItem(item) {
     switch (tipoItem) {
         case VAL_TIPO_TEMPO:
             tempoVerbalSelecionado = item.data(ATR_TEMPO_ID);
+            // Clone permite escolher o mesmo Tempo p/ verbos diferentes do mesmo fluxo, caso liberado
+            item = item.clone(true, true);
             break;
         case VAL_TIPO_PALAVRA:
             listaPalavrasSelecionadas.push(item.data(ATR_PALAVRA_ID));
@@ -199,7 +190,6 @@ function deselecionarItem(item) {
     
     // Deixa de ser selecionado, e se torna selecionável
     item.removeClass(CLASSE_ITEM_SELECIONADO);
-    item.addClass(CLASSE_ITEM_SELECIONAVEL);
     
     var tipoItem = item.data(ATR_ITEM_TIPO);
     
@@ -234,7 +224,7 @@ function fazerAcao(item) {
             window.location.reload(true);
             break;
         case VAL_ACAO_APAGAR_ULTIMO:
-            deselecionarItem($("#{0}".f(ID_SECAO_FORMACAO)).children().last());
+            deselecionarItem($("#{0}".f(ID_SECAO_FORMACAO)).scrollView().children().last());
             voltarEtapaFluxo();
             break;
         default:
@@ -264,7 +254,7 @@ function fazerAcaoFalar() {
 
 /* ### Fluxo ### */
 
-function proximaEtapaFluxo() {
+function proximaEtapaFluxo(ultimoItemSelecionado) {
     desativarTodosRealces();
     
     if (etapaFluxoAtual === null || etapaFluxoAtual < 0) {
@@ -277,7 +267,7 @@ function proximaEtapaFluxo() {
     }
     
     var funcaoAtualFluxo = fluxoFuncoes[etapaFluxoAtual];
-    funcaoAtualFluxo();
+    funcaoAtualFluxo(ultimoItemSelecionado);
     
     rodarSeletorSecao();
 }
@@ -301,7 +291,7 @@ function voltarEtapaFluxo() {
 }
 
 
-/* ##### Funções Ajudantes ##### */
+/* ##### FUNÇÕES AJUDANTES ##### */
 
 /* ### Seletor ### */
 
