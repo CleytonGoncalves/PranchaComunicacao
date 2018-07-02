@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="fragmentos/pastaPalavra">
+      layout:decorator="fragmentos/base/template">
 
 <head>
   <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Pacientes</title>
@@ -9,168 +9,26 @@
 
 <body>
 
-<main>
-  <!--TODO: COLOCAR BOTÃO PARA SELECIONAR PRANCHA DO PACIENTE-->
+<main layout:fragment="conteudo-frag" class="container-fluid">
   
-  <!-- Modal de cadastro -->
-  <!-- Substitui o div pelo fragmento de modal, alterando o ID e Título -->
-  <div layout:fragment="modal-cadastro-frag"
-       layout:replace="fragmentos/modalVazio :: modal-frag(modalId='modal-cadastro', modalTitulo='CADASTRO DE PACIENTE')"></div>
-  
-  <!-- Conteúdo do Modal, para ser inserido DINAMICAMENTE (não aparece na página quando instanciado) -->
-  <form th:fragment="form-cadastro" id="form-cadastro" th:assert="${palavra1}"
-        th:object="${palavra1}"
-        th:action="@{/pastaVerbo/salvar}" method="post" enctype="multipart/form-data">
+  <header>
+    <h2 class="float-left">PACIENTES</h2>
     
-    <div class="modal-body">
-      
-      <div class="container">
-        
-        <!-- Imagem e Palavra -->
-        <div class="row form-group justify-content-center align-items-center">
-          
-          <fieldset class="col-md-3">
-            <img class="img-thumbnail d-block mx-auto" id="imagem-palavra" height="150" width="150"
-                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.png}"
-                 src="../static/images/placeholder.png">
-            
-            <div id="grupo-input-imagem" class="mt-3">
-              <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
-              <input id="input-imagem-real" name="imagem" type="file" th:required="*{id == null}"
-                     accept="image/png, image/jpeg, image/jpg, image/gif"/>
-              
-              <!-- Botão falso que delega para outro botão invísivel (onclick) -->
-              <input id="input-imagem-exibido" class="btn btn-block btn-info" type="button"
-                     value="SELECIONAR"/>
-            </div>
-          
-          </fieldset>
-          
-          <div class="col-md-3 offset-md-1">
-            <label class="col-form-label font-weight-bold" for="input-palavra">PALAVRA:</label>
-            <input class="form-control " id="input-palavra" name="input-palavra"
-                   required="" type="text" th:field="*{palavra}">
-          </div>
-        
-        </div>
-        
-        <!-- Conjugação -->
-        <div class="row">
-          
-          <!-- Eu -->
-          <fieldset class="col-md card">
-            <section class="card-body">
-              
-              <h5 class="card-title">EU</h5>
-              <hr>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold"
-                       for="input-presente-eu">PRESENTE</label>
-                <input class="form-control " id="input-presente-eu" name="input-presente-eu"
-                       required="" type="text" th:field="*{presenteEu}">
-              </div>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold" for="input-passado-eu">PASSADO</label>
-                <input class="form-control " id="input-passado-eu" name="input-passado-eu"
-                       required="" type="text" th:field="*{passadoEu}">
-              </div>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold" for="input-futuro-eu">FUTURO</label>
-                <input class="form-control " id="input-futuro-eu" name="input-futuro-eu"
-                       required="" type="text" th:field="*{futuroEu}">
-              </div>
-            
-            </section>
-          </fieldset>
-          
-          <!-- Você -->
-          <fieldset class="col-md card">
-            <section class="card-body">
-              
-              <h5 class="card-title">VOCÊ</h5>
-              <hr>
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold"
-                       for="input-presente-voce">PRESENTE</label>
-                <input class="form-control " id="input-presente-voce"
-                       name="input-presente-voce"
-                       required="" type="text" th:field="*{presenteVoce}">
-              </div>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold"
-                       for="input-passado-voce">PASSADO</label>
-                <input class="form-control " id="input-passado-voce"
-                       name="input-passado-voce"
-                       required="" type="text" th:field="*{passadoVoce}">
-              </div>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold" for="input-futuro-voce">FUTURO</label>
-                <input class="form-control " id="input-futuro-voce" name="input-futuro-voce"
-                       required="" type="text" th:field="*{futuroVoce}">
-              </div>
-            
-            </section>
-          </fieldset>
-          
-          <!-- Nós -->
-          <fieldset class="col-md card">
-            <section class="card-body">
-              
-              <h5 class="card-title">NÓS</h5>
-              <hr>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold"
-                       for="input-presente-nos">PRESENTE</label>
-                <input class="form-control " id="input-presente-nos"
-                       name="input-presente-nos"
-                       required="" type="text" th:field="*{presenteNos}">
-              </div>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold"
-                       for="input-passado-nos">PASSADO</label>
-                <input class="form-control " id="input-passado-nos" name="input-passado-nos"
-                       required="" type="text" th:field="*{passadoNos}">
-              </div>
-              
-              <div class="form-group">
-                <label class="col-form-label font-weight-bold" for="input-futuro-nos">FUTURO</label>
-                <input class="form-control " id="input-futuro-nos" name="input-futuro-nos"
-                       required="" type="text" th:field="*{futuroNos}">
-              </div>
-            
-            </section>
-          </fieldset>
-        
-        </div>
-      
-      </div>
+    <a type="button" id="botao-novo-cadastro" class="ml-3 btn btn-info" th:href="@{'/pastaPaciente/novo'}">
+      <i class="fas fa-plus fa-lg"></i>
+    </a>
     
-    </div>
-    
-    <div class="modal-footer">
-      <button type="reset" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
-      <button id="botao-enviar-form" type="submit" class="btn btn-primary">SALVAR</button>
-    </div>
+    <hr/>
+  </header>
   
-  </form>
-  
-  <!-- Tabela de Palavra -->
-  <!-- TODO: Implementar DataTable na tabela -->
-  <table layout:fragment="tabela-palavra-frag" id="tabela-palavras"
-         class="table table-hover rtable table-sm table-bordered table-striped">
+  <!-- Tabela de Pacientes -->
+  <table layout:fragment="tabela-paciente-frag" id="tabela-pacientes"
+         class="table table-sm table-bordered table-striped">
     
     <thead>
     <tr>
       <th scope="col" class="text-center">IMAGEM</th>
       <th scope="col">NOME</th>
-      <th scope="col">DATA DE NASCIMENTO</th>
       <th scope="col">SEXO</th>
       <th scope="col" class="text-center">EDITAR</th>
       <th scope="col" class="text-center">SELECIONAR</th>
@@ -186,15 +44,14 @@
       </td>
       
       <td class="align-middle" th:text="${paciente.nome}"></td>
-      <td class="align-middle" th:text="${paciente.dataNascimento}"></td>
       <td class="align-middle" th:text="${paciente.sexo}"></td>
       
       <td class="align-middle text-center">
-        <button th:id="${paciente.id}" type="button" class="btn btn-link botao-editar-cadastro">
+        <a type="button" class="btn btn-link" th:href="@{'/pastaPaciente/' + ${paciente.id}}">
           <i class="fas fa-edit fa-lg fa-fw"></i>
-        </button>
+        </a>
       </td>
-  
+      
       <td class="align-middle text-center">
         <form th:id="'form-selecionar-' + ${paciente.id}"
               th:action="@{'/pastaPaciente/selecionarPaciente/' + ${paciente.id}}"
@@ -212,6 +69,9 @@
 
 </main>
 
+<th:block layout:fragment="rodape-scripts-frag">
+  <script th:src="@{/js/pasta-paciente.js}"></script>
+</th:block>
 
 </body>
 </html>
