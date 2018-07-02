@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="uploadImagem-frag(imagemId, tamanho, src)">
+
+<img class="img-thumbnail d-block mx-auto imagem-preview" th:id="${imagemId}" th:height="${tamanho}"
+     th:width="${tamanho}"
+     th:src="${src != null && src != ''} ? @{'/' + ${src}} : @{/images/placeholder.png}" src="">
+
+<div class="grupo-input-imagem mt-3 mx-auto" th:style="'max-width: ' + ${tamanho + 50} + 'px'">
+  <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
+  <input class="input-imagem-real" name="imagem" type="file" th:required="*{id == null}"
+         accept="image/png, image/jpeg, image/jpg, image/gif"/>
+  
+  <!-- Botão falso que delega para outro botão invísivel (onclick) -->
+  <input class="input-imagem-exibido btn btn-block btn-info" type="button" value="SELECIONAR"/>
+</div>
+
+
+</body>
