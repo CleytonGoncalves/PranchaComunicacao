@@ -32,7 +32,11 @@ public abstract class PalavraController<T extends Palavra> {
     }
     
     @GetMapping
-    public String pegarPaginaInicial() {
+    public String pegarPaginaInicial(Model model, SessionStatus status) {
+        if (model.containsAttribute(PALAVRA_MODEL)) {
+            status.setComplete();
+        }
+        
         return getPaginaInicial();
     }
     
@@ -63,7 +67,11 @@ public abstract class PalavraController<T extends Palavra> {
      * @return Fragmento da Palavra pedida
      */
     @GetMapping("/{id}")
-    public String pegarPalavraPorId(@PathVariable(name = "id") long id, Model model) {
+    public String pegarPalavraPorId(@PathVariable(name = "id") long id, Model model, SessionStatus status) {
+        if (model.containsAttribute(PALAVRA_MODEL)) {
+            status.setComplete();
+        }
+        
         model.addAttribute(PALAVRA_MODEL, palavraService.buscarPorId(id));
         
         return getFragmentoCadastro(); // Fragmento preenchido com a palavra pedida
