@@ -10,6 +10,8 @@
 <body>
 
 <main>
+  <h2 layout:fragment="titulo-frag">VERBOS</h2>
+  
   <!-- Modal de cadastro -->
   <!-- Substitui o div pelo fragmento de modal, alterando o ID e Título -->
   <div layout:fragment="modal-cadastro-frag"
@@ -24,21 +26,13 @@
   
         <!-- Imagem e Palavra -->
         <div class="row form-group justify-content-center align-items-center">
-      
-          <fieldset class="col-md-3">
-            <img class="img-thumbnail d-block mx-auto" id="imagem-palavra" height="150" width="150"
-                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.png}">
-        
-            <div id="grupo-input-imagem" class="mt-3">
-              <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
-              <input id="input-imagem-real" name="imagem" type="file" th:required="*{id == null}"
-                     accept="image/png, image/jpeg, image/jpg, image/gif"/>
-          
-              <!-- Botão falso que delega para outro botão invísivel (onclick) -->
-              <input id="input-imagem-exibido" class="btn btn-block btn-info" type="button"
-                     value="SELECIONAR"/>
-            </div>
-      
+  
+          <!-- Imagem -->
+          <fieldset class="col-md-3 form-group"
+                    layout:include="fragmentos/uploadImagem :: uploadImagem-frag(
+                      imagemId='imagem-palavra',
+                      tamanho=150,
+                      src=*{url})">
           </fieldset>
       
           <div class="col-md-5">
@@ -155,9 +149,8 @@
   </form>
   
   <!-- Tabela de Palavra -->
-  <!-- TODO: Implementar DataTable na tabela -->
   <table layout:fragment="tabela-palavra-frag" id="tabela-palavras"
-         class="table table-hover rtable table-sm table-bordered table-striped">
+         class="table   table-sm table-bordered table-striped">
     
     <thead>
     <tr>
