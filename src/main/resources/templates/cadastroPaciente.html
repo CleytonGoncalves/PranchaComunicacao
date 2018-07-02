@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/base/template">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Cadastro de Paciente</title>
+</head>
+
+<body>
+
+<main layout:fragment="conteudo-frag" class="container fundo-claro">
+  <header class="mb-5">
+    <h4>Cadastro de Paciente</h4>
+    <hr/>
+  </header>
+  
+  <form id="form-cadastro" class="col-md-6 offset-md-3" th:assert="${paciente}" th:object="${paciente}"
+        th:action="@{/pastaPaciente/salvar}" method="post" enctype="multipart/form-data">
+    
+    <!-- Imagem -->
+    <fieldset class="form-group" layout:include="fragmentos/uploadImagem :: uploadImagem-frag(
+      imagemId='imagem-paciente',
+      tamanho=150,
+      src=*{imagemUrl})">
+    </fieldset>
+    
+    <!-- Dados -->
+    <fieldset class="form-group row">
+      <label class="col-form-label font-weight-bold" for="input-nome">NOME</label>
+      <input class="form-control " id="input-nome" name="input-nome"
+             required="" type="text" th:field="*{nome}">
+    </fieldset>
+    
+    <!-- Sexo -->
+    <fieldset class="form-group row">
+      <label class="font-weight-bold">SEXO</label>
+      
+      <div class="col-md">
+        
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="sexo-0" name="grupo-sexo" type="radio" value="M"
+                 th:field="*{sexo}" required=""/>
+          <label class="custom-control-label" for="sexo-0">MASCULINO</label>
+        </div>
+        
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="sexo-1" name="grupo-sexo" type="radio" value="F"
+                 th:field="*{sexo}" required=""/>
+          <label class="custom-control-label" for="sexo-1">FEMININO</label>
+        </div>
+      
+      </div>
+    </fieldset>
+    
+    <!-- Fluxo Prancha -->
+    <fieldset class="form-group row">
+      <label class="font-weight-bold">FLUXO DA PRANCHA</label>
+      
+      <div class="col-md">
+        
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="fluxo-svc" name="grupo-fluxo" type="radio"
+                 value="SUJEITO-VERBO-COMPLEMENTO"
+                 th:field="*{fluxoPrancha}" required="" checked=""/>
+          <label class="custom-control-label" for="fluxo-svc">SUJEITO -> VERBO -> COMPLEMENTO</label>
+        </div>
+        
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="fluxo-livre" name="grupo-fluxo" type="radio" value="LIVRE"
+                 th:field="*{fluxoPrancha}" required=""/>
+          <label class="custom-control-label" for="fluxo-livre">LIVRE</label>
+        </div>
+      
+      </div>
+    </fieldset>
+    
+    <!-- Falar cada palavra da Prancha -->
+    <fieldset class="form-group row">
+      <label class="font-weight-bold">FALAR CADA PALAVRA PELO QUAL O SELETOR PASSAR</label>
+      
+      <div class="col-md">
+        
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="falar-nao" name="grupo-falar-seletor" type="radio" value="false"
+                 th:field="*{falarCadaPalavraSeletor}" required="" checked=""/>
+          <label class="custom-control-label" for="falar-nao">NÃO</label>
+        </div>
+        
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="falar-sim" name="grupo-falar-seletor" type="radio" value="true"
+                 th:field="*{falarCadaPalavraSeletor}" required=""/>
+          <label class="custom-control-label" for="falar-sim">SIM</label>
+        </div>
+      
+      </div>
+    </fieldset>
+    
+    <!-- Botões de envio -->
+    <section class="mt-4 row offset-md-7">
+      <a type="button" class="col mr-2 btn btn-secondary" th:href="@{'/pastaPaciente'}">CANCELAR</a>
+      <button id="botao-enviar-form" type="submit" class="col btn btn-primary">SALVAR</button>
+    </section>
+  
+  </form>
+
+</main>
+
+
+</body>
+</html>

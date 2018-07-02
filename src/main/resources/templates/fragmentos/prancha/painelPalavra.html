@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--/* <!--suppress ThymeleafVariablesResolveInspection */-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="painel-frag(listaPalavra, categoria, titulo)">
+
+<section th:id="'secao-' + ${categoria}" class="card secao-selecionavel">
+  <h5 class="card-header" th:text="${titulo}">(TÍTULO)</h5>
+  
+  <ul th:class="painel-secao">
+    
+    <th:block th:each="palavra : ${listaPalavra}">
+      <li layout:replace="fragmentos/prancha/itemPalavra :: item-frag(id=${categoria} + '-' + ${palavra.id},
+        texto=${palavra.palavra}, categoria=${categoria}, palavraId=${palavra.id}, secao='secao-' + ${categoria}, imagem='/' + ${palavra.url})"></li>
+    </th:block>
+  
+    <li layout:replace="fragmentos/prancha/itemAcao :: item-frag(id='acao-voltar-' + ${categoria},
+        texto='VOLTAR A SELEÇÃO', acaoId='voltar-selecao', secao='secao-' + ${categoria}, icone='fa-arrow-up')"></li>
+  
+  </ul>
+</section>
+
+</body>
+</html>

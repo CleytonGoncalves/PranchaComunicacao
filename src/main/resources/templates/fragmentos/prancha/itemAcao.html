@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!--/* <!--suppress ThymeleafVariablesResolveInspection, HtmlUnknownTag */-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="item-frag(id, texto, acaoId, secao, icone)">
+
+<li th:id="${id}" class="btn  item-icone"
+     data-item-tipo="acao" th:attr="data-item-secao=${secao}, data-acao-id=${acaoId}">
+  <i th:class="'fas fa-5x ' + ${icone}"></i>
+  <h6 th:text="${texto}"></h6>
+</li>
+
+</body>
+
+</html>

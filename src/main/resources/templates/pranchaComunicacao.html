@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/base/template">
+
+<head>
+  <title>Prancha de Comunicação</title>
+  
+  <link th:href="@{/css/prancha-comunicacao.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div layout:fragment="topo-frag"
+     layout:replace="fragmentos/prancha/topoReduzido :: topo-frag(imagem=${paciente.getImagemUrl()})"></div>
+
+<!-- Conteúdo -->
+
+<main layout:fragment="conteudo-frag" class="container-fluid">
+  
+  <div class="container-prancha" th:assert="${paciente}">
+    
+    <!-- Painel de Formação de Frase -->
+    <section layout:replace="fragmentos/prancha/painelFormacao :: painel-frag"></section>
+    
+    <!-- Paineis de Seleção de Palavras -->
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getSujeitos()},
+    categoria='sujeito', titulo='SUJEITOS')"></section>
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getVerbos()},
+    categoria='verbo', titulo='VERBOS')"></section>
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getComplementos()},
+    categoria='complemento', titulo='COMPLEMENTOS')"></section>
+    
+    <section layout:replace="fragmentos/prancha/painelPalavra :: painel-frag(listaPalavra=${paciente.getDiversos()},
+    categoria='diverso', titulo='DIVERSOS')"></section>
+    
+    <!-- Painel de Tempo -->
+    <section layout:replace="fragmentos/prancha/painelTempo :: painel-frag"></section>
+    
+    <!-- Painel de Ações -->
+    <section layout:replace="fragmentos/prancha/painelAcao :: painel-frag"></section>
+  
+  </div>
+  
+</main>
+
+<!-- Rodapé -->
+
+<th:block layout:fragment="rodape-scripts-frag">
+  <script th:inline="javascript">
+      /* ### Configurações do Paciente ### */
+    
+      /*<![CDATA[*/
+    
+      var CONFIG_TEMPO_SELETOR = [[${paciente.velocidadeSelecao}]]; // Tempo em ms para o movimento do seletor
+      var CONFIG_FLUXO_PRANCHA = [[${paciente.fluxoPrancha}]]; // Qual fluxo de prancha usar
+      var CONFIG_FALAR_CADA_PALAVRA = [[${paciente.falarCadaPalavraSeletor}]]; // Se todo item pelo qual o seletor passar deve ser falado
+    
+      /*]]>*/
+  </script>
+  <script th:src="@{/js/prancha/configuracao.js}"></script>
+  <script th:src="@{/js/prancha/constante.js}"></script>
+  <script th:src="@{/js/prancha/sintetizador.js}"></script>
+  <script th:src="@{/js/prancha/fluxo.js}"></script>
+  <script th:src="@{/js/prancha/prancha-comunicacao.js}"></script>
+  
+  <!-- Sintetizador de Voz (TTS) -->
+  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+</th:block>
+
+</body>
+
+</html>

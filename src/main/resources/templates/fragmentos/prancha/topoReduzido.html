@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--/* <!--suppress ThymeleafVariablesResolveInspection */-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="topo-frag(imagem)">
+
+<header id="topo">
+  <nav class="navbar navbar-dark bg-dark mb-3">
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <span class="navbar-brand mb-0">
+      <img th:src="'/' + ${imagem}" src="" width="30" height="30" class="rounded-circle">
+      JOÃO SILVA LOPES
+    </span>
+    
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item active">
+          <a class="nav-link" href="#">INÍCIO <span class="sr-only">(current)</span></a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/pranchaComunicacao">PRANCHA</a>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false">CADASTRO</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="/pastaSujeito">SUJEITO</a>
+            <a class="dropdown-item" href="/pastaVerbo">VERBO</a>
+            <a class="dropdown-item" href="/pastaComplemento">COMPLEMENTO</a>
+            <a class="dropdown-item" href="#">DIVERSO</a>
+          </div>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/pastaPaciente">PACIENTES</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="#">CONTATO</a>
+        </li>
+      
+      </ul>
+    </div>
+  
+  </nav>
+</header>
+
+</body>
+</html>

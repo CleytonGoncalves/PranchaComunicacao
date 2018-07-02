@@ -1,6 +1,6 @@
 ## Configuração
 
-É necessário adicionar um arquivo **segredos.application.properties** no diretório **src/main/resources**, substituindo
+É necessário adicionar um arquivo **secrets.properties** no diretório do **executável da aplicação**, substituindo
 o que está entre **<>** por sua configuração própria:
 
 ```

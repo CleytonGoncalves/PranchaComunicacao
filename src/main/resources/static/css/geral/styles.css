@@ -1,0 +1,47 @@
+/* Site todo maiúsculo */
+* {
+    text-transform: uppercase !important;
+}
+
+.fa-fw.fa-border {
+    width: 1.58571429em;
+}
+
+/* Coloca o botão falso de seleção da imagem por cima (eixo Z) do botão real invisível  */
+/* Permitindo mostrar a validação (campo "required") que ocorre no botão invisível */
+.grupo-input-imagem {
+    position: relative;
+}
+
+.input-imagem-real {
+    position: relative;
+    opacity: 0;
+    min-width: 100%;
+    max-width: 100%;
+    z-index: -1;
+}
+
+.input-imagem-exibido {
+    top: 0;
+    position: absolute;
+}
+
+.fundo-claro {
+    border: solid 1px #eee;
+    background: #fafafa;
+    padding: 1rem;
+}
+
+.rodape {
+    background-color: #292c2f;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    font: normal 18px sans-serif;
+    padding: 15px;
+    margin-top: 80px;
+    color: #dddddd;
+    font-size: 14px;
+}
+

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!--/* <!--suppress ThymeleafVariablesResolveInspection, HtmlUnknownTag */-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body layout:fragment="item-frag(id, texto, categoria, palavraId, secao, imagem)">
+
+<li th:id="${id}" class="btn "  data-item-tipo="palavra"
+     th:attr="data-palavra-categoria=${categoria}, data-palavra-id=${palavraId}, data-item-secao=${secao}">
+  <img height="110" width="110" th:src="@{${imagem}}" src="">
+  <h6 class="texto-item" th:text="${texto}"></h6>
+</li>
+
+</body>
+
+</html>

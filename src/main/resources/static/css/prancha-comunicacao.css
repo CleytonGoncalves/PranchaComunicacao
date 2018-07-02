@@ -1,0 +1,135 @@
+/* Topo */
+
+#topo .navbar {
+    padding: 0.25rem 1rem;
+}
+
+#topo .navbar-brand {
+    padding: 0;
+    font-size: 1rem;
+}
+
+#topo .navbar-toggler-icon {
+    width: 1em;
+    height: 1em;
+}
+
+/* Conteúdo */
+
+.container-prancha {
+    flex-direction: column;
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.container-prancha .card-header {
+    padding: 0.5rem 1.0rem;
+}
+
+.painel-secao {
+    display: flex;
+    background: #eeeeee;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 0.375rem 0.75rem;
+    margin: 0;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.secao-selecionavel {
+    margin-bottom: 1rem;
+}
+
+/* Título da seção atual sendo percorrido pelo Seletor (JS) */
+.secao-selecionavel.secao-realce .card-header {
+    background: #fff885 !important;
+}
+
+/* Corpo da seção atual sendo percorrido pelo Seletor (JS) */
+.secao-selecionavel.secao-realce .painel-secao {
+    background: #dfe61f !important;
+}
+
+/* Item da Prancha */
+.container-prancha .btn {
+    margin: 0.80rem 3px;
+    padding: 0;
+    border-radius: 0;
+    background-color: #fff;
+    border-color: #ddd;
+    color: #000000;
+    min-width: 110px;
+    max-width: 150px;
+}
+
+/* Legenda do Item */
+.container-prancha h6 {
+    margin: 0.25rem;
+}
+
+.item-icone {
+    height: 139px !important;
+    min-width: 150px !important;
+}
+
+.item-icone svg {
+    height: 110px !important;
+    width: 50px !important;
+}
+
+/* Item atual da seção sendo percorrido pelo Seletor (JS) */
+.item-realce {
+    color: #fff !important;
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+}
+
+.item-realce img {
+    width: 130px !important;
+    height: 130px !important;
+}
+
+.item-realce.item-icone {
+    height: 160px !important;
+}
+
+.item-realce.item-icone svg {
+    height: 130px !important;
+    width: 60px !important;
+}
+
+.item-selecionado {
+    color: #fff !important;
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+}
+
+.item-selecionado img {
+    width: 130px !important;
+    height: 130px !important;
+}
+
+.item-selecionado.item-icone {
+    height: 160px !important;
+}
+
+#secao-formacao {
+    margin-bottom: 2rem;
+    background-color: #dae0e5;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 0.5rem 1.0rem;
+    width: fit-content;
+    min-width: 700px;
+    min-height: 185px;
+    margin-left: auto;
+    margin-right: auto;
+}

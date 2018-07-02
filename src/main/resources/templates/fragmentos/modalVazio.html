@@ -4,8 +4,8 @@
 
 <body layout:fragment="modal-frag(modalId, modalTitulo)">
 
-<section th:id="${modalId}" class="modal fade static" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
+<section th:id="${modalId}" class="modal fade" data-static="" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
     
     <div th:id="${modalId} + '-conteudo'" class="modal-content">
       
@@ -19,8 +19,7 @@
       
       </header>
   
-      <!-- Conteúdo - Deve ser substituido pelo conteúdo desejado -->
-      <div id="modal-conteudo" layout:fragment="modal-conteudo-frag"></div>
+      <!-- Conteúdo -->
     
     </div>
   

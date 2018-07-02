@@ -10,6 +10,8 @@
 <body>
 
 <main>
+  <h2 layout:fragment="titulo-frag">COMPLEMENTOS</h2>
+  
   <!-- Modal de cadastro -->
   <!-- Substitui o div pelo fragmento de modal, alterando o ID e Título -->
   <div layout:fragment="modal-cadastro-frag"
@@ -23,54 +25,49 @@
     <div class="modal-body">
       <div class="container">
         <div class="row align-items-center">
-          
-          <!-- Lado esquerdo (Imagem) -->
-          <fieldset class="col-md-3 form-group">
-            <img class="img-thumbnail d-block mx-auto" id="imagem-palavra" height="150" width="150"
-                 th:src="*{id != null} ? @{*{url}} : @{images/placeholder.jpg}"
-                 src="../static/images/placeholder.jpg">
-            
-            <div id="grupo-input-imagem" class="mt-3">
-              <!-- Botão real de upload (invisível) - Obrigatório para Novo Cadastro apenas -->
-              <input id="input-imagem-real" name="imagem" type="file" th:required="*{id == null}"
-                     accept="image/png, image/jpeg, image/jpg, image/gif"/>
-              
-              <!-- Botão falso que delega para outro botão invísivel (onclick) -->
-              <input id="input-imagem-exibido" class="btn btn-block btn-info" type="button"
-                     value="SELECIONAR"/>
-            </div>
-          
+  
+          <!-- Imagem -->
+          <fieldset class="col-md-3 form-group"
+                    layout:include="fragmentos/uploadImagem :: uploadImagem-frag(
+                      imagemId='imagem-palavra',
+                      tamanho=150,
+                      src=*{url})">
           </fieldset>
           
           <!-- Lado direito (Campos) -->
-          <fieldset class="col-md-8 form-group">
+          <fieldset class="col-md-9 form-group">
             
             <!-- Entrada Palavra-->
             <div class="form-group row">
-              <label class="col-md-2 control-label font-weight-bold"
+              <label class="col-md-3 col-form-label font-weight-bold"
                      for="input-palavra">PALAVRA</label>
-              <div class="col-md-6">
-                <input class="form-control input-md" id="input-palavra" name="input-palavra"
+              <div class="col-md-9">
+                <input class="form-control " id="input-palavra" name="input-palavra"
                        required="" type="text" th:field="*{palavra}"/>
               </div>
             </div>
             
             <!-- Radio Sexo -->
             <div class="form-group row">
-              <label class="col-md-2 control-label font-weight-bold">SEXO</label>
+              <label class="col-md-3 font-weight-bold">SEXO</label>
               
-              <div class="col-md-8">
-                <input id="grupo-sexo-0" name="grupo-sexo" type="radio" value="M" th:field="*{sexo}"
-                       required=""/>
-                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-0">
-                  MASCULINO
-                </label>
+              <div class="col-md-9">
                 
-                <input id="grupo-sexo-1" name="grupo-sexo" type="radio" value="F" th:field="*{sexo}"
-                       required=""/>
-                <label class="radio-inline form-check form-check-inline" for="grupo-sexo-1">
-                  FEMININO
-                </label>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="sexo-0" name="grupo-sexo" type="radio" value="M" th:field="*{sexo}"
+                         required=""/>
+                  <label class="custom-control-label" for="sexo-0">
+                    MASCULINO
+                  </label>
+                </div>
+                
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="sexo-1" name="grupo-sexo" type="radio" value="F" th:field="*{sexo}"
+                         required=""/>
+                  <label class="custom-control-label" for="sexo-1">
+                    FEMININO
+                  </label>
+                </div>
               
               </div>
             </div>
@@ -90,9 +87,8 @@
   </form>
   
   <!-- Tabela de palavras -->
-  <!-- TODO: Implementar DataTable na tabela -->
   <table layout:fragment="tabela-palavra-frag" id="tabela-palavras"
-         class="table table-hover rtable table-sm table-bordered table-striped">
+         class="table   table-sm table-bordered table-striped">
     
     <thead>
     <tr>
@@ -108,7 +104,7 @@
       
       <td class="text-center">
         <img class="img-thumbnail img-fluid d-block mx-auto"
-             th:src="@{${complemento.url}}" src="../static/images/placeholder.jpg" width="60">
+             th:src="@{${complemento.url}}" src="../static/images/placeholder.png" width="60">
       </td>
       
       <td class="align-middle" th:text="${complemento.palavra}">(Enfermeira)</td>

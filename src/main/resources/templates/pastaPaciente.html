@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragmentos/base/template">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">Pacientes</title>
+</head>
+
+<body>
+
+<main layout:fragment="conteudo-frag" class="container-fluid">
+  
+  <header>
+    <h2 class="float-left">PACIENTES</h2>
+    
+    <a type="button" id="botao-novo-cadastro" class="ml-3 btn btn-info" th:href="@{'/pastaPaciente/novo'}">
+      <i class="fas fa-plus fa-lg"></i>
+    </a>
+    
+    <hr/>
+  </header>
+  
+  <!-- Tabela de Pacientes -->
+  <table layout:fragment="tabela-paciente-frag" id="tabela-pacientes"
+         class="table table-sm table-bordered table-striped">
+    
+    <thead>
+    <tr>
+      <th scope="col" class="text-center">IMAGEM</th>
+      <th scope="col">NOME</th>
+      <th scope="col">SEXO</th>
+      <th scope="col" class="text-center">EDITAR</th>
+      <th scope="col" class="text-center">SELECIONAR</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <tr th:each="paciente : ${listaPaciente}">
+      
+      <td class="text-center">
+        <img class="img-thumbnail img-fluid d-block mx-auto"
+             th:src="@{${paciente.imagemUrl}}" src="../static/images/placeholder.png" width="60">
+      </td>
+      
+      <td class="align-middle" th:text="${paciente.nome}"></td>
+      <td class="align-middle" th:text="${paciente.sexo}"></td>
+      
+      <td class="align-middle text-center">
+        <a type="button" class="btn btn-link" th:href="@{'/pastaPaciente/' + ${paciente.id}}">
+          <i class="fas fa-edit fa-lg fa-fw"></i>
+        </a>
+      </td>
+      
+      <td class="align-middle text-center">
+        <form th:id="'form-selecionar-' + ${paciente.id}"
+              th:action="@{'/pastaPaciente/selecionarPaciente/' + ${paciente.id}}"
+              method="post">
+          <button type="submit" class="btn btn-link">
+            <i class="fas fa-angle-right fa-lg fa-fw"></i>
+          </button>
+        </form>
+      </td>
+    
+    </tr>
+    </tbody>
+  
+  </table>
+
+</main>
+
+<th:block layout:fragment="rodape-scripts-frag">
+  <script th:src="@{/js/pasta-paciente.js}"></script>
+</th:block>
+
+</body>
+</html>

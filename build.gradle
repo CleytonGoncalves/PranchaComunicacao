@@ -22,8 +22,15 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom 'io.spring.platform:platform-bom:Brussels-SR6'
+	}
+}
 
 dependencies {
+    /* Dependências padrões */
+
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-actuator-docs')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -31,12 +38,16 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 
-    /* Suportar self-closing HTML tags */
-    compile('net.sourceforge.nekohtml:nekohtml:1.9.21')
-
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+
+    /* Dependências adicionadas */
+    /* Dependências abaixo sem versões são gerenciadas pelo Spring Platform */
+
+    compile('net.sourceforge.nekohtml:nekohtml') // Suporte a self-closing HTML tags
+    compile('org.hibernate:hibernate-java8') // Suporte do Hibernate ao Java 8
+
 }
