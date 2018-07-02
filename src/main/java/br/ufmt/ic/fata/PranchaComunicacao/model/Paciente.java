@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,8 +21,6 @@ public class Paciente extends EntidadeBase {
     @NotBlank
     private String nome;
     
-    private LocalDate dataNascimento;
-    
     private String sexo;
     
     private String imagemUrl;
@@ -33,6 +30,10 @@ public class Paciente extends EntidadeBase {
     private int velocidadeVoz = 50;
     
     private int velocidadeSelecao = 1000;
+    
+    private String fluxoPrancha = "SUJEITO-VERBO-COMPLEMENTO";
+    
+    private boolean falarCadaPalavraSeletor = false;
     
     /* Por que Set? https://thoughts-on-java.org/association-mappings-bag-list-set */
     
