@@ -8,7 +8,7 @@ var FluxoPrancha = function (fluxoId) {
         case "SUJEITO-VERBO-COMPLEMENTO":
             fluxoFuncoes = getFluxoSujeitoVerboComplemento();
             break;
-        case "FLUXOLIVRE":
+        case "LIVRE":
             fluxoFuncoes =  getFluxoLivre();
             break;
         default:
