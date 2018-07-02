@@ -1,5 +1,6 @@
 package br.ufmt.ic.fata.PranchaComunicacao.service.armazenamento;
 
+import br.ufmt.ic.fata.PranchaComunicacao.service.ValidadorImagem;
 import br.ufmt.ic.fata.PranchaComunicacao.util.NomeArquivoUtil;
 import br.ufmt.ic.fata.PranchaComunicacao.util.exception.ArmazenamentoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -22,10 +24,12 @@ public class ArmazenamentoDiscoService implements ArmazenamentoService {
     /* TODO: Criar entidade Imagem, que grave o nome recebido, tamanho, quem e quando */
     
     private final Path local;
+    private final ValidadorImagem validadorImagem;
     
     @Autowired
-    public ArmazenamentoDiscoService(@Value("${armazenamento.caminho}") Path local) {
+    public ArmazenamentoDiscoService(@Value("${armazenamento.caminho}") Path local, ValidadorImagem vi) {
         this.local = local;
+        this.validadorImagem = vi;
     }
     
     @Override
@@ -55,6 +59,18 @@ public class ArmazenamentoDiscoService implements ArmazenamentoService {
         } catch (IOException e) {
             throw new ArmazenamentoException("Falha ao armazenar o arquivo: " + nomeArquivo, e);
         }
+    }
+    
+    public String salvarImagem(MultipartFile imagem, Errors erros) {
+        String novaImagemNome = gerarNomeUnico(imagem.getOriginalFilename());
+        validadorImagem.validate(imagem, erros);
+        
+        if (erros.hasErrors()) {
+            return null;
+        }
+        
+        salvar(imagem, novaImagemNome);
+        return novaImagemNome;
     }
     
     @Override

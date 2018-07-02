@@ -37,16 +37,7 @@ public abstract class PalavraService<T extends Palavra> extends BaseCrudService<
     }
     
     public String salvarImagem(MultipartFile imagem, Errors erros) {
-        String novaImagemNome = armazenamentoService.gerarNomeUnico(imagem.getOriginalFilename());
-        
-        validadorImagem.validate(imagem, erros);
-        
-        if (erros.hasErrors()) {
-            return null;
-        }
-        
-        armazenamentoService.salvar(imagem, novaImagemNome);
-        return novaImagemNome;
+        return armazenamentoService.salvarImagem(imagem, erros);
     }
     
     /*  Métodos Auxiliares */
