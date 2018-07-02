@@ -50,6 +50,17 @@
 <!-- Rodapé -->
 
 <th:block layout:fragment="rodape-scripts-frag">
+  <script th:inline="javascript">
+      /* ### Configurações do Paciente ### */
+    
+      /*<![CDATA[*/
+    
+      var CONFIG_TEMPO_SELETOR = [[${paciente.velocidadeSelecao}]]; // Tempo em ms para o movimento do seletor
+      var CONFIG_FLUXO_PRANCHA = [[${paciente.fluxoPrancha}]]; // Qual fluxo de prancha usar
+      var CONFIG_FALAR_CADA_PALAVRA = [[${paciente.falarCadaPalavraSeletor}]]; // Se todo item pelo qual o seletor passar deve ser falado
+    
+      /*]]>*/
+  </script>
   <script th:src="@{/js/prancha/configuracao.js}"></script>
   <script th:src="@{/js/prancha/constante.js}"></script>
   <script th:src="@{/js/prancha/sintetizador.js}"></script>
