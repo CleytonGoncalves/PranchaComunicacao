@@ -2,7 +2,6 @@ package br.ufmt.ic.fata.PranchaComunicacao.service.palavra;
 
 import br.ufmt.ic.fata.PranchaComunicacao.model.Palavra;
 import br.ufmt.ic.fata.PranchaComunicacao.repository.PalavraRepository;
-import br.ufmt.ic.fata.PranchaComunicacao.service.ValidadorImagem;
 import br.ufmt.ic.fata.PranchaComunicacao.service.armazenamento.ArmazenamentoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.base.BaseCrudService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +20,10 @@ public abstract class PalavraService<T extends Palavra> extends BaseCrudService<
     
     private final ArmazenamentoService armazenamentoService;
     
-    private final ValidadorImagem validadorImagem;
-    
     protected abstract PalavraRepository<T> getRepository();
     
-    PalavraService(ArmazenamentoService as, ValidadorImagem vi) {
+    PalavraService(ArmazenamentoService as) {
         this.armazenamentoService = as;
-        this.validadorImagem = vi;
     }
     
     @Override
