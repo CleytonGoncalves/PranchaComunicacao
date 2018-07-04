@@ -37,7 +37,7 @@ public class Synthesiser extends BaseSynthesiser {
 	/**
 	 * The speed of the generated audio
 	 */
-	private double speed = 1.0;
+	private double speed = 0.85;
 	
 	/**
 	 * Constructor
