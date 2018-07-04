@@ -54,8 +54,8 @@ public class PacienteController {
         return PAGINA_INICIAL;
     }
     
-    @PostMapping("/selecionarPaciente/{id}")
-    public String selecionarPaciente(@PathVariable(name = "id") long pacienteId) {
+    @GetMapping("/selecionarPrancha/{id}")
+    public String selecionarPrancha(@PathVariable(name = "id") long pacienteId) {
         return "redirect:/" + PAGINA_PRANCHA + "/" + pacienteId;
     }
     
