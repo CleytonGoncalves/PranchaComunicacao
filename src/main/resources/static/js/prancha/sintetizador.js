@@ -9,6 +9,7 @@ var Sintetizador = function () {
         if ('speechSynthesis' in window && !!window.chrome) { // Navegador chrome
             var fala = new SpeechSynthesisUtterance(texto);
             fala.lang = 'pt-BR';
+            fala.rate = 0.9;
             window.speechSynthesis.speak(fala);
         } else {
             console.error(

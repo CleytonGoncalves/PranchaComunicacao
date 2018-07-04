@@ -27,6 +27,12 @@ var seletorIntervalId = undefined;
 /* ##### SCRIPT DO SELETOR ##### */
 
 $(window).ready(function () {
+    if (CONFIG_TEMPO_SELETOR < 1500 && CONFIG_FALAR_CADA_PALAVRA) {
+        CONFIG_TEMPO_SELETOR = 2000;
+        console.log("Com a configuração de falar cada palavra, é preciso um tempo maior do seletor" +
+            " p/ que a fala seja completada. Velocidade reajustada para " + CONFIG_TEMPO_SELETOR);
+    }
+    
     proximaEtapaFluxo();
 });
 
@@ -60,6 +66,10 @@ function rodarSeletor(lista, funcaoAtivarRealce, funcaoDesativarRealce) {
         
         if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM && CONFIG_FALAR_CADA_PALAVRA) {
             sintetizador.sintetizarLocal($(lista[posAtual]).find("." + CLASSE_ITEM_TEXTO).text());
+        }
+        
+        if (estadoSeletor === EstadoSeletorEnum.SELETOR_SECAO) {
+            // $(lista[posAtual]).scrollView(); //TODO ?
         }
         
         funcaoDesativarRealce(lista[posAnterior]);
@@ -202,8 +212,9 @@ function moverParaSecaoFormacao(item) {
 }
 
 function moverParaSecaoOriginal(item) {
-    // TODO: Voltar o item para mesma posição anterior, ou ao menos coloca-lo antes do Voltar Seleção
-    item.appendTo("#{0} ul".f(item.data(ATR_ITEM_SECAO)));
+    // TODO: Voltar o item para mesma posição (relativa) anterior
+    var local = "#{0} ul li[{1}='{2}']".f(item.data(ATR_ITEM_SECAO), 'data-item-tipo', VAL_TIPO_ACAO);
+    item.insertBefore($(local));
 }
 
 /* ### Realce ### */
