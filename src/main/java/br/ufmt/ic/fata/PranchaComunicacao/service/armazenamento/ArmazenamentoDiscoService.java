@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,13 +34,13 @@ public class ArmazenamentoDiscoService implements ArmazenamentoService {
     }
     
     @Override
-    public void salvar(MultipartFile arquivo) {
-        this.salvar(arquivo, NomeArquivoUtil.transformarEmNomeValido(arquivo.getOriginalFilename
+    public void salvarUpload(MultipartFile arquivo) {
+        this.salvarUpload(arquivo, NomeArquivoUtil.transformarEmNomeValido(arquivo.getOriginalFilename
                                                                                      ()));
     }
     
     @Override
-    public void salvar(MultipartFile arquivo, String nomeArquivo) {
+    public void salvarUpload(MultipartFile arquivo, String nomeArquivo) {
         try {
             if (nomeArquivo == null || nomeArquivo.isEmpty()) {
                 throw new ArmazenamentoException("Nome do arquivo inválido: " + nomeArquivo);
@@ -55,7 +56,15 @@ public class ArmazenamentoDiscoService implements ArmazenamentoService {
                                 + nomeArquivo);
             }
     
-            Files.copy(arquivo.getInputStream(), this.local.resolve(nomeArquivo), StandardCopyOption.REPLACE_EXISTING);
+            salvarInputStream(arquivo.getInputStream(), nomeArquivo);
+        } catch (IOException e) {
+            throw new ArmazenamentoException("Falha ao armazenar o arquivo: " + nomeArquivo, e);
+        }
+    }
+    
+    public void salvarInputStream(InputStream inputStream, String nomeArquivo) {
+        try {
+            Files.copy(inputStream, this.local.resolve(nomeArquivo), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new ArmazenamentoException("Falha ao armazenar o arquivo: " + nomeArquivo, e);
         }
@@ -69,7 +78,7 @@ public class ArmazenamentoDiscoService implements ArmazenamentoService {
             return null;
         }
         
-        salvar(imagem, novaImagemNome);
+        salvarUpload(imagem, novaImagemNome);
         return novaImagemNome;
     }
     
@@ -85,15 +94,15 @@ public class ArmazenamentoDiscoService implements ArmazenamentoService {
     }
     
     @Override
-    public Path carregar(String nomeArquivo) {
+    public Path getCaminhoCompleto(String nomeArquivo) {
         return this.local.resolve(nomeArquivo);
     }
     
     @Override
     public Resource carregarComoResource(String nomeArquivo) {
         try {
-            Path file = carregar(nomeArquivo);
-            Resource resource = new UrlResource(file.toUri());
+            Path caminho = getCaminhoCompleto(nomeArquivo);
+            Resource resource = new UrlResource(caminho.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
@@ -109,6 +118,11 @@ public class ArmazenamentoDiscoService implements ArmazenamentoService {
     @Override
     public void removerTodos() {
         FileSystemUtils.deleteRecursively(local.toFile());
+    }
+    
+    public boolean existeArquivo(String nomeArquivo) {
+        Path caminho = getCaminhoCompleto(nomeArquivo);
+        return Files.exists(caminho);
     }
     
     @Override

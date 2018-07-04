@@ -6,14 +6,15 @@ import br.ufmt.ic.fata.PranchaComunicacao.model.Pronome;
 import br.ufmt.ic.fata.PranchaComunicacao.model.Sujeito;
 import br.ufmt.ic.fata.PranchaComunicacao.model.TempoVerbal;
 import br.ufmt.ic.fata.PranchaComunicacao.model.Verbo;
+import br.ufmt.ic.fata.PranchaComunicacao.service.armazenamento.ArmazenamentoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.ComplementoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.DiversoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.SujeitoService;
 import br.ufmt.ic.fata.PranchaComunicacao.service.palavra.VerboService;
+import br.ufmt.ic.fata.PranchaComunicacao.util.NomeArquivoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -30,27 +31,35 @@ public class SintetizadorService {
     private final ComplementoService complementoService;
     private final DiversoService diversoService;
     
-    // Sintetizador de Voz
-    private Synthesiser sintetizador;
+    private final ArmazenamentoService armazenamentoService;
+    private final Synthesiser sintetizador;
     
     @Autowired
-    private SintetizadorService(@Value("${sintetizador.chave}") String chave, SujeitoService ss, VerboService vs, ComplementoService cs, DiversoService ds) {
+    private SintetizadorService(@Value("${sintetizador.chave}") String chave, SujeitoService ss, VerboService vs,
+                                ComplementoService cs, DiversoService ds, ArmazenamentoService as) {
         this.sujeitoService = ss;
         this.verboService = vs;
         this.complementoService = cs;
         this.diversoService = ds;
     
         sintetizador = new Synthesiser(chave);
+        armazenamentoService = as;
         sintetizador.setLanguage("pt-br");
     }
     
-    public InputStreamResource sintetizarTexto(List<String> listaPalavra, TempoVerbal tempoVerbal) throws IOException {
+    public String sintetizarTexto(List<String> listaPalavra, TempoVerbal tempoVerbal) throws IOException {
         String texto = getTextoFromListaPalavrasIds(listaPalavra, tempoVerbal);
         
-        return new InputStreamResource(sintetizador.getMP3Data(texto));
+        String nome = NomeArquivoUtil.transformarEmNomeValido(texto.replaceAll(" ", "") + ".mp3");
+    
+        if (! armazenamentoService.existeArquivo(nome)) {
+            armazenamentoService.salvarInputStream(sintetizador.getMP3Data(texto), nome);
+        }
+    
+        return nome;
     }
     
-    public String getTextoFromListaPalavrasIds(List<String> listaPalavra, TempoVerbal tempoVerbal) {
+    private String getTextoFromListaPalavrasIds(List<String> listaPalavra, TempoVerbal tempoVerbal) {
         log.debug(listaPalavra + " - " + tempoVerbal);
         StringBuilder texto = new StringBuilder();
         

@@ -6,9 +6,6 @@ import br.ufmt.ic.fata.PranchaComunicacao.service.sintetizador.SintetizadorServi
 import br.ufmt.ic.fata.PranchaComunicacao.util.converter.TempoVerbalConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,11 +27,11 @@ public class SintetizadorController {
         this.service = service;
     }
     
-    @PostMapping(produces = "audio/mpeg")
-    public ResponseEntity<InputStreamResource> sintetizarTexto(@RequestBody SintetizadorRequest request) throws IOException {
-        InputStreamResource audio = service.sintetizarTexto(request.getPalavrasIds(), request.getTempoVerbal());
-    
-        return new ResponseEntity<>(audio, HttpStatus.OK);
+    @PostMapping
+    public String sintetizarTexto(@RequestBody SintetizadorRequest request) throws IOException {
+        String nomeAudio = service.sintetizarTexto(request.getPalavrasIds(), request.getTempoVerbal());
+        
+        return nomeAudio;
     }
     
     @InitBinder

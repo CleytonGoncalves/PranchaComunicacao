@@ -59,7 +59,7 @@ function rodarSeletor(lista, funcaoAtivarRealce, funcaoDesativarRealce) {
         var posAnterior = calcPosCircular(posAtual - 1, qntd);
         
         if (estadoSeletor === EstadoSeletorEnum.SELETOR_ITEM && CONFIG_FALAR_CADA_PALAVRA) {
-            sintetizador.falar($(lista[posAtual]).find("." + CLASSE_ITEM_TEXTO).text());
+            sintetizador.sintetizarLocal($(lista[posAtual]).find("." + CLASSE_ITEM_TEXTO).text());
         }
         
         funcaoDesativarRealce(lista[posAnterior]);
@@ -113,7 +113,7 @@ function selecionarItem(item) {
     item.addClass(CLASSE_ITEM_SELECIONADO);
     
     if (tipoItem === VAL_TIPO_PALAVRA) {
-        listaPalavrasSelecionadas.push(item.data(ATR_PALAVRA_ID));
+        listaPalavrasSelecionadas.push(item.prop("id"));
     }
     
     moverParaSecaoFormacao(item);
@@ -132,7 +132,7 @@ function deselecionarItem(item) {
     
     if (tipoItem === VAL_TIPO_PALAVRA) {
         listaPalavrasSelecionadas = listaPalavrasSelecionadas.filter(function (e) {
-            return e !== item.data(ATR_PALAVRA_ID);
+            return e !== item.prop("id");
         }); // Remove o ID da palavra atual da lista
         moverParaSecaoOriginal(item);
         return;
@@ -146,8 +146,7 @@ function fazerAcao(item) {
     
     switch (tipoAcao) {
         case VAL_ACAO_FALAR:
-            fazerAcaoFalar();
-            rodarSeletorSecao();
+            sintetizador.sintetizarServidor(getTextoFormado(), rodarSeletorSecao);
             break;
         case VAL_ACAO_VOLTAR_SELECAO:
             rodarSeletorSecao();
@@ -161,26 +160,6 @@ function fazerAcao(item) {
         default:
             console.error("Ação da prancha inválida: {0}".f(tipoAcao));
     }
-}
-
-function fazerAcaoFalar() {
-    sintetizador.falar(getTextoFormado());
-    
-    //TODO: ENVIAR FRASE FORMADA PARA O SERVIDOR
-    $.post({
-        url:  location.origin + "/api/sintetizador",
-        data: JSON.stringify({palavrasIds: listaPalavrasSelecionadas, tempoVerbal: tempoVerbalSelecionado}),
-        dataType: 'json',
-        contentType: 'application/json;charset=UTF-8',
-        processData: false,
-        cache: false
-    })
-    .done(function () {
-        console.log("Sucesso ao enviar frase para o servidor");
-    })
-    .fail(function () {
-        alert("Falha ao sintetizar o texto.");
-    });
 }
 
 /* ### Fluxo ### */
