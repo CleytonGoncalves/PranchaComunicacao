@@ -35,6 +35,7 @@ var DATATABLES_CONFIG_PADRAO = {
     "language": DATATABLES_PT_LANG,
     "pagingType": "numbers",
     responsive: true,
+    retrieve: true,
     "info": false,
     "lengthChange": false
 };

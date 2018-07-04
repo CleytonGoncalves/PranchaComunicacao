@@ -59,26 +59,44 @@ public class PacienteController {
         return "redirect:/" + PAGINA_PRANCHA + "/" + pacienteId;
     }
     
+    /* Cadastro / Atualização */
+    
     @GetMapping("/novo")
-    public String novoPaciente(Model model, SessionStatus status) {
+    public String cadastrarPaciente(Model model, SessionStatus status) {
         if (model.containsAttribute(PACIENTE_MODEL)) {
             status.setComplete();
         }
         
         model.addAttribute(PACIENTE_MODEL, new Paciente());
+        addPalavrasNoModel(model);
+        
+        return PAGINA_CADASTRO;
+    }
+    
+    @GetMapping("/{id}")
+    public String atualizarPaciente(@PathVariable(name = "id") long id, Model model, SessionStatus status) {
+        if (model.containsAttribute(PACIENTE_MODEL)) {
+            status.setComplete();
+        }
+        
+        model.addAttribute(PACIENTE_MODEL, service.buscarPorId(id));
+        addPalavrasNoModel(model);
         
         return PAGINA_CADASTRO;
     }
     
     @PostMapping(value = "/salvar")
     public String salvarPaciente(@RequestParam("imagem") MultipartFile imagem,
-                              @Valid @ModelAttribute(PACIENTE_MODEL) Paciente paciente,
-                              BindingResult br, SessionStatus status) {
+                                 @Valid @ModelAttribute(PACIENTE_MODEL) Paciente paciente,
+                                 @RequestParam("palavrasIds") List<String> palavrasIds,
+                                 BindingResult br, SessionStatus status) {
         
         if (paciente.isNew() || ! imagem.isEmpty()) { //Nova paciente, ou já existente com nova imagem
             String imagemNome = service.salvarImagem(imagem, br);
             paciente.setImagemUrl(imagemNome);
         }
+        
+        service.adicionarPalavras(paciente, palavrasIds);
         
         if (br.hasErrors()) {
             // O Front-end é responsável por validar tudo antes de enviar. Só deve ocorrer caso
@@ -93,15 +111,11 @@ public class PacienteController {
         return "redirect:/" + PAGINA_PRANCHA;
     }
     
-    @GetMapping("/{id}")
-    public String getPacientePorId(@PathVariable(name = "id") long id, Model model, SessionStatus status) {
-        if (model.containsAttribute(PACIENTE_MODEL)) {
-            status.setComplete();
-        }
-        
-        model.addAttribute(PACIENTE_MODEL, service.buscarPorId(id));
-        
-        return PAGINA_CADASTRO;
+    public void addPalavrasNoModel(Model model) {
+        model.addAttribute(service.getTodosSujeitos());
+        model.addAttribute(service.getTodosVerbos());
+        model.addAttribute(service.getTodosComplementos());
+        model.addAttribute(service.getTodosDiversos());
     }
     
 }
