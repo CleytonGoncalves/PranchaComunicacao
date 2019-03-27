@@ -102,6 +102,22 @@ public abstract class PalavraController<T extends Palavra> {
         status.setComplete(); // Indica que terminou com a Palavra atual
     }
     
+    /**
+     * Adiciona a Palavra ao Model, retornando o fragmento referente a seu cadastro.
+     *
+     * @return Fragmento da Palavra pedida
+     */
+    @GetMapping("/remover/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removerPalavraPorId(@PathVariable(name = "id") long id, Model model, SessionStatus status) {
+        System.out.println("Removendo");
+        palavraService.remover(palavraService.buscarPorId(id));
+        System.out.println("removeu");
+        status.setComplete(); // Indica que terminou com a Palavra atual
+        System.out.println("loco");
+        
+    }
+    
     /* Métodos Abstratos */
     
     abstract String getPaginaInicial();
