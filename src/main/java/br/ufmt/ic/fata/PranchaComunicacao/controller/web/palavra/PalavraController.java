@@ -110,12 +110,8 @@ public abstract class PalavraController<T extends Palavra> {
     @GetMapping("/remover/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void removerPalavraPorId(@PathVariable(name = "id") long id, Model model, SessionStatus status) {
-        System.out.println("Removendo");
-        palavraService.remover(palavraService.buscarPorId(id));
-        System.out.println("removeu");
+        palavraService.remover(palavraService.buscarPorId(id));        
         status.setComplete(); // Indica que terminou com a Palavra atual
-        System.out.println("loco");
-        
     }
     
     /* Métodos Abstratos */

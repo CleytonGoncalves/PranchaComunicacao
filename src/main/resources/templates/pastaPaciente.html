@@ -50,6 +50,9 @@
         <a class="btn btn-link" th:href="@{'/pastaPaciente/' + ${paciente.id}}">
           <i class="fas fa-edit fa-lg fa-fw"></i>
         </a>
+        <button type="button" class="btn" th:onclick="'clickRemoverCadastro(' + ${paciente.id}+')'">
+          <i class="fas fa-remove fa-lg fa-fw"></i>
+        </button>
       </td>
       
       <td class="align-middle text-center">

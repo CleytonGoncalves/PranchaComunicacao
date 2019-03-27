@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @SessionAttributes("paciente") // Garante o mesmo Model até completar o cadastro
@@ -118,4 +120,10 @@ public class PacienteController {
         model.addAttribute(service.getTodosDiversos());
     }
     
+    @GetMapping("/remover/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removerPacientePorId(@PathVariable(name = "id") long id, Model model, SessionStatus status) {
+        service.remover(service.buscarPorId(id));        
+        status.setComplete(); // Indica que terminou com a Palavra atual
+    }
 }

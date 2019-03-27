@@ -119,3 +119,21 @@ String.prototype.format = String.prototype.f = function () {
     }
     return s;
 };
+
+
+/* Pede pro servidor remover uma nova palavra, recebendo o id  */
+function clickRemoverCadastro(id) {
+
+    if(confirm('Deseja realmente excluir o registro?')){
+        $.get({
+            url: window.location +"/remover/"+id,
+            cache: false
+        })
+        .done(function(){
+            location.reload();
+        })
+        .fail(function () {
+            alert("Falha ao remover cadastro.");
+        });
+    }
+}

@@ -114,6 +114,9 @@
         <button th:id="${complemento.id}" type="button" class="btn btn-link botao-editar-cadastro">
           <i class="fas fa-edit fa-lg fa-fw"></i>
         </button>
+        <button type="button" class="btn" th:onclick="'clickRemoverCadastro(' + ${complemento.id}+')'">
+          <i class="fas fa-remove fa-lg fa-fw"></i>
+        </button>
       </td>
     
     </tr>
