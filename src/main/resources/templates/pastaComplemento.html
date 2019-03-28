@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
+<html 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="fragmentos/pastaPalavra">
 
@@ -95,7 +97,7 @@
       <th scope="col" class="text-center">Imagem</th>
       <th scope="col">Complemento</th>
       <th scope="col">Sexo</th>
-      <th scope="col" class="text-center">Editar</th>
+      <th scope="col" class="text-center controle">Editar</th>
     </tr>
     </thead>
     
@@ -114,8 +116,8 @@
         <button th:id="${complemento.id}" type="button" class="btn btn-link botao-editar-cadastro">
           <i class="fas fa-edit fa-lg fa-fw"></i>
         </button>
-        <button type="button" class="btn" th:onclick="'clickRemoverCadastro(' + ${complemento.id}+')'">
-          <i class="fas fa-remove fa-lg fa-fw"></i>
+        <button th:id="${complemento.id}" type="button" class="btn btn-link botao-remover-cadastro">
+          <i class="fas fa-trash fa-lg fa-fw"></i>
         </button>
       </td>
     

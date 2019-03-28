@@ -34,7 +34,7 @@ var DATATABLES_PT_LANG = {
 var DATATABLES_CONFIG_PADRAO = {
     "language": DATATABLES_PT_LANG,
     "pagingType": "numbers",
-    responsive: true,
+    responsive: false,
     retrieve: true,
     "info": false,
     "lengthChange": false
@@ -122,7 +122,10 @@ String.prototype.format = String.prototype.f = function () {
 
 
 /* Pede pro servidor remover uma nova palavra, recebendo o id  */
-function clickRemoverCadastro(id) {
+function clickRemoverCadastro(e) {
+    console.log('executnado botal')
+    e.preventDefault();
+    var id = $(this).closest("button").attr("id");
 
     if(confirm('Deseja realmente excluir o registro?')){
         $.get({
@@ -137,3 +140,7 @@ function clickRemoverCadastro(id) {
         });
     }
 }
+
+$(document).ready(function () {
+    $(".botao-remover-cadastro").click(clickRemoverCadastro);
+});
